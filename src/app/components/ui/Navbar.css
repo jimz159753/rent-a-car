@@ -1,0 +1,11 @@
+.navbar {
+    @apply h-20 bg-black text-white flex justify-between items-center
+}
+
+img {
+    @apply mx-10
+}
+
+.list {
+    @apply  flex justify-end space-x-10 mx-10
+}

@@ -1,0 +1,44 @@
+.city-background {
+    @apply h-5/6 mx-0 bg-cover mb-32;
+}
+
+.container {
+    @apply mx-20
+}
+
+.about-us {
+    @apply flex justify-between items-center mb-40;
+
+    > img {
+        @apply h-80;
+    }
+}
+
+.about-us-text {
+    > h1 {
+        @apply text-[20px]
+    }
+
+    > p {
+        @apply text-[15px]
+    }
+}
+
+
+.free-worries {
+    @apply flex justify-between items-center mb-40;
+
+    > img {
+        @apply h-80;
+    }
+}
+
+.free-worries-text {
+    > h1 {
+        @apply text-[20px]
+    }
+
+    > p {
+        @apply text-[15px]
+    }
+}
