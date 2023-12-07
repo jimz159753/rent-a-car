@@ -20,7 +20,7 @@ const Main = () => {
         <div>
             <Navbar />
             <Image src={cityBackground} className='city-background' alt="rent a car" />
-            <div id='about' className='main-container'>
+            <div className='main-container'>
 
                 <div className='about-us'>
                     <div className='about-us-text'>
