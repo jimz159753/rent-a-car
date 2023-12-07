@@ -1,15 +1,16 @@
+"use client";
 import React from 'react'
-import { Navbar } from '../components/ui/Navbar'
+import { Navbar } from '../../components/ui/Navbar'
 import Image from 'next/image'
 import './page.css'
-import { Categories } from '../components/ui/Categories'
-import { Footer } from '../components/ui/Footer'
+import { Categories } from '../../components/ui/Categories'
+import { Footer } from '../../components/ui/Footer'
 
 
-export const Main = () => {
-    const cityBackground = require('../../../public/city_background.png')
-    const aboutUsImg = require('../../../public/about_us.png')
-    const freeWorriesImg = require('../../../public/free_worries.png')
+const Main = () => {
+    const cityBackground = require('../../../../public/city_background.png')
+    const aboutUsImg = require('../../../../public/about_us.png')
+    const freeWorriesImg = require('../../../../public/free_worries.png')
     const aboutUs = `
     Líder en la industria de alquiler de vehículos, comprometida a proporcionar a nuestros clientes una experiencia de conducción excepcional. Con una flota diversa de automóviles de alta calidad, nos esforzamos por satisfacer las necesidades y expectativas de cada cliente.`
     const freeWorries = `
@@ -42,3 +43,5 @@ export const Main = () => {
         </div>
     )
 }
+
+export default Main
