@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import './Footer.css'
+import Link from 'next/link'
 
 export const Footer = () => {
     const instagramIcon = require('../../../../public/instagram.png')
@@ -11,12 +12,18 @@ export const Footer = () => {
     const mastercardIcon = require('../../../../public/mastercard.png')
     const americanIcon = require('../../../../public/american.png')
     return (
-        <div className='footer'>
+        <div id='contact' className='footer'>
             <div className='info'>
                 <div className='social-media'>
-                    <Image src={instagramIcon} className='icon' alt="rent a car" />
-                    <Image src={facebookIcon} className='icon' alt="rent a car" />
-                    <Image src={twitterIcon} className='icon' alt="rent a car" />
+                    <Link href='https://www.instagram.com/rhb_rentadeautos/?igshid=MzMyNGUyNmU2YQ%3D%3D'>
+                        <Image src={instagramIcon} className='icon' alt="rent a car" />
+                    </Link>
+                    <Link href='https://www.google.com'>
+                        <Image src={facebookIcon} className='icon' alt="rent a car" />
+                    </Link>
+                    <Link href='https://www.google.com'>
+                        <Image src={twitterIcon} className='icon' alt="rent a car" />
+                    </Link>
                 </div>
                 <div className='separate' />
                 <div className='contact'>

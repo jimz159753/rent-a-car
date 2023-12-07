@@ -3,44 +3,44 @@
 }
 
 .main-container {
-    @apply w-full px-40
+    @apply w-full px-40 max-tablet:px-5
 }
 
 .about-us {
-    @apply flex justify-between items-center mb-40;
+    @apply flex justify-between items-center mb-40 max-desktop:flex max-desktop:flex-wrap max-desktop:justify-center;
 
     > img {
-        @apply w-[60%];
+        @apply w-[60%] max-desktop:w-full;
     }
 }
 
 .about-us-text {
-    @apply w-[30%];
+    @apply w-[30%] max-desktop:w-full max-desktop:mb-32 max-desktop:text-center max-tablet:w-full;
     > h1 {
-        @apply text-[24px] font-quando text-black opacity-60 mb-5;
+        @apply text-[24px] font-quando text-black opacity-60 mb-5 max-tablet:text-[22px];
     }
 
     > p {
-        @apply text-[15px] font-quicksand text-[18px];
+        @apply font-quicksand text-[18px] max-tablet:text-[15px];
     }
 }
 
 
 .free-worries {
-    @apply flex justify-between items-center mb-40 w-full;
+    @apply flex justify-between items-center mb-40 max-desktop:flex max-desktop:flex-wrap-reverse max-desktop:justify-center;
     > img {
-        @apply w-[60%];
+        @apply w-[60%] max-desktop:w-full;
     }
 }
 
 .free-worries-text {
-    @apply w-[30%];
+    @apply w-[30%] max-desktop:w-full max-desktop:mb-32 max-desktop:text-center;
 
     > h1 {
-        @apply text-[24px] font-quando text-black opacity-60 mb-5;
+        @apply text-[24px] font-quando text-black opacity-60 mb-5 max-tablet:text-[22px];
     }
 
     > p {
-        @apply text-[18px] font-quicksand;
+        @apply text-[18px] font-quicksand max-tablet:text-[15px];
     }
 }

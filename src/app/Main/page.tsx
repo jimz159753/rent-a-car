@@ -19,7 +19,7 @@ export const Main = () => {
         <div>
             <Navbar />
             <Image src={cityBackground} className='city-background' alt="rent a car" />
-            <div className='main-container'>
+            <div id='about' className='main-container'>
 
                 <div className='about-us'>
                     <div className='about-us-text'>
