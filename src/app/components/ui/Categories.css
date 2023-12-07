@@ -1,3 +1,11 @@
 .categories {
-    @apply flex 
+    @apply flex justify-between mt-20 mb-40;
+}
+
+.card {
+    @apply flex flex-col items-center justify-evenly;
+
+    > p {
+        @apply font-quando opacity-60 text-[18px]
+    }
 }

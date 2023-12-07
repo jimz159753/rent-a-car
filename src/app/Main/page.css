@@ -1,44 +1,46 @@
 .city-background {
-    @apply h-5/6 mx-0 bg-cover mb-32;
+    @apply h-5/6 mx-0 bg-cover mb-32 w-full;
 }
 
-.container {
-    @apply mx-20
+.main-container {
+    @apply w-full px-40
 }
 
 .about-us {
     @apply flex justify-between items-center mb-40;
 
     > img {
-        @apply h-80;
+        @apply w-[60%];
     }
 }
 
 .about-us-text {
+    @apply w-[30%];
     > h1 {
-        @apply text-[20px]
+        @apply text-[24px] font-quando text-black opacity-60 mb-5;
     }
 
     > p {
-        @apply text-[15px]
+        @apply text-[15px] font-quicksand text-[18px];
     }
 }
 
 
 .free-worries {
-    @apply flex justify-between items-center mb-40;
-
+    @apply flex justify-between items-center mb-40 w-full;
     > img {
-        @apply h-80;
+        @apply w-[60%];
     }
 }
 
 .free-worries-text {
+    @apply w-[30%];
+
     > h1 {
-        @apply text-[20px]
+        @apply text-[24px] font-quando text-black opacity-60 mb-5;
     }
 
     > p {
-        @apply text-[15px]
+        @apply text-[18px] font-quicksand;
     }
 }

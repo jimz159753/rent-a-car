@@ -19,7 +19,8 @@ export const Main = () => {
         <div>
             <Navbar />
             <Image src={cityBackground} className='city-background' alt="rent a car" />
-            <div className='container'>
+            <div className='main-container'>
+
                 <div className='about-us'>
                     <div className='about-us-text'>
                         <h1>Nosotros</h1>
@@ -34,10 +35,10 @@ export const Main = () => {
                         <p>{freeWorries}</p>
                     </div>
                 </div>
-                <h1>Tipo de carros</h1>
+                <h1 className='text-center font-quando text-[24px] opacity-60'>Tipo de vehículos</h1>
                 <Categories />
-                <Footer />
             </div>
+            <Footer />
         </div>
     )
 }

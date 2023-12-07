@@ -21,7 +21,7 @@ export const Categories = () => {
     return (
         <div className='categories'>
             {
-                categories.map(category => <div key={category.title}>
+                categories.map(category => <div key={category.title} className='card'>
                     <Image src={category.image} className='' alt="rent a car" />
                     <p>{category.title}</p>
                 </div>)

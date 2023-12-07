@@ -1,5 +1,7 @@
+
+
 .navbar {
-    @apply h-20 bg-black text-white flex justify-between items-center
+    @apply h-20 bg-black text-white flex justify-between items-center font-quando text-[18px];
 }
 
 img {
