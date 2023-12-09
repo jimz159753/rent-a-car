@@ -1,11 +1,15 @@
 .categories {
-    @apply flex justify-between mt-20 mb-40;
+    @apply flex justify-between space-x-20 mt-20 mb-40 max-laptop:flex-wrap max-laptop:space-y-20 max-laptop:space-x-0 max-laptop:justify-center;
 }
 
 .card {
     @apply flex flex-col items-center justify-evenly;
 
+    > img {
+        @apply mb-5;
+    }
+
     > p {
-        @apply font-quando opacity-60 text-[18px]
+        @apply font-quando opacity-60 text-[18px] text-center;
     }
 }

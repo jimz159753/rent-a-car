@@ -19,10 +19,10 @@ export const Categories = () => {
     ]
 
     return (
-        <div className='categories'>
+        <div id='cars' className='categories'>
             {
                 categories.map(category => <div key={category.title} className='card'>
-                    <Image src={category.image} className='' alt="rent a car" />
+                    <Image src={category.image} alt="rent a car" />
                     <p>{category.title}</p>
                 </div>)
             }
