@@ -5,16 +5,20 @@ import './Categories.css'
 export const Categories = () => {
     const categories = [
         {
-            title: 'Autos',
+            title: 'Sedan',
             image: require('../../../../public/cars.png'),
         },
         {
-            title: `SUV's & Geep`,
+            title: `SUV`,
             image: require('../../../../public/suvs_geep.png'),
         },
         {
-            title: 'Vans & Truck',
-            image: require('../../../../public/vans_truck.png'),
+            title: 'MiniVan',
+            image: require('../../../../public/minivan.png'),
+        },
+        {
+            title: 'Van',
+            image: require('../../../../public/van.png'),
         },
     ]
 

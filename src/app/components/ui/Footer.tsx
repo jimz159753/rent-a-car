@@ -6,7 +6,7 @@ import Link from 'next/link'
 export const Footer = () => {
     const instagramIcon = require('../../../../public/instagram.png')
     const facebookIcon = require('../../../../public/facebook.png')
-    const twitterIcon = require('../../../../public/twitter.png')
+    const whatsappIcon = require('../../../../public/whatsapp.png')
 
     const visaIcon = require('../../../../public/visa.png')
     const mastercardIcon = require('../../../../public/mastercard.png')
@@ -21,8 +21,8 @@ export const Footer = () => {
                     <Link href='https://www.google.com'>
                         <Image src={facebookIcon} className='icon' alt="rent a car" />
                     </Link>
-                    <Link href='https://www.google.com'>
-                        <Image src={twitterIcon} className='icon' alt="rent a car" />
+                    <Link href='https://wa.me/5216727238767'>
+                        <Image src={whatsappIcon} className='icon' alt="rent a car" />
                     </Link>
                 </div>
                 <div className='separate' />
