@@ -18,7 +18,7 @@ export const Footer = () => {
                     <Link href='https://www.instagram.com/rhb_rentadeautos/?igshid=MzMyNGUyNmU2YQ%3D%3D'>
                         <Image src={instagramIcon} className='icon' alt="rent a car" />
                     </Link>
-                    <Link href='www.facebook.com/rhbrentacar'>
+                    <Link href='https://www.facebook.com/rhbrentacar'>
                         <Image src={facebookIcon} className='icon' alt="rent a car" />
                     </Link>
                     <Link href='https://wa.me/5216727238767'>
