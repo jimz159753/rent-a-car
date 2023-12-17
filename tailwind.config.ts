@@ -13,6 +13,9 @@ const config: Config = {
       'desktop': '1280px'
     },
     extend: {
+      colors: {
+        'soft-red': '#E74E4E'
+      },
       fontFamily: {
         'quando': 'var(--font-quando)',
         'quicksand': 'var(--font-quicksand)'

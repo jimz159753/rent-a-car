@@ -2,11 +2,11 @@ import React from 'react'
 
 interface ButtonProps {
     children: React.ReactNode;
-    handleClick: React.MouseEventHandler<HTMLButtonElement>
+    onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
-export const Button: React.FunctionComponent<ButtonProps> = ({ children, handleClick }) => {
+export const Button: React.FunctionComponent<ButtonProps> = ({ children, onClick }) => {
     return (
-        <button onClick={handleClick} >{children}</button>
+        <button onClick={onClick} >{children}</button>
     )
 }

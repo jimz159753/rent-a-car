@@ -1,0 +1,15 @@
+.login-form {
+    @apply flex flex-col justify-center items-center h-screen space-y-6;
+
+    img {
+        @apply w-1/5 mb-10; 
+    }
+
+    input {
+        @apply h-11 w-60 border border-current rounded px-4 font-quicksand text-lg focus:outline-none;
+    }
+
+    button {
+        @apply h-11 bg-soft-red w-60 font-quicksand text-lg text-white font-bold tracking-widest;
+    }
+}
