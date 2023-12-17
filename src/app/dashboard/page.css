@@ -1,0 +1,15 @@
+.dashboard {
+    @apply flex
+}
+
+.sidebar {
+    @apply bg-black text-white w-1/6 h-screen;
+
+    img {
+        @apply py-10 mx-auto
+    }
+
+    li {
+        @apply font-quando px-10 text-[18px] h-14 hover:bg-white/80 items-center flex
+    }
+}
