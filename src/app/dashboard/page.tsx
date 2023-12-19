@@ -46,7 +46,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = ({ children }) => {
                     </li>
                 </ol>
             </section>
-            <section>
+            <section className='flex items-center justify-center w-screen'>
                 {children}
             </section>
         </div>

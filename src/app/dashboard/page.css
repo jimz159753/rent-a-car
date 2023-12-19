@@ -3,7 +3,7 @@
 }
 
 .sidebar {
-    @apply bg-black text-white w-1/6 h-screen;
+    @apply bg-black text-white w-1/5 h-screen;
 
     img {
         @apply py-10 mx-auto
