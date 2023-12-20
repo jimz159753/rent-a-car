@@ -3,10 +3,11 @@ import React from 'react'
 interface ButtonProps {
     children: React.ReactNode;
     onClick: React.MouseEventHandler<HTMLButtonElement>
+    className?: string
 }
 
-export const Button: React.FunctionComponent<ButtonProps> = ({ children, onClick }) => {
+export const Button: React.FunctionComponent<ButtonProps> = ({ children, onClick, className }) => {
     return (
-        <button onClick={onClick} >{children}</button>
+        <button onClick={onClick} className={className} >{children}</button>
     )
 }

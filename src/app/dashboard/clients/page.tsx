@@ -1,12 +1,10 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Dashboard from '../page'
-import {
-    getCoreRowModel,
-    getPaginationRowModel,
-    useReactTable,
-} from '@tanstack/react-table'
 import { ListTable } from '@/app/components/ui/ListTable'
+import { Button } from '@/app/components/ui/Button'
+import Image from 'next/image'
+import './page.css'
 
 type Client = {
     id: string
@@ -14,7 +12,7 @@ type Client = {
     name: string
     phone: string
     address: string
-    date: number
+    date: string
 }
 
 const defaultData: Client[] = [
@@ -24,214 +22,94 @@ const defaultData: Client[] = [
         name: 'Luis Jimenez',
         phone: '3315027257',
         address: 'Trafalgar #2581',
-        date: Date.now()
+        date: ''
     },
     {
-        id: '1234',
+        id: '123',
         dni: 'INE',
-        name: 'Luis Jimenez',
+        name: 'Marco Jimenez',
         phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
+        address: 'Hector Berlioz',
+        date: ''
     },
     {
-        id: '1234',
+        id: '12',
         dni: 'INE',
-        name: 'Luis Jimenez',
+        name: 'Charly asdf',
         phone: '3315027257',
         address: 'Trafalgar #2581',
-        date: Date.now()
+        date: ''
     },
     {
-        id: '1234',
+        id: '1',
         dni: 'INE',
-        name: 'Luis Jimenez',
+        name: 'Uriel Lazaro',
         phone: '3315027257',
         address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
-    },
-    {
-        id: '1234',
-        dni: 'INE',
-        name: 'Luis Jimenez',
-        phone: '3315027257',
-        address: 'Trafalgar #2581',
-        date: Date.now()
+        date: ''
     },
 ]
 
-const columns = [{
-    header: () => 'Id',
-    cell: (row: any) => row.renderValue(),
-    accessorKey: 'id'
-},
-{
-    header: () => 'Dni',
-    cell: (row: any) => <p>{row.renderValue()}</p>,
-    accessorKey: 'dni'
-},
-{
-    header: () => 'Nombre',
-    cell: (row: any) => <p>{row.renderValue()}</p>,
-    accessorKey: 'name'
-},
-{
-    header: () => 'Telefono',
-    cell: (row: any) => <p>{row.renderValue()}</p>,
-    accessorKey: 'phone'
-},
-{
-    header: () => 'Direccion',
-    cell: (row: any) => <p>{row.renderValue()}</p>,
-    accessorKey: 'address'
-},
-{
-    header: () => 'Fecha',
-    cell: (row: any) => <p>{row.renderValue()}</p>,
-    accessorKey: 'date'
-},
-]
+
 
 const Clients = () => {
     const [data, setData] = React.useState(() => [...defaultData])
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-    })
+    const [date, setDate] = React.useState('')
+
+    const editIcon = require('../../../../public/edit.png')
+    const removeIcon = require('../../../../public/remove.png')
+
+    const columns = [{
+        header: () => 'Id',
+        cell: (row: any) => row.renderValue(),
+        accessorKey: 'id'
+    },
+    {
+        header: () => 'Dni',
+        cell: (row: any) => <p>{row.renderValue()}</p>,
+        accessorKey: 'dni'
+    },
+    {
+        header: () => 'Nombre',
+        cell: (row: any) => <p>{row.renderValue()}</p>,
+        accessorKey: 'name'
+    },
+    {
+        header: () => 'Telefono',
+        cell: (row: any) => <p>{row.renderValue()}</p>,
+        accessorKey: 'phone'
+    },
+    {
+        header: () => 'Direccion',
+        cell: (row: any) => <p>{row.renderValue()}</p>,
+        accessorKey: 'address'
+    },
+    {
+        header: () => 'Fecha',
+        cell: (row: any) => <p>{date}</p>,
+        accessorKey: 'date'
+    },
+    {
+        id: 'Action',
+        header: () => 'Accion',
+        cell: (row: any) => <div className='flex justify-between'>
+            <Button onClick={() => { console.log('edit') }}>
+                <Image src={editIcon} width={25} height={25} alt="rent a car" />
+            </Button>
+            <Button onClick={() => { console.log('delete') }}>
+                <Image src={removeIcon} width={25} height={25} alt="rent a car" />
+            </Button>
+        </div>,
+    },
+    ]
+
+    useEffect(() => {
+        setDate(Date())
+    }, [])
 
     return (
         <Dashboard>
-            <ListTable data={defaultData} columns={columns} />
+            <ListTable data={data} columns={columns} />
         </Dashboard >
     )
 }

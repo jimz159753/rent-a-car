@@ -1,28 +1,58 @@
-import { ColumnDef, Table as TableProps, getCoreRowModel, getPaginationRowModel, useReactTable, flexRender } from '@tanstack/react-table'
+import {
+    ColumnDef,
+    Table as TableProps,
+    getCoreRowModel,
+    getPaginationRowModel,
+    useReactTable,
+    flexRender,
+    getFilteredRowModel,
+    OnChangeFn
+} from '@tanstack/react-table'
 import React from 'react'
+import { Input } from '@/app/components/ui/Input'
+import { Button } from '@/app/components/ui/Button'
+import Image from 'next/image'
 import './ListTable.css'
 
 interface ListTableProps<T extends object> {
     name?: string
     columns: ColumnDef<object>[]
-    data: T[]
+    data: T[],
 }
 
 export const ListTable = <T extends object>({
     name,
     columns,
-    data
+    data,
 }: ListTableProps<T>) => {
+
+    const [globalFilter, setGlobalFilter] = React.useState('')
+    const addIcon = require('../../../../public/add.png')
 
     const table: TableProps<object> = useReactTable({
         data: data,
         columns,
+        state: {
+            globalFilter
+        },
+        onGlobalFilterChange: setGlobalFilter,
+        getFilteredRowModel: getFilteredRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel()
     })
 
     return (
         <div>
+            <div className='flex justify-between items-center mb-5'>
+                <Button className='add-btn' onClick={() => { }}>
+                    <Image src={addIcon} width={18} height={18} alt="rent a car" />
+                    <p className='font-quicksand'>Agregar</p>
+                </Button>
+                <Input className='search-input' type='text' name='search' required placeholder='Buscar' onChange={ev => {
+                    console.log(ev.target.value)
+                    setGlobalFilter(ev.target.value)
+                }} value={globalFilter ?? ''} />
+            </div>
             <table id={name}>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
@@ -52,7 +82,7 @@ export const ListTable = <T extends object>({
                     ))}
                 </tbody>
             </table>
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center gap-2 font-quicksand">
                 <button
                     className="border rounded p-1"
                     onClick={() => table.setPageIndex(0)}

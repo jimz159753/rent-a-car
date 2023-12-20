@@ -6,10 +6,12 @@ interface InputProps {
     name: string
     required: boolean
     placeholder: string
+    value: string,
+    className?: string
 }
 
-export const Input: React.FunctionComponent<InputProps> = ({ onChange, type, required = true, name, placeholder }) => {
+export const Input: React.FunctionComponent<InputProps> = ({ onChange, type, required = true, name, placeholder, value, className }) => {
     return (
-        <input name={name} placeholder={placeholder} onChange={onChange} type={type} required={required} />
+        <input name={name} className={className} value={value} placeholder={placeholder} onChange={onChange} type={type} required={required} />
     )
 }

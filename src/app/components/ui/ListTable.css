@@ -1,21 +1,18 @@
-table {
-    border: 1px solid lightgray;
-  }
-  
-  tbody {
-    border-bottom: 1px solid lightgray;
-  }
-  
-  th {
-    border-bottom: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-    padding: 2px 4px;
-  }
-  
-  tfoot {
-    color: gray;
-  }
-  
-  tfoot th {
-    font-weight: normal;
-  }
+tbody {
+    @apply border-b-[lightgray] border-b border-solid font-quicksand font-semibold;
+}
+th {
+    @apply p-2 border-[lightgray] border border-solid font-quando;
+}
+
+td {
+    @apply p-2 border border-[lightgray] text-slate-600;
+}
+
+.add-btn {
+    @apply h-12 w-28 flex items-center justify-evenly bg-[#6582EB] rounded font-medium text-white text-lg font-quando;
+}
+
+.search-input {
+    @apply h-12 w-60 px-2 border border-[lightgray] text-slate-600 font-quicksand
+}
