@@ -5,8 +5,7 @@ import {
     getPaginationRowModel,
     useReactTable,
     flexRender,
-    getFilteredRowModel,
-    OnChangeFn
+    getFilteredRowModel
 } from '@tanstack/react-table'
 import React from 'react'
 import { Input } from '@/app/components/ui/Input'
@@ -45,8 +44,8 @@ export const ListTable = <T extends object>({
         <div>
             <div className='flex justify-between items-center mb-5'>
                 <Button className='add-btn' onClick={() => { }}>
-                    <Image src={addIcon} width={18} height={18} alt="rent a car" />
-                    <p className='font-quicksand'>Agregar</p>
+                    <Image src={addIcon} width={14} height={14} alt="rent a car" />
+                    <p>Agregar</p>
                 </Button>
                 <Input className='search-input' type='text' name='search' required placeholder='Buscar' onChange={ev => {
                     console.log(ev.target.value)

@@ -75,12 +75,12 @@ const Clients = () => {
         accessorKey: 'name'
     },
     {
-        header: () => 'Telefono',
+        header: () => 'Teléfono',
         cell: (row: any) => <p>{row.renderValue()}</p>,
         accessorKey: 'phone'
     },
     {
-        header: () => 'Direccion',
+        header: () => 'Dirección',
         cell: (row: any) => <p>{row.renderValue()}</p>,
         accessorKey: 'address'
     },
@@ -91,7 +91,7 @@ const Clients = () => {
     },
     {
         id: 'Action',
-        header: () => 'Accion',
+        header: () => 'Acción',
         cell: (row: any) => <div className='flex justify-between'>
             <Button onClick={() => { console.log('edit') }}>
                 <Image src={editIcon} width={25} height={25} alt="rent a car" />
