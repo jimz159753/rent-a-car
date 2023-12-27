@@ -48,7 +48,6 @@ export const ListTable = <T extends object>({
                     <p>Agregar</p>
                 </Button>
                 <Input className='search-input' type='text' name='search' required placeholder='Buscar' onChange={ev => {
-                    console.log(ev.target.value)
                     setGlobalFilter(ev.target.value)
                 }} value={globalFilter ?? ''} />
             </div>

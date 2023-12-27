@@ -54,57 +54,83 @@ const defaultData: Client[] = [
 
 const Clients = () => {
     const [data, setData] = React.useState(() => [...defaultData])
-    const [date, setDate] = React.useState('')
-
     const editIcon = require('../../../../public/edit.png')
     const removeIcon = require('../../../../public/remove.png')
 
     const columns = [{
         header: () => 'Id',
-        cell: (row: any) => row.renderValue(),
-        accessorKey: 'id'
+        cell: (cell: any) => cell.renderValue(),
+        accessorKey: '_id'
     },
     {
         header: () => 'Dni',
-        cell: (row: any) => <p>{row.renderValue()}</p>,
+        cell: (cell: any) => <p>{cell.renderValue()}</p>,
         accessorKey: 'dni'
     },
     {
         header: () => 'Nombre',
-        cell: (row: any) => <p>{row.renderValue()}</p>,
+        cell: (cell: any) => <p>{cell.renderValue()}</p>,
         accessorKey: 'name'
     },
     {
         header: () => 'Teléfono',
-        cell: (row: any) => <p>{row.renderValue()}</p>,
+        cell: (cell: any) => <p>{cell.renderValue()}</p>,
         accessorKey: 'phone'
     },
     {
         header: () => 'Dirección',
-        cell: (row: any) => <p>{row.renderValue()}</p>,
+        cell: (cell: any) => <p>{cell.renderValue()}</p>,
         accessorKey: 'address'
     },
     {
         header: () => 'Fecha',
-        cell: (row: any) => <p>{date}</p>,
-        accessorKey: 'date'
+        cell: (cell: any) => <p>{cell.renderValue()}</p>,
+        accessorKey: 'timestamp'
     },
     {
         id: 'Action',
         header: () => 'Acción',
-        cell: (row: any) => <div className='flex justify-between'>
+        cell: (cell: any) => <div className='flex justify-between'>
             <Button onClick={() => { console.log('edit') }}>
                 <Image src={editIcon} width={25} height={25} alt="rent a car" />
             </Button>
-            <Button onClick={() => { console.log('delete') }}>
+            <Button onClick={() => { removeClient(cell.row.original._id) }}>
                 <Image src={removeIcon} width={25} height={25} alt="rent a car" />
             </Button>
         </div>,
     },
     ]
 
+    const getClients = async () => {
+        // Create authorization login and save token in local storage
+        const response = await fetch(`${process.env.API_URL}/clients`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODYwYjE3M2UzNDkzMzUyMTQ5YjAxYiIsIm5hbWUiOiJsdWlzIGppbWVuZXoiLCJpYXQiOjE3MDM2MzU3NjYsImV4cCI6MTcwMzcyMjE2Nn0.VwkLxTNmi6pcOuqjGZ91I0g7CDF7ct4wuxLOv18QFUc'
+            }
+        })
+        const data = await response.json()
+        setData(data)
+    }
+
+    const removeClient = async (id: string) => {
+        // Create authorization login and save token in local storage
+        const response = await fetch(`${process.env.API_URL}/clients/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODYwYjE3M2UzNDkzMzUyMTQ5YjAxYiIsIm5hbWUiOiJsdWlzIGppbWVuZXoiLCJpYXQiOjE3MDM2MzU3NjYsImV4cCI6MTcwMzcyMjE2Nn0.VwkLxTNmi6pcOuqjGZ91I0g7CDF7ct4wuxLOv18QFUc'
+            }
+        })
+        const data = await response.json()
+        console.log('res', data)
+    }
+
+    //Create Form for edit method
+
     useEffect(() => {
-        setDate(Date())
+        getClients()
     }, [])
 
     return (
