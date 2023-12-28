@@ -1,0 +1,11 @@
+.input--Container {
+    @apply flex flex-col space-y-2;
+}
+
+.input--Input {
+    @apply h-12 w-60 px-2 border border-[lightgray] text-slate-600 font-quando focus:outline-none;
+}
+
+.input--Label {
+    @apply mt-5 font-quando font-semibold;
+}

@@ -10,9 +10,5 @@ td {
 }
 
 .add-btn {
-    @apply h-12 w-28 flex items-center justify-evenly bg-[#6582EB] rounded font-medium text-white  font-quando;
-}
-
-.search-input {
-    @apply h-12 w-60 px-2 border border-[lightgray] text-slate-600 font-quando;
+    @apply h-12 w-28 flex items-center justify-evenly bg-[#6582EB] rounded font-medium text-white font-quando;
 }

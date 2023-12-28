@@ -1,4 +1,5 @@
 import React from 'react'
+import './Input.css'
 
 interface InputProps {
     onChange: React.ChangeEventHandler<HTMLInputElement>
@@ -8,10 +9,14 @@ interface InputProps {
     placeholder: string
     value: string,
     className?: string
+    label?: string
 }
 
-export const Input: React.FunctionComponent<InputProps> = ({ onChange, type, required = true, name, placeholder, value, className }) => {
+export const Input: React.FunctionComponent<InputProps> = ({ onChange, type, required = true, name, placeholder, value, className, label }) => {
     return (
-        <input name={name} className={className} value={value} placeholder={placeholder} onChange={onChange} type={type} required={required} />
+        <div className={`${className} input--Container`}>
+            {label && <label className='input--Label' htmlFor={name}>{label}</label>}
+            <input name={name} className={`input--Input`} value={value} placeholder={placeholder} onChange={onChange} type={type} required={required} />
+        </div>
     )
 }
