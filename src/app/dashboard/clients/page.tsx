@@ -6,7 +6,7 @@ import { Button } from '@/app/components/ui/Button'
 import { Drawer } from '@/app/components/ui/Drawer'
 import { Form } from './form/page'
 import Image from 'next/image'
-import { IClient } from './interfaces/client.interface'
+import { ActionEnum, IClient } from './interfaces/client.interface'
 import './page.css'
 
 const Clients = () => {
@@ -14,6 +14,14 @@ const Clients = () => {
     const editIcon = require('../../../../public/edit.png')
     const removeIcon = require('../../../../public/remove.png')
     const [isOpen, setOpen] = React.useState(false)
+    const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
+    const [id, setId] = useState<string>('')
+    const [dni, setDni] = useState<string>('')
+    const [name, setName] = useState<string>('')
+    const [phone, setPhone] = useState<string>('')
+    const [address, setAddress] = useState<string>('')
+
+
 
     const columns = [{
         header: () => 'Id',
@@ -49,7 +57,7 @@ const Clients = () => {
         id: 'Action',
         header: () => 'Acción',
         cell: (cell: any) => <div className='flex justify-between'>
-            <Button onClick={() => setOpen(true)}>
+            <Button onClick={(e) => rowUpdateDrawer(cell.row.index, cell.row.original._id)}>
                 <Image src={editIcon} width={25} height={25} alt="rent a car" />
             </Button>
             <Button onClick={(e) => { removeClient(e, cell.row.original._id) }}>
@@ -58,6 +66,41 @@ const Clients = () => {
         </div>,
     },
     ]
+
+    const rowUpdateDrawer = (index: number, id: string) => {
+        setAction(ActionEnum.UPDATE)
+        if (data) {
+            const { dni, name, phone, address } = data[index]
+            setId(id)
+            setDni(dni)
+            setName(name)
+            setPhone(phone)
+            setAddress(address)
+        }
+        setOpen(true)
+    }
+
+    const rowAddDrawer = () => {
+        setAction(ActionEnum.ADD)
+        setDni('')
+        setName('')
+        setPhone('')
+        setAddress('')
+        setOpen(true)
+    }
+
+    const addClient = async (newClient: IClient) => {
+        const token = localStorage.getItem('token')
+        await fetch(`${process.env.API_URL}/clients`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newClient)
+        })
+        getClients()
+    }
 
     const getClients = async () => {
         const token = localStorage.getItem('token')
@@ -72,9 +115,22 @@ const Clients = () => {
         setData(data)
     }
 
-    const removeClient = async (e: React.SyntheticEvent<EventTarget>, id: string) => {
-        e.preventDefault()
+    const updateClient = async (id: string, updatedClient: IClient) => {
         const token = localStorage.getItem('token')
+        await fetch(`${process.env.API_URL}/clients/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedClient)
+        })
+        getClients()
+    }
+
+    const removeClient = async (e: React.SyntheticEvent<EventTarget>, id: string) => {
+        const token = localStorage.getItem('token')
+        e.preventDefault()
         await fetch(`${process.env.API_URL}/clients/${id}`, {
             method: 'DELETE',
             headers: {
@@ -84,27 +140,28 @@ const Clients = () => {
         getClients()
     }
 
-    const updateClient = async (id: string, updatedClient: IClient) => {
-        const token = localStorage.getItem('token')
-        await fetch(`${process.env.API_URL}/clients/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(updatedClient)
-        })
-        getClients()
-    }
-
     useEffect(() => {
         getClients()
     }, [])
-    // Make Form component general for creating and updating data
+
     return (
         <Dashboard>
-            {data && <ListTable data={data} columns={columns} />}
-            <Drawer isOpen={isOpen} setOpen={setOpen} title='Actualizar cliente' >
-                <Form setOpen={setOpen} />
+            {data && <ListTable data={data} columns={columns} rowAddDrawer={rowAddDrawer} />}
+            <Drawer isOpen={isOpen} setOpen={setOpen} title={action === ActionEnum.ADD ? 'Agregar Cliente' : 'Actualizar Cliente'} >
+                <Form
+                    setOpen={setOpen}
+                    dni={dni} name={name}
+                    phone={phone}
+                    address={address}
+                    setDni={setDni}
+                    setName={setName}
+                    setPhone={setPhone}
+                    setAddress={setAddress}
+                    addClient={addClient}
+                    updateClient={updateClient}
+                    action={action}
+                    id={id}
+                />
             </Drawer>
         </Dashboard >
     )

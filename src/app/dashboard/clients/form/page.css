@@ -1,9 +1,13 @@
 form {
     input {
-        @apply h-11 w-60 border border-current rounded px-4 font-quicksand text-lg focus:outline-none;
+        @apply h-11 w-60 border border-current rounded px-4 text-lg focus:outline-none;
     }
 
     .cancel {
-        @apply bg-soft-red h-11 w-32 font-quicksand text-lg text-white font-bold tracking-widest;
+        @apply bg-soft-red rounded h-11 w-32 font-quando text-lg text-white;
+    }
+
+    .update {
+        @apply bg-[#6582EB] rounded h-11 w-32 font-quando text-lg text-white;
     }
 }

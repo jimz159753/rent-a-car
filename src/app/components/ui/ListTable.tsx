@@ -12,17 +12,20 @@ import { Input } from '@/app/components/ui/Input'
 import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
 import './ListTable.css'
+import { ActionEnum } from '@/app/dashboard/clients/interfaces/client.interface'
 
 interface ListTableProps<T extends object> {
     name?: string
     columns: ColumnDef<object>[]
     data: T[],
+    rowAddDrawer: Function
 }
 
 export const ListTable = <T extends object>({
     name,
     columns,
     data,
+    rowAddDrawer
 }: ListTableProps<T>) => {
 
     const [globalFilter, setGlobalFilter] = React.useState('')
@@ -43,7 +46,7 @@ export const ListTable = <T extends object>({
     return (
         <div>
             <div className='flex justify-between items-center mb-5'>
-                <Button className='add-btn' onClick={() => { }}>
+                <Button className='add-btn' onClick={() => rowAddDrawer()}>
                     <Image src={addIcon} width={14} height={14} alt="rent a car" />
                     <p>Agregar</p>
                 </Button>

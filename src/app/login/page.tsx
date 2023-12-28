@@ -13,7 +13,7 @@ const Login = () => {
     const { push } = useRouter();
 
     const handleClick = async (e: React.MouseEvent<HTMLElement>) => {
-        console.log(email, password)
+        e.preventDefault()
         const response = await fetch(`${process.env.API_URL}/auth/login`, {
             method: 'POST',
             headers: {
