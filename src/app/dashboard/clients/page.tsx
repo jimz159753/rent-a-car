@@ -8,20 +8,19 @@ import { Form } from './form/page'
 import Image from 'next/image'
 import { ActionEnum, IClient } from './interfaces/client.interface'
 import './page.css'
+import { addClient, getClients, removeClient, updateClient } from './actions/actions'
 
 const Clients = () => {
-    const [data, setData] = React.useState<IClient[]>()
-    const editIcon = require('../../../../public/edit.png')
-    const removeIcon = require('../../../../public/remove.png')
-    const [isOpen, setOpen] = React.useState(false)
-    const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
+    const [data, setData] = useState<IClient[]>()
+    const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
     const [dni, setDni] = useState<string>('')
     const [name, setName] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [address, setAddress] = useState<string>('')
-
-
+    const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
+    const editIcon = require('../../../../public/edit.png')
+    const removeIcon = require('../../../../public/remove.png')
 
     const columns = [{
         header: () => 'Id',
@@ -60,7 +59,7 @@ const Clients = () => {
             <Button onClick={(e) => rowUpdateDrawer(cell.row.index, cell.row.original._id)}>
                 <Image src={editIcon} width={25} height={25} alt="rent a car" />
             </Button>
-            <Button onClick={(e) => { removeClient(e, cell.row.original._id) }}>
+            <Button onClick={(e) => deleteClient(cell.row.original._id)}>
                 <Image src={removeIcon} width={25} height={25} alt="rent a car" />
             </Button>
         </div>,
@@ -89,59 +88,28 @@ const Clients = () => {
         setOpen(true)
     }
 
-    const addClient = async (newClient: IClient) => {
-        const token = localStorage.getItem('token')
-        await fetch(`${process.env.API_URL}/clients`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newClient)
-        })
-        getClients()
+    const registerClient = (client: IClient) => {
+        addClient(client)
+        loadClients()
     }
 
-    const getClients = async () => {
-        const token = localStorage.getItem('token')
-        const response = await fetch(`${process.env.API_URL}/clients`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        const data = await response.json()
+    const loadClients = async () => {
+        const data = await getClients()
         setData(data)
     }
 
-    const updateClient = async (id: string, updatedClient: IClient) => {
-        const token = localStorage.getItem('token')
-        await fetch(`${process.env.API_URL}/clients/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedClient)
-        })
-        getClients()
+    const editClient = (id: string, updatedClient: IClient) => {
+        updateClient(id, updatedClient)
+        loadClients()
     }
 
-    const removeClient = async (e: React.SyntheticEvent<EventTarget>, id: string) => {
-        const token = localStorage.getItem('token')
-        e.preventDefault()
-        await fetch(`${process.env.API_URL}/clients/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        getClients()
+    const deleteClient = (id: string) => {
+        removeClient(id)
+        loadClients()
     }
 
     useEffect(() => {
-        getClients()
+        loadClients()
     }, [])
 
     return (
@@ -157,8 +125,8 @@ const Clients = () => {
                     setName={setName}
                     setPhone={setPhone}
                     setAddress={setAddress}
-                    addClient={addClient}
-                    updateClient={updateClient}
+                    registerClient={registerClient}
+                    editClient={editClient}
                     action={action}
                     id={id}
                 />

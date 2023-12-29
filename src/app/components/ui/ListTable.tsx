@@ -12,7 +12,6 @@ import { Input } from '@/app/components/ui/Input'
 import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
 import './ListTable.css'
-import { ActionEnum } from '@/app/dashboard/clients/interfaces/client.interface'
 
 interface ListTableProps<T extends object> {
     name?: string

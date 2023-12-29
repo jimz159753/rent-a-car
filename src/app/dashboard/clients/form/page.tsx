@@ -16,8 +16,8 @@ interface FormProps {
     address: string
     setAddress: (e: string) => void
     action: ActionEnum
-    addClient: (client: IClient) => void
-    updateClient: (id: string, client: IClient) => void
+    registerClient: (client: IClient) => void
+    editClient: (id: string, client: IClient) => void
 }
 
 export const Form = ({
@@ -32,8 +32,8 @@ export const Form = ({
     setPhone,
     setAddress,
     action,
-    addClient,
-    updateClient }: FormProps) => {
+    registerClient,
+    editClient }: FormProps) => {
 
     const handleAction = () => {
         const client = {
@@ -43,22 +43,22 @@ export const Form = ({
             address
         }
         if (action === ActionEnum.ADD) {
-            addClient(client)
+            registerClient(client)
             setDni('')
             setName('')
             setPhone('')
             setAddress('')
         } else {
-            updateClient(id, client)
+            editClient(id, client)
         }
     }
 
     return (
         <form className='form' onSubmit={(e) => e.preventDefault()}>
             <Input label='Dni' name='dni' type='text' placeholder='dni' value={dni} onChange={(e) => setDni(e.target.value)} required />
-            <Input label='Name' name='name' type='text' placeholder='name' value={name} onChange={(e) => setName(e.target.value)} required />
-            <Input label='Phone' name='phone' type='text' placeholder='phone' value={phone} onChange={(e) => setPhone(e.target.value)} required />
-            <Input label='Address' name='address' type='text' placeholder='address' value={address} onChange={(e) => setAddress(e.target.value)} required />
+            <Input label='Nombre' name='name' type='text' placeholder='nombre' value={name} onChange={(e) => setName(e.target.value)} required />
+            <Input label='Teléfono' name='phone' type='text' placeholder='teléfono' value={phone} onChange={(e) => setPhone(e.target.value)} required />
+            <Input label='Dirección' name='address' type='text' placeholder='dirección' value={address} onChange={(e) => setAddress(e.target.value)} required />
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Button className='update' onClick={handleAction} >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
