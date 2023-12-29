@@ -16,7 +16,7 @@ import './ListTable.css'
 interface ListTableProps<T extends object> {
     name?: string
     columns: ColumnDef<object>[]
-    data: T[],
+    data: T[]
     rowAddDrawer: Function
 }
 

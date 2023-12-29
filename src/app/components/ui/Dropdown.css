@@ -1,0 +1,7 @@
+.dropdown--Container {
+    @apply flex flex-col space-y-2;
+}
+
+.dropdown--Label {
+    @apply mt-5 font-quando font-semibold;
+}

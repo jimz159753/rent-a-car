@@ -1,7 +1,5 @@
 import { IClient } from "../interfaces/client.interface"
 
-
-
 export const addClient = async (newClient: IClient) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/clients`, {

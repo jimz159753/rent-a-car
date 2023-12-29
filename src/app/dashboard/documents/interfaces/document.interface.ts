@@ -8,7 +8,7 @@ export interface IDocument {
 }
 
 export interface IClient {
-    _id?: string;
+    _id: string;
     dni: string;
     name: string;
     phone: string;
@@ -17,7 +17,7 @@ export interface IClient {
 }
 
 export interface IVehicle {
-    _id?: string;
+    _id: string;
     dni: string;
     name: string;
     phone: string;
@@ -28,4 +28,9 @@ export interface IVehicle {
 export enum ActionEnum {
     ADD = 'Add',
     UPDATE = 'Update'
+}
+
+export interface IDropdownOption {
+    value: string;
+    label: string;
 }
