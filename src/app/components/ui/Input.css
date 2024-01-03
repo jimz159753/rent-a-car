@@ -9,3 +9,7 @@
 .input--Label {
     @apply mt-5 font-quando font-semibold;
 }
+
+.react-select__control {
+    @apply h-[58px]
+}

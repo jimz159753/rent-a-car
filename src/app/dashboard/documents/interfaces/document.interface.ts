@@ -3,11 +3,12 @@ export interface IDocument {
     name: string;
     client: IClient;
     vehicle: IVehicle;
-    price: number;
+    price: string;
     timestamp?: string;
 }
 
 export interface IClient {
+    value: any;
     _id: string;
     dni: string;
     name: string;
@@ -17,11 +18,14 @@ export interface IClient {
 }
 
 export interface IVehicle {
+    value: any;
     _id: string;
-    dni: string;
-    name: string;
-    phone: string;
-    address: string;
+    model: string;
+    image: string;
+    brand: string;
+    plate: string;
+    price: string;
+    status: string;
     timestamp?: string;
 }
 
@@ -30,7 +34,7 @@ export enum ActionEnum {
     UPDATE = 'Update'
 }
 
-export interface IDropdownOption {
-    value: string;
+export type IDropdownOption = {
+    value: IClient | IVehicle;
     label: string;
 }

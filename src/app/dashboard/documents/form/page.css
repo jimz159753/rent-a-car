@@ -1,6 +1,6 @@
-form {
+.documents-form {
     input {
-        @apply h-11 w-60 border border-current rounded px-4 text-lg focus:outline-none;
+        @apply rounded text-lg ;
     }
 
     .cancel {

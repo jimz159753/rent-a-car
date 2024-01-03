@@ -2,25 +2,24 @@
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
 import { Drawer } from '@/app/components/ui/Drawer'
-import { ActionEnum, IClient, IDocument, IVehicle, IDropdownOption } from './interfaces/document.interface'
+import { ActionEnum, IClient, IDocument, IDropdownOption, IVehicle } from './interfaces/document.interface'
 import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
 import { ListTable } from '@/app/components/ui/ListTable'
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
 import { Form } from './form/page'
+import { ActionMeta } from 'react-select'
 
-
-
-const Documents = () => {
+const Documents = <T extends object>() => {
     const [data, setData] = useState<IDocument[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
     const [name, setName] = useState<string>('')
-    const [dropClient, setDropClient] = useState<IDropdownOption | null>(null)
-    const [dropVehicle, setDropVehicle] = useState<IDropdownOption | null>(null)
+    const [dropClient, setDropClient] = useState<null | any>(null)
+    const [dropVehicle, setDropVehicle] = useState<null | any>(null)
     const [price, setPrice] = useState<string>('')
-    const [dropClients, setDropClients] = useState<IDropdownOption[]>()
-    const [dropVehicles, setDropVehicles] = useState<IDropdownOption[]>()
+    const [dropClients, setDropClients] = useState<IClient[] | T[]>([])
+    const [dropVehicles, setDropVehicles] = useState<IVehicle[] | T[]>([])
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const editIcon = require('../../../../public/edit.png')
     const removeIcon = require('../../../../public/remove.png')
@@ -43,7 +42,7 @@ const Documents = () => {
     {
         header: () => 'Vehículo',
         cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'vehicle.name'
+        accessorKey: 'vehicle.brand'
     },
     {
         header: () => 'Precio',
@@ -73,12 +72,13 @@ const Documents = () => {
         setAction(ActionEnum.UPDATE)
         if (data) {
             const { name, client, vehicle } = data[index]
-            const clientOption = { value: client._id, label: client.name }
-            const vehicleOption = { value: vehicle._id, label: vehicle.name }
+            const clientOption = { value: client, label: client.name }
+            const vehicleOption = { value: vehicle, label: vehicle.model }
             setId(id)
             setName(name)
             setDropClient(clientOption)
             setDropVehicle(vehicleOption)
+            setPrice(vehicle.price)
         }
         setOpen(true)
     }
@@ -97,26 +97,26 @@ const Documents = () => {
         setData(documents)
     }
 
-    const registerDocument = (document: IDocument) => {
-        addDocument(document)
-        loadDocuments()
+    const registerDocument = async (document: IDocument) => {
+        await addDocument(document)
+        await loadDocuments()
     }
 
-    const editDocument = (id: string, updatedDocument: IDocument) => {
-        updateDocument(id, updatedDocument)
-        loadDocuments()
+    const editDocument = async (id: string, updatedDocument: IDocument) => {
+        await updateDocument(id, updatedDocument)
+        await loadDocuments()
     }
 
-    const deleteDocument = (id: string) => {
-        removeDocument(id)
-        loadDocuments()
+    const deleteDocument = async (id: string) => {
+        await removeDocument(id)
+        await loadDocuments()
     }
 
     const loadDropdrowns = async () => {
         const clients = await getClients()
         const vehicles = await getVehicles()
-        const clientOptions = clients.map((el: IClient) => ({ value: el._id, label: el.name }))
-        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: el._id, label: el.name }))
+        const clientOptions = clients.map((el: IClient) => ({ value: el, label: el.name }))
+        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: el, label: el.brand }))
         setDropClients(clientOptions)
         setDropVehicles(vehicleOptions)
     }
@@ -125,6 +125,34 @@ const Documents = () => {
         loadDocuments()
         loadDropdrowns()
     }, [])
+
+    const clientsOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
+        setDropClient(newValue)
+    }
+
+    const vehiclesOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
+        setDropVehicle(newValue)
+    }
+
+    const handleAction = () => {
+        const document = {
+            name,
+            client: dropClient.value,
+            vehicle: dropVehicle.value,
+            price
+        }
+
+        if (action === ActionEnum.ADD) {
+            setName('')
+            setDropClient(null)
+            setDropVehicle(null)
+            setPrice('')
+            setOpen(false)
+            registerDocument(document)
+        } else {
+            editDocument(id, document)
+        }
+    }
 
     return (
         <Dashboard>
@@ -139,19 +167,17 @@ const Documents = () => {
             >
                 {dropClients && dropVehicles &&
                     <Form
+                        handleAction={handleAction}
+                        clientsOnChange={clientsOnChange}
+                        vehiclesOnChange={vehiclesOnChange}
                         setOpen={setOpen}
                         name={name}
-                        dropClient={dropClient}
-                        dropVehicle={dropVehicle}
+                        dropClient={dropClient as IDropdownOption}
+                        dropVehicle={dropVehicle as IDropdownOption}
                         price={price}
                         setName={setName}
-                        setDropClient={setDropClient}
-                        setDropVehicle={setDropVehicles}
                         setPrice={setPrice}
-                        registerDocument={registerDocument}
-                        editDocument={editDocument}
                         action={action}
-                        id={id}
                         dropClients={dropClients}
                         dropVehicles={dropVehicles}
                     />}
