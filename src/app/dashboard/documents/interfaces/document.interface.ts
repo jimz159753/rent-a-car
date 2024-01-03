@@ -8,7 +8,6 @@ export interface IDocument {
 }
 
 export interface IClient {
-    value: any;
     _id: string;
     dni: string;
     name: string;
@@ -18,7 +17,6 @@ export interface IClient {
 }
 
 export interface IVehicle {
-    value: any;
     _id: string;
     model: string;
     image: string;

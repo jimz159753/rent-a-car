@@ -88,9 +88,9 @@ const Clients = () => {
         setOpen(true)
     }
 
-    const registerClient = (client: IClient) => {
-        addClient(client)
-        loadClients()
+    const registerClient = async (client: IClient) => {
+        await addClient(client)
+        await loadClients()
     }
 
     const loadClients = async () => {
@@ -98,14 +98,14 @@ const Clients = () => {
         setData(data)
     }
 
-    const editClient = (id: string, updatedClient: IClient) => {
-        updateClient(id, updatedClient)
-        loadClients()
+    const editClient = async (id: string, updatedClient: IClient) => {
+        await updateClient(id, updatedClient)
+        await loadClients()
     }
 
-    const deleteClient = (id: string) => {
-        removeClient(id)
-        loadClients()
+    const deleteClient = async (id: string) => {
+        await removeClient(id)
+        await loadClients()
     }
 
     useEffect(() => {
