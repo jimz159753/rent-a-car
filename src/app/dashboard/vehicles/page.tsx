@@ -155,7 +155,7 @@ const Vehicles = <T extends object>() => {
     return (
         <Dashboard>
             {data && <ListTable data={data} columns={columns} rowAddDrawer={rowAddDrawer} />}
-            <Drawer isOpen={isOpen} setOpen={setOpen} title={action === ActionEnum.ADD ? 'Agregar Cliente' : 'Actualizar Cliente'} >
+            <Drawer isOpen={isOpen} setOpen={setOpen} title={action === ActionEnum.ADD ? 'Agregar Vehículo' : 'Actualizar Vehículo'} >
                 <Form
                     setOpen={setOpen}
                     model={model}

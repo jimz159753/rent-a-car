@@ -161,9 +161,9 @@ const Documents = <T extends object>() => {
                 isOpen={isOpen}
                 setOpen={setOpen}
                 title={action === ActionEnum.ADD ?
-                    'Agregar Cliente'
+                    'Agregar Documento'
                     :
-                    'Actualizar Cliente'}
+                    'Actualizar Documento'}
             >
                 {dropClients && dropVehicles &&
                     <Form
