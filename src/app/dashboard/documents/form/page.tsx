@@ -42,7 +42,7 @@ export const Form = <T extends object>({
             <Input label='Nombre' name='name' type='text' placeholder='nombre' value={name} onChange={(e) => setName(e.target.value)} required />
             <Dropdown id='client' label='Cliente' options={dropClients as T[]} onChange={clientsOnChange} value={dropClient as T} placeholder='selecciona un cliente' name='clients' />
             <Dropdown id='vehicle' label='Vehículo' options={dropVehicles as T[]} onChange={vehiclesOnChange} value={dropVehicle as T} placeholder='selecciona un vehículo' name='vehicles' />
-            <Input label='Precio' name='price' type='text' placeholder='precio' value={price} onChange={(e) => setPrice(e.target.value)} required />
+            <Input label='Precio' name='price' type='number' placeholder='precio' value={price} onChange={(e) => setPrice(e.target.value)} required />
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Button className='update' onClick={handleAction} >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>

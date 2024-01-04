@@ -5,11 +5,21 @@ export interface IVehicle {
     brand: string;
     plate: string;
     price: string;
-    status: string;
+    status: StatusEnum;
     timestamp?: string;
 }
 
 export enum ActionEnum {
     ADD = 'Add',
     UPDATE = 'Update'
+}
+
+export enum StatusEnum {
+    AVAILABLE = 'Disponible',
+    RENTED = 'Alquildo'
+}
+
+export type IDropdownOption = {
+    value: StatusEnum;
+    label: string;
 }

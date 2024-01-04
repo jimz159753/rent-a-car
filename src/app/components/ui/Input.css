@@ -13,3 +13,16 @@
 .react-select__control {
     @apply h-[58px]
 }
+
+[name='price']::-webkit-outer-spin-button,
+[name='price']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+[name='phone']::-webkit-outer-spin-button,
+[name='phone']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+

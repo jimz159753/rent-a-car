@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
 import { Drawer } from '@/app/components/ui/Drawer'
 import { ListTable } from '@/app/components/ui/ListTable'
-import { ActionEnum, IVehicle } from './interfaces/vehicle.interface'
+import { ActionEnum, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
 import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
 import './page.css'
 import { Form } from './form/page'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
+import { ActionMeta } from 'react-select'
 
-const Vehicles = () => {
+const Vehicles = <T extends object>() => {
     const [data, setData] = useState<IVehicle[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
@@ -18,8 +19,12 @@ const Vehicles = () => {
     const [brand, setBrand] = useState<string>('')
     const [plate, setPlate] = useState<string>('')
     const [price, setPrice] = useState<string>('')
-    const [status, setStatus] = useState<string>('')
+    const [dropStatus, setDropStatus] = useState<null | any>(null)
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
+    const StatusOptions: any[] = [
+        { value: StatusEnum.AVAILABLE, label: 'Disponible' },
+        { value: StatusEnum.RENTED, label: 'Alquilado' }
+    ]
 
     const editIcon = require('../../../../public/edit.png')
     const removeIcon = require('../../../../public/remove.png')
@@ -77,12 +82,13 @@ const Vehicles = () => {
         setAction(ActionEnum.UPDATE)
         if (data) {
             const { model, brand, plate, price, status } = data[index]
+            const statusOption = { value: status, label: status }
             setId(id)
             setModel(model)
             setBrand(brand)
             setPlate(plate)
             setPrice(price)
-            setStatus(status)
+            setDropStatus(statusOption)
         }
         setOpen(true)
     }
@@ -93,7 +99,7 @@ const Vehicles = () => {
         setBrand('')
         setPlate('')
         setPrice('')
-        setStatus('')
+        setDropStatus(null)
         setOpen(true)
     }
 
@@ -121,6 +127,30 @@ const Vehicles = () => {
         loadVehicles()
     }, [])
 
+    const StatusOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
+        setDropStatus(newValue)
+    }
+
+    const handleAction = () => {
+        const vehicle = {
+            model,
+            brand,
+            plate,
+            price,
+            status: dropStatus.value
+        }
+        if (action === ActionEnum.ADD) {
+            registerVehicle(vehicle)
+            setModel('')
+            setBrand('')
+            setPlate('')
+            setPrice('')
+            setDropStatus(null)
+        } else {
+            editVehicle(id, vehicle)
+        }
+    }
+
 
     return (
         <Dashboard>
@@ -132,16 +162,15 @@ const Vehicles = () => {
                     brand={brand}
                     plate={plate}
                     price={price}
-                    status={status}
+                    dropStatus={dropStatus}
                     setModel={setModel}
                     setBrand={setBrand}
                     setPlate={setPlate}
                     setPrice={setPrice}
-                    setStatus={setStatus}
-                    registerVehicle={registerVehicle}
-                    editVehicle={editVehicle}
                     action={action}
-                    id={id}
+                    StatusOnChange={StatusOnChange}
+                    handleAction={handleAction}
+                    StatusOptions={StatusOptions}
                 />
             </Drawer>
         </Dashboard>
