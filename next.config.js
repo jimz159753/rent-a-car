@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        'API_URL':'https://api.rhbrentauncarro.com/'
+        'API_URL':'https://api.rhbrentauncarro.com'
     }
 }
 
