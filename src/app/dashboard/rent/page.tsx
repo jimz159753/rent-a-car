@@ -6,7 +6,7 @@ import { ListTable } from '@/app/components/ui/ListTable'
 import { ActionEnum, IClient, IDropdownOption, IRent, IVehicle } from './interfaces/rent.interface'
 import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
-import { Form } from './form/page'
+import { Form } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
 import { ActionMeta } from 'react-select'
 

@@ -7,7 +7,7 @@ import { ActionEnum, IVehicle, StatusEnum } from './interfaces/vehicle.interface
 import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
 import './page.css'
-import { Form } from './form/page'
+import { Form } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { ActionMeta } from 'react-select'
 

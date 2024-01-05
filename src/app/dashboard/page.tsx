@@ -7,7 +7,7 @@ interface DashboardProps {
     children: React.ReactNode
 }
 
-const Dashboard: React.FunctionComponent<DashboardProps> = ({ children }) => {
+const Dashboard = (props: any) => {
     const rentACarIcon = require('../../../public/rent_a_car.png')
     return (
         <div className='dashboard'>
@@ -47,7 +47,7 @@ const Dashboard: React.FunctionComponent<DashboardProps> = ({ children }) => {
                 </ol>
             </section>
             <section className='flex items-center justify-center w-screen'>
-                {children}
+                {props.children}
             </section>
         </div>
     )

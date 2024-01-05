@@ -7,7 +7,7 @@ import { Button } from '@/app/components/ui/Button'
 import Image from 'next/image'
 import { ListTable } from '@/app/components/ui/ListTable'
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
-import { Form } from './form/page'
+import { Form } from './form/form'
 import { ActionMeta } from 'react-select'
 
 const Documents = <T extends object>() => {

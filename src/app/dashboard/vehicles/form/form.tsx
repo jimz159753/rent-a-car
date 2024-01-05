@@ -1,5 +1,5 @@
 import React from 'react'
-import './page.css'
+import './form.css'
 import { ActionEnum, IDropdownOption, IVehicle, StatusEnum } from '../interfaces/vehicle.interface'
 import { Input } from '@/app/components/ui/Input'
 import { Button } from '@/app/components/ui/Button'

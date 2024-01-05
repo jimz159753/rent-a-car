@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input } from '@/app/components/ui/Input'
 import { Button } from '@/app/components/ui/Button'
-import './page.css'
+import './form.css'
 import { ActionEnum, IClient } from '../interfaces/client.interface'
 
 interface FormProps {
