@@ -20,7 +20,7 @@ const Dashboard = (props: any) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={'/dashboard/administration'}>
+                        <Link href={'/dashboard/users'}>
                             <p>Administración</p>
                         </Link>
                     </li>
