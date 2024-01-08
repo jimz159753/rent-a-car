@@ -118,10 +118,12 @@ const Documents = () => {
     }
 
     const handleAction = (values: FieldType) => {
+        const clientObj = JSON.parse(values.client)
+        const vehicleObj = JSON.parse(values.vehicle)
         const document = {
             name: values.name,
-            client: values.client,
-            vehicle: values.vehicle,
+            client: clientObj,
+            vehicle: vehicleObj,
         }
 
         if (action === ActionEnum.ADD) {

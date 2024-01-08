@@ -2,124 +2,116 @@
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
 import { Drawer } from '@/app/components/ui/Drawer'
-import { ListTable } from '@/app/components/ui/ListTable'
-import { ActionEnum, IClient, IDropdownOption, IRent, IVehicle } from './interfaces/rent.interface'
-import { Button } from '@/app/components/ui/Button'
-import Image from 'next/image'
-import { Form } from './form/form'
+import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/rent.interface'
+import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
-import { ActionMeta } from 'react-select'
+import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Button, Form, Spin, Table } from 'antd'
 
-const Rent = <T extends object>() => {
+const Rent = () => {
     const [data, setData] = useState<IRent[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
-    const [dropClient, setDropClient] = useState<null | any>(null)
-    const [dropVehicle, setDropVehicle] = useState<null | any>(null)
     const [days, setDays] = useState<string>('')
     const [payment, setPayment] = useState<string>('')
     const [total, setTotal] = useState<string>('')
     const [description, setDescription] = useState<string>('')
-    const [dropClients, setDropClients] = useState<IClient[] | T[]>([])
-    const [dropVehicles, setDropVehicles] = useState<IVehicle[] | T[]>([])
+    const [client, setClient] = useState<string>('')
+    const [vehicle, setVehicle] = useState<string>('')
+    const [dropClients, setDropClients] = useState<IClient[]>([])
+    const [dropVehicles, setDropVehicles] = useState<IVehicle[]>([])
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
-    const editIcon = require('../../../../public/edit.png')
-    const removeIcon = require('../../../../public/remove.png')
+    const [form] = Form.useForm()
 
-
-    const columns = [{
-        header: () => 'Id',
-        cell: (cell: any) => cell.renderValue(),
-        accessorKey: '_id'
-    },
-    {
-        header: () => 'Cliente',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'client.name'
-    },
-    {
-        header: () => 'Vehículo',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'vehicle.brand'
-    },
-    {
-        header: () => 'Dias',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'days'
-    },
-    {
-        header: () => 'Anticipo',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'payment'
-    },
-    {
-        header: () => 'Total',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'total'
-    },
-    {
-        header: () => 'Descripción',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'description'
-    },
-    {
-        header: () => 'Fecha',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'timestamp'
-    },
-    {
-        id: 'Action',
-        header: () => 'Acción',
-        cell: (cell: any) => <div className='flex justify-between'>
-            <Button onClick={(e) => rowUpdateDrawer(cell.row.index, cell.row.original._id)}>
-                <Image src={editIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-            <Button onClick={(e) => deleteRent(cell.row.original._id)}>
-                <Image src={removeIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-        </div>,
-    },
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: '_id',
+            key: '_id',
+        },
+        {
+            title: 'Cliente',
+            dataIndex: 'client',
+            key: '_id',
+            render: (client: IClient, item: IRent) => <p>{item.client.name}</p>
+        },
+        {
+            title: 'Vehículo',
+            dataIndex: 'vehicle',
+            key: '_id',
+            render: (vehicle: IVehicle, item: IRent) => <p>{item.vehicle.model}</p>
+        },
+        {
+            title: 'Dias',
+            dataIndex: 'days',
+            key: 'days',
+        },
+        {
+            title: 'Anticipo',
+            dataIndex: 'payment',
+            key: 'payment',
+        },
+        {
+            title: 'Total',
+            dataIndex: 'total',
+            key: 'total',
+        },
+        {
+            title: 'Descripción',
+            dataIndex: 'description',
+            key: 'description',
+        },
+        {
+            title: 'Fecha',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+        },
+        {
+            title: 'Acción',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+            render: (timestamp: string, item: IRent, idx: number) => <div className='flex justify-between'>
+                <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
+                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteRent(item._id)} />
+            </div>
+        },
     ]
 
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
             const { client, vehicle, days, payment, total, description } = data[index]
-            const clientOption = { value: client, label: client.name }
-            const vehicleOption = { value: vehicle, label: vehicle.model }
             setId(id)
-            setDropClient(clientOption)
-            setDropVehicle(vehicleOption)
-            setDays(days)
-            setPayment(payment)
-            setTotal(total)
-            setDescription(description)
+            form.setFieldsValue({
+                client: client.name,
+                vehicle: vehicle.model,
+                days,
+                payment,
+                total,
+                description
+            })
         }
         setOpen(true)
     }
 
     const rowAddDrawer = () => {
         setAction(ActionEnum.ADD)
-        setDropClient(null)
-        setDropVehicle(null)
-        setDays('')
-        setPayment('')
-        setTotal('')
-        setDescription('')
+        form.resetFields()
         setOpen(true)
     }
 
     const loadRents = async () => {
-        const rents = await getRents()
-        setData(rents)
+        const response = await getRents()
+        const data = response.map((el: IRent) => ({ ...el, key: el._id }))
+        setData(data)
     }
 
-    const registerRent = async (document: IRent) => {
+    const registerRent = async (document: FieldType) => {
         await addRent(document)
         await loadRents()
     }
 
-    const editRent = async (id: string, updatedRent: IRent) => {
+    const editRent = async (id: string, updatedRent: FieldType) => {
         await updateRent(id, updatedRent)
         await loadRents()
     }
@@ -132,8 +124,8 @@ const Rent = <T extends object>() => {
     const loadDropdrowns = async () => {
         const clients = await getClients()
         const vehicles = await getVehicles()
-        const clientOptions = clients.map((el: IClient) => ({ value: el, label: el.name }))
-        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: el, label: el.brand }))
+        const clientOptions = clients.map((el: IClient) => ({ value: JSON.stringify(el), label: el.name }))
+        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: JSON.stringify(el), label: el.brand }))
         setDropClients(clientOptions)
         setDropVehicles(vehicleOptions)
     }
@@ -143,33 +135,28 @@ const Rent = <T extends object>() => {
         loadDropdrowns()
     }, [])
 
-    const clientsOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
-        setDropClient(newValue)
-    }
-
-    const vehiclesOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
-        setDropVehicle(newValue)
-    }
-
-    const handleAction = () => {
+    const handleAction = (values: FieldType) => {
+        const clientObj = JSON.parse(values.client)
+        const vehicleObj = JSON.parse(values.vehicle)
         const rent = {
-            client: dropClient.value,
-            vehicle: dropVehicle.value,
-            days,
-            payment,
-            total,
-            description
+            client: clientObj,
+            vehicle: vehicleObj,
+            days: values.days,
+            payment: values.payment,
+            total: values.total,
+            description: values.description
         }
 
         if (action === ActionEnum.ADD) {
-            setDropClient(null)
-            setDropVehicle(null)
+            registerRent(rent)
+            form.resetFields()
+            setClient('')
+            setVehicle('')
             setDays('')
             setPayment('')
             setTotal('')
             setDescription('')
             setOpen(false)
-            registerRent(rent)
         } else {
             editRent(id, rent)
         }
@@ -177,7 +164,12 @@ const Rent = <T extends object>() => {
 
     return (
         <Dashboard>
-            {data && <ListTable data={data} columns={columns} rowAddDrawer={rowAddDrawer} />}
+            <div>
+                <Button onClick={rowAddDrawer}>Agregar</Button>
+                {data ? <Table columns={columns} dataSource={data} /> :
+                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                }
+            </div>
             <Drawer
                 isOpen={isOpen}
                 setOpen={setOpen}
@@ -187,24 +179,19 @@ const Rent = <T extends object>() => {
                     'Actualizar Alquiler'}
             >
                 {dropClients && dropVehicles &&
-                    <Form
+                    <RentForm
                         handleAction={handleAction}
-                        clientsOnChange={clientsOnChange}
-                        vehiclesOnChange={vehiclesOnChange}
                         setOpen={setOpen}
-                        dropClient={dropClient as IDropdownOption}
-                        dropVehicle={dropVehicle as IDropdownOption}
+                        client={client}
+                        vehicle={vehicle}
                         days={days}
                         payment={payment}
                         total={total}
                         description={description}
-                        setDays={setDays}
-                        setPayment={setPayment}
-                        setTotal={setTotal}
-                        setDescription={setDescription}
                         action={action}
                         dropClients={dropClients}
                         dropVehicles={dropVehicles}
+                        form={form}
                     />}
             </Drawer>
         </Dashboard >

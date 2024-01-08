@@ -1,5 +1,5 @@
 export interface IRent {
-    _id?: string;
+    _id: string;
     client: IClient;
     vehicle: IVehicle;
     days: string;
@@ -39,7 +39,11 @@ export enum ActionEnum {
     UPDATE = 'Update'
 }
 
-export type IDropdownOption = {
-    value: IClient | IVehicle;
-    label: string;
+export type FieldType = {
+    client: string;
+    vehicle: string;
+    days: string;
+    payment: string;
+    total: string;
+    description: string;
 }

@@ -1,6 +1,6 @@
-import { IRent } from "../interfaces/rent.interface"
+import { FieldType, IRent } from "../interfaces/rent.interface"
 
-export const addRent = async (newRent: IRent) => {
+export const addRent = async (newRent: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/rents`, {
         method: 'POST',
@@ -25,7 +25,7 @@ export const getRents = async () => {
     return data
 }
 
-export const updateRent = async (id: string, updatedRent: IRent) => {
+export const updateRent = async (id: string, updatedRent: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/rents/${id}`, {
         method: 'PATCH',

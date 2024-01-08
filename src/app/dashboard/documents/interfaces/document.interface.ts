@@ -33,6 +33,6 @@ export enum ActionEnum {
 
 export type FieldType = {
     name: string;
-    client: IClient;
-    vehicle: IVehicle;
+    client: string;
+    vehicle: string;
 }

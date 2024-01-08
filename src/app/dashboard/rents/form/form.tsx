@@ -1,62 +1,98 @@
 import React from 'react'
-import { Input } from '@/app/components/ui/Input'
-import { Button } from '@/app/components/ui/Button'
-import { ActionEnum, IClient, IDropdownOption, IVehicle } from '../interfaces/rent.interface'
-import { Dropdown } from '@/app/components/ui/Dropdown'
+import { ActionEnum, FieldType, IClient, IVehicle } from '../interfaces/rent.interface'
+import { Button, Form, Input, Select } from 'antd'
 import './form.css'
-import { ActionMeta, SingleValue } from 'react-select'
 
-interface FormProps<T extends object> {
+interface FormProps {
     setOpen: (e: boolean) => void
     days: string
-    setDays: (e: string) => void
-    dropClient: IDropdownOption
-    dropVehicle: IDropdownOption
     payment: string
-    setPayment: (e: string) => void
     total: string
-    setTotal: (e: string) => void
     description: string
-    setDescription: (e: string) => void
     action: ActionEnum
-    dropClients: IClient[] | T[];
-    dropVehicles: IVehicle[] | T[];
-    clientsOnChange: (newValue: SingleValue<T>, actionMeta: ActionMeta<T>) => void
-    vehiclesOnChange: (newValue: SingleValue<T>, actionMeta: ActionMeta<T>) => void
-    handleAction: React.MouseEventHandler<HTMLButtonElement>
+    dropClients: IClient[];
+    dropVehicles: IVehicle[];
+    handleAction: (values: FieldType) => void
+    form: any
+    client: string
+    vehicle: string
 }
 
-export const Form = <T extends object>({
+export const RentForm = ({
     setOpen,
-    dropClient,
-    dropVehicle,
+    client,
+    vehicle,
     days,
-    setDays,
     payment,
-    setPayment,
     total,
-    setTotal,
     description,
-    setDescription,
     action,
     dropClients,
     dropVehicles,
-    clientsOnChange,
-    vehiclesOnChange,
-    handleAction
-}: FormProps<T>) => {
+    handleAction,
+    form
+}: FormProps) => {
     return (
-        <div className='documents-form'>
-            <Input label='Dias' name='days' type='text' placeholder='dias' value={days} onChange={(e) => setDays(e.target.value)} required />
-            <Input label='Anticipo' name='payment' type='text' placeholder='anticipo' value={payment} onChange={(e) => setPayment(e.target.value)} required />
-            <Input label='Total' name='total' type='text' placeholder='total' value={total} onChange={(e) => setTotal(e.target.value)} required />
-            <Input label='Descripción' name='description' type='text' placeholder='descripción' value={description} onChange={(e) => setDescription(e.target.value)} required />
-            <Dropdown id='client' label='Cliente' options={dropClients as T[]} onChange={clientsOnChange} value={dropClient as T} placeholder='selecciona un cliente' name='clients' />
-            <Dropdown id='vehicle' label='Vehículo' options={dropVehicles as T[]} onChange={vehiclesOnChange} value={dropVehicle as T} placeholder='selecciona un vehículo' name='vehicles' />
+        <Form
+            form={form}
+            initialValues={{
+                client,
+                vehicle,
+                days,
+                payment,
+                total,
+                description
+            }}
+            className='form'
+            onFinish={handleAction}>
+            <Form.Item<FieldType>
+                label="Cliente"
+                name="client"
+                rules={[{ required: true, message: 'Cliente requerido.' }]}
+            >
+                <Select placeholder='selecciona un cliente' options={dropClients} />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Vehículo"
+                name="vehicle"
+                rules={[{ required: true, message: 'Vehículo requerido.' }]}
+            >
+                <Select placeholder='selecciona un vehículo' options={dropVehicles} />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Dias"
+                name="days"
+                rules={[{ required: true, message: 'Dias requerido.' }]}
+            >
+                <Input placeholder='dias' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Anticipo"
+                name="payment"
+                rules={[{ required: true, message: 'Anticipo requerido.' }]}
+            >
+                <Input placeholder='payment' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Total"
+                name="total"
+                rules={[{ required: true, message: 'Total requerido.' }]}
+            >
+                <Input placeholder='total' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Descripción"
+                name="description"
+                rules={[{ required: true, message: 'Descripción requerido.' }]}
+            >
+                <Input placeholder='descripción' />
+            </Form.Item>
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
-                <Button className='update' onClick={handleAction} >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
+                <Form.Item>
+                    <Button className='submit' htmlType='submit' >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
+                </Form.Item>
             </div>
-        </div>
+        </Form>
     )
 }
