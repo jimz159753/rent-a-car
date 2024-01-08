@@ -1,6 +1,6 @@
-import { IClient } from "../interfaces/client.interface"
+import { FieldType, IClient } from "../interfaces/client.interface"
 
-export const addClient = async (newClient: IClient) => {
+export const addClient = async (newClient: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/clients`, {
         method: 'POST',
@@ -25,7 +25,7 @@ export const getClients = async () => {
     return data
 }
 
-export const updateClient = async (id: string, updatedClient: IClient) => {
+export const updateClient = async (id: string, updatedClient: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/clients/${id}`, {
         method: 'PATCH',

@@ -1,5 +1,5 @@
 .dashboard {
-    @apply flex
+    @apply h-screen;
 }
 
 .sidebar {

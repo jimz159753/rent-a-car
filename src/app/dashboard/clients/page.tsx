@@ -2,13 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
 import { ListTable } from '@/app/components/ui/ListTable'
-import { Button } from '@/app/components/ui/Button'
-import { Drawer } from '@/app/components/ui/Drawer'
-import { Form } from './form/form'
-import Image from 'next/image'
-import { ActionEnum, IClient } from './interfaces/client.interface'
+import { ClientForm } from './form/form'
+import { ActionEnum, FieldType, IClient } from './interfaces/client.interface'
 import './page.css'
 import { addClient, getClients, removeClient, updateClient } from './actions/actions'
+import { Button, Drawer, Image, Spin, Table, Form } from 'antd'
+import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 
 const Clients = () => {
     const [data, setData] = useState<IClient[]>()
@@ -19,51 +18,49 @@ const Clients = () => {
     const [phone, setPhone] = useState<string>('')
     const [address, setAddress] = useState<string>('')
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
-    const editIcon = require('../../../../public/edit.png')
-    const removeIcon = require('../../../../public/remove.png')
+    const [form] = Form.useForm()
 
-    const columns = [{
-        header: () => 'Id',
-        cell: (cell: any) => cell.renderValue(),
-        accessorKey: '_id'
-    },
-    {
-        header: () => 'Dni',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'dni'
-    },
-    {
-        header: () => 'Nombre',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'name'
-    },
-    {
-        header: () => 'Teléfono',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'phone'
-    },
-    {
-        header: () => 'Dirección',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'address'
-    },
-    {
-        header: () => 'Fecha',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'timestamp'
-    },
-    {
-        id: 'Action',
-        header: () => 'Acción',
-        cell: (cell: any) => <div className='flex justify-between'>
-            <Button onClick={(e) => rowUpdateDrawer(cell.row.index, cell.row.original._id)}>
-                <Image src={editIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-            <Button onClick={(e) => deleteClient(cell.row.original._id)}>
-                <Image src={removeIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-        </div>,
-    },
+
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: '_id',
+            key: '_id',
+        },
+        {
+            title: 'Dni',
+            dataIndex: 'dni',
+            key: 'dni',
+        },
+        {
+            title: 'Nombre',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Teléfono',
+            dataIndex: 'phone',
+            key: 'phone',
+        },
+        {
+            title: 'Dirección',
+            dataIndex: 'address',
+            key: 'address',
+        },
+        {
+            title: 'Fecha',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+        },
+        {
+            title: 'Acción',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+            render: (timestamp: string, item: IClient, idx: number) => <div className='flex justify-between'>
+                <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
+                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteClient(item._id)} />
+            </div>
+        },
     ]
 
     const rowUpdateDrawer = (index: number, id: string) => {
@@ -71,34 +68,34 @@ const Clients = () => {
         if (data) {
             const { dni, name, phone, address } = data[index]
             setId(id)
-            setDni(dni)
-            setName(name)
-            setPhone(phone)
-            setAddress(address)
+            form.setFieldsValue({
+                dni,
+                name,
+                phone,
+                address
+            })
         }
         setOpen(true)
     }
 
     const rowAddDrawer = () => {
         setAction(ActionEnum.ADD)
-        setDni('')
-        setName('')
-        setPhone('')
-        setAddress('')
+        form.resetFields()
         setOpen(true)
     }
 
-    const registerClient = async (client: IClient) => {
+    const registerClient = async (client: FieldType) => {
         await addClient(client)
         await loadClients()
     }
 
     const loadClients = async () => {
-        const data = await getClients()
+        const response = await getClients()
+        const data = response.map((el: IClient) => ({ ...el, key: el._id }))
         setData(data)
     }
 
-    const editClient = async (id: string, updatedClient: IClient) => {
+    const editClient = async (id: string, updatedClient: FieldType) => {
         await updateClient(id, updatedClient)
         await loadClients()
     }
@@ -112,23 +109,48 @@ const Clients = () => {
         loadClients()
     }, [])
 
+    const onClose = () => {
+        setOpen(false)
+    }
+
+    const handleAction = (values: FieldType) => {
+        const client = {
+            dni: values.dni,
+            name: values.name,
+            phone: values.phone,
+            address: values.address
+        }
+        if (action === ActionEnum.ADD) {
+            registerClient(client)
+            form.resetFields()
+            setDni('')
+            setName('')
+            setPhone('')
+            setAddress('')
+            setOpen(false)
+        } else {
+            editClient(id, client)
+        }
+    }
+
     return (
         <Dashboard>
-            {data && <ListTable data={data} columns={columns} rowAddDrawer={rowAddDrawer} />}
-            <Drawer isOpen={isOpen} setOpen={setOpen} title={action === ActionEnum.ADD ? 'Agregar Cliente' : 'Actualizar Cliente'} >
-                <Form
+            <div>
+                <Button onClick={rowAddDrawer}>Agregar</Button>
+                {data ? <Table columns={columns} dataSource={data} /> :
+                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                }
+            </div>
+            <Drawer open={isOpen} onClose={onClose} title={action === ActionEnum.ADD ? 'Agregar Cliente' : 'Actualizar Cliente'} >
+                <ClientForm
                     setOpen={setOpen}
-                    dni={dni} name={name}
+                    action={action}
+                    handleAction={handleAction}
+                    form={form}
+                    dni={dni}
+                    name={name}
                     phone={phone}
                     address={address}
-                    setDni={setDni}
-                    setName={setName}
-                    setPhone={setPhone}
-                    setAddress={setAddress}
-                    registerClient={registerClient}
-                    editClient={editClient}
-                    action={action}
-                    id={id}
                 />
             </Drawer>
         </Dashboard >

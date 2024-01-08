@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@tanstack/react-table": "^8.11.0",
+    "antd": "^5.12.8",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",

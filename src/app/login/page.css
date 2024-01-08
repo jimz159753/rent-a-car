@@ -1,11 +1,20 @@
 .login-form {
     @apply flex flex-col justify-center items-center h-screen space-y-6;
 
-    img {
-        @apply w-1/5 mb-10; 
+    .login-container{
+        @apply flex flex-col justify-between items-center h-1/5;
+
+        img {
+            @apply w-full mb-8;
+        }
+
+        .ant-form-item {
+            @apply w-full;
+        }
+
+        button {
+            @apply bg-soft-red font-quicksand w-full text-white font-bold ;
+        }
     }
 
-    button {
-        @apply h-11 bg-soft-red w-60 font-quicksand text-lg text-white font-bold tracking-widest;
-    }
 }

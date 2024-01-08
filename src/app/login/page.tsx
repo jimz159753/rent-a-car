@@ -1,19 +1,21 @@
 'use client'
-import React, { useState } from 'react'
-import { Input } from '@/app/components/ui/Input'
-import { Button } from '@/app/components/ui/Button'
+import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
+import { Button, Input, Form } from 'antd';
 import './page.css'
 
 const Login = () => {
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
     const rentACarIcon = require('../../../public/rent_a_car.png')
     const { push } = useRouter();
 
-    const handleClick = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault()
+    type FieldType = {
+        email: string;
+        password: string;
+    }
+
+    const handleClick = async (values: FieldType) => {
+        const { email, password } = values
         const response = await fetch(`${process.env.API_URL}/auth/login`, {
             method: 'POST',
             headers: {
@@ -22,15 +24,31 @@ const Login = () => {
             body: JSON.stringify({ email, password })
         })
         const data = await response.json()
-        localStorage.setItem('token', data.token)
-        push('/dashboard/information')
+        if (data.token) {
+            localStorage.setItem('token', data.token)
+            push('/dashboard/information')
+        }
     }
     return (
         <div className='login-form'>
-            <Image src={rentACarIcon} alt="rent a car" />
-            <Input name='email' type='text' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <Input name='password' type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} required />
-            <Button onClick={handleClick}>Entrar</Button>
+            <Form className='login-container' onFinish={handleClick}>
+                <Image src={rentACarIcon} alt="rent a car" />
+                <Form.Item<FieldType>
+                    name="email"
+                    rules={[{ required: true, message: 'Correo eléctronico requerido.' }]}
+                >
+                    <Input placeholder='email' />
+                </Form.Item>
+                <Form.Item<FieldType>
+                    name="password"
+                    rules={[{ required: true, message: 'Contraseña requerido.' }]}
+                >
+                    <Input.Password placeholder='contraseña' />
+                </Form.Item>
+                <Form.Item<FieldType>>
+                    <Button htmlType='submit'>Entrar</Button>
+                </Form.Item>
+            </Form>
         </div>
     )
 }

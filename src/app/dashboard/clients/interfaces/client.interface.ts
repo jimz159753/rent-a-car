@@ -1,5 +1,5 @@
 export interface IClient {
-    _id?: string;
+    _id: string;
     dni: string;
     name: string;
     phone: string;
@@ -10,4 +10,11 @@ export interface IClient {
 export enum ActionEnum {
     ADD = 'Add',
     UPDATE = 'Update'
+}
+
+export type FieldType = {
+    dni: string;
+    name: string;
+    phone: string;
+    address: string;
 }
