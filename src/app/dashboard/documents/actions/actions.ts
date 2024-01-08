@@ -1,6 +1,6 @@
-import { IDocument } from "../interfaces/document.interface"
+import { FieldType, IDocument } from "../interfaces/document.interface"
 
-export const addDocument = async (newDocument: IDocument) => {
+export const addDocument = async (newDocument: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/documents`, {
         method: 'POST',
@@ -25,7 +25,7 @@ export const getDocuments = async () => {
     return data
 }
 
-export const updateDocument = async (id: string, updatedDocument: IDocument) => {
+export const updateDocument = async (id: string, updatedDocument: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/documents/${id}`, {
         method: 'PATCH',

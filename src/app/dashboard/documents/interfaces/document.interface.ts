@@ -1,9 +1,8 @@
 export interface IDocument {
-    _id?: string;
+    _id: string;
     name: string;
     client: IClient;
     vehicle: IVehicle;
-    price: string;
     timestamp?: string;
 }
 
@@ -32,7 +31,8 @@ export enum ActionEnum {
     UPDATE = 'Update'
 }
 
-export type IDropdownOption = {
-    value: IClient | IVehicle;
-    label: string;
+export type FieldType = {
+    name: string;
+    client: IClient;
+    vehicle: IVehicle;
 }

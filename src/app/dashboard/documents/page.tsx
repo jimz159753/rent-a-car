@@ -1,108 +1,95 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
-import { Drawer } from '@/app/components/ui/Drawer'
-import { ActionEnum, IClient, IDocument, IDropdownOption, IVehicle } from './interfaces/document.interface'
-import { Button } from '@/app/components/ui/Button'
-import Image from 'next/image'
-import { ListTable } from '@/app/components/ui/ListTable'
+import { ActionEnum, FieldType, IClient, IDocument, IVehicle } from './interfaces/document.interface'
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
-import { Form } from './form/form'
-import { ActionMeta } from 'react-select'
+import { DocumentForm } from './form/form'
+import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Button, Drawer, Form, Spin, Table } from 'antd'
 
-const Documents = <T extends object>() => {
+const Documents = () => {
     const [data, setData] = useState<IDocument[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
     const [name, setName] = useState<string>('')
-    const [dropClient, setDropClient] = useState<null | any>(null)
-    const [dropVehicle, setDropVehicle] = useState<null | any>(null)
-    const [price, setPrice] = useState<string>('')
-    const [dropClients, setDropClients] = useState<IClient[] | T[]>([])
-    const [dropVehicles, setDropVehicles] = useState<IVehicle[] | T[]>([])
+    const [client, setClient] = useState<string>('')
+    const [vehicle, setVehicle] = useState<string>('')
+    const [dropClients, setDropClients] = useState<IClient[]>([])
+    const [dropVehicles, setDropVehicles] = useState<IVehicle[]>([])
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
-    const editIcon = require('../../../../public/edit.png')
-    const removeIcon = require('../../../../public/remove.png')
+    const [form] = Form.useForm()
 
-    const columns = [{
-        header: () => 'Id',
-        cell: (cell: any) => cell.renderValue(),
-        accessorKey: '_id'
-    },
-    {
-        header: () => 'Nombre',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'name'
-    },
-    {
-        header: () => 'Cliente',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'client.name'
-    },
-    {
-        header: () => 'Vehículo',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'vehicle.brand'
-    },
-    {
-        header: () => 'Precio',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'vehicle.price'
-    },
-    {
-        header: () => 'Fecha',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'timestamp'
-    },
-    {
-        id: 'Action',
-        header: () => 'Acción',
-        cell: (cell: any) => <div className='flex justify-between'>
-            <Button onClick={(e) => rowUpdateDrawer(cell.row.index, cell.row.original._id)}>
-                <Image src={editIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-            <Button onClick={(e) => deleteDocument(cell.row.original._id)}>
-                <Image src={removeIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-        </div>,
-    },
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: '_id',
+            key: '_id',
+        },
+        {
+            title: 'Nombre',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Cliente',
+            dataIndex: 'client',
+            key: '_id',
+            render: (client: IClient, item: IDocument) => <p>{item.client.name}</p>
+        },
+        {
+            title: 'Vehículo',
+            dataIndex: 'vehicle',
+            key: '_id',
+            render: (vehicle: IVehicle, item: IDocument) => <p>{item.vehicle.model}</p>
+        },
+        {
+            title: 'Fecha',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+        },
+        {
+            title: 'Acción',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+            render: (timestamp: string, item: IDocument, idx: number) => <div className='flex justify-between'>
+                <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
+                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteDocument(item._id)} />
+            </div>
+        },
     ]
 
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
             const { name, client, vehicle } = data[index]
-            const clientOption = { value: client, label: client.name }
-            const vehicleOption = { value: vehicle, label: vehicle.model }
             setId(id)
-            setName(name)
-            setDropClient(clientOption)
-            setDropVehicle(vehicleOption)
-            setPrice(vehicle.price)
+            form.setFieldsValue({
+                name,
+                client: client.name,
+                vehicle: vehicle.model,
+            })
         }
         setOpen(true)
     }
 
     const rowAddDrawer = () => {
         setAction(ActionEnum.ADD)
-        setName('')
-        setPrice('')
-        setDropClient(null)
-        setDropVehicle(null)
+        form.resetFields()
         setOpen(true)
     }
 
     const loadDocuments = async () => {
-        const documents = await getDocuments()
-        setData(documents)
+        const response = await getDocuments()
+        const data = response.map((el: IDocument) => ({ ...el, key: el._id }))
+        setData(data)
     }
 
-    const registerDocument = async (document: IDocument) => {
+    const registerDocument = async (document: FieldType) => {
         await addDocument(document)
         await loadDocuments()
     }
 
-    const editDocument = async (id: string, updatedDocument: IDocument) => {
+    const editDocument = async (id: string, updatedDocument: FieldType) => {
         await updateDocument(id, updatedDocument)
         await loadDocuments()
     }
@@ -115,8 +102,8 @@ const Documents = <T extends object>() => {
     const loadDropdrowns = async () => {
         const clients = await getClients()
         const vehicles = await getVehicles()
-        const clientOptions = clients.map((el: IClient) => ({ value: el, label: el.name }))
-        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: el, label: el.brand }))
+        const clientOptions = clients.map((el: IClient) => ({ value: JSON.stringify(el), label: el.name }))
+        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: JSON.stringify(el), label: el.brand }))
         setDropClients(clientOptions)
         setDropVehicles(vehicleOptions)
     }
@@ -126,29 +113,23 @@ const Documents = <T extends object>() => {
         loadDropdrowns()
     }, [])
 
-    const clientsOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
-        setDropClient(newValue)
+    const onClose = () => {
+        setOpen(false)
     }
 
-    const vehiclesOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
-        setDropVehicle(newValue)
-    }
-
-    const handleAction = () => {
+    const handleAction = (values: FieldType) => {
         const document = {
-            name,
-            client: dropClient.value,
-            vehicle: dropVehicle.value,
-            price
+            name: values.name,
+            client: values.client,
+            vehicle: values.vehicle,
         }
 
         if (action === ActionEnum.ADD) {
-            setName('')
-            setDropClient(null)
-            setDropVehicle(null)
-            setPrice('')
-            setOpen(false)
             registerDocument(document)
+            form.resetFields()
+            setName('')
+            setClient('')
+            setVehicle('')
         } else {
             editDocument(id, document)
         }
@@ -156,27 +137,28 @@ const Documents = <T extends object>() => {
 
     return (
         <Dashboard>
-            {data && <ListTable data={data} columns={columns} rowAddDrawer={rowAddDrawer} />}
+            <div>
+                <Button onClick={rowAddDrawer}>Agregar</Button>
+                {data ? <Table columns={columns} dataSource={data} /> :
+                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                }
+            </div>
             <Drawer
-                isOpen={isOpen}
-                setOpen={setOpen}
+                open={isOpen}
+                onClose={onClose}
                 title={action === ActionEnum.ADD ?
                     'Agregar Documento'
                     :
                     'Actualizar Documento'}
             >
                 {dropClients && dropVehicles &&
-                    <Form
+                    <DocumentForm
+                        form={form}
                         handleAction={handleAction}
-                        clientsOnChange={clientsOnChange}
-                        vehiclesOnChange={vehiclesOnChange}
                         setOpen={setOpen}
                         name={name}
-                        dropClient={dropClient as IDropdownOption}
-                        dropVehicle={dropVehicle as IDropdownOption}
-                        price={price}
-                        setName={setName}
-                        setPrice={setPrice}
+                        client={client}
+                        vehicle={vehicle}
                         action={action}
                         dropClients={dropClients}
                         dropVehicles={dropVehicles}

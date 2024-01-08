@@ -126,7 +126,6 @@ const Clients = () => {
             setName('')
             setPhone('')
             setAddress('')
-            setOpen(false)
         } else {
             editClient(id, client)
         }
