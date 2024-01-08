@@ -25,7 +25,8 @@ export const ClientForm = ({
     form }: FormProps) => {
 
     return (
-        <Form form={form}
+        <Form
+            form={form}
             initialValues={{
                 dni,
                 name,

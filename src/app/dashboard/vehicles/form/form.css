@@ -4,10 +4,10 @@ form {
     }
 
     .cancel {
-        @apply bg-soft-red rounded h-11 w-32 font-quando text-lg text-white;
+        @apply bg-soft-red rounded w-32 font-quando text-white;
     }
 
-    .update {
-        @apply bg-[#6582EB] rounded h-11 w-32 font-quando text-lg text-white;
+    .submit {
+        @apply bg-[#6582EB] rounded w-32 font-quando text-white;
     }
 }

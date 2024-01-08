@@ -1,13 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
-import { ListTable } from '@/app/components/ui/ListTable'
 import { ClientForm } from './form/form'
 import { ActionEnum, FieldType, IClient } from './interfaces/client.interface'
-import './page.css'
 import { addClient, getClients, removeClient, updateClient } from './actions/actions'
 import { Button, Drawer, Image, Spin, Table, Form } from 'antd'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
+import './page.css'
 
 const Clients = () => {
     const [data, setData] = useState<IClient[]>()

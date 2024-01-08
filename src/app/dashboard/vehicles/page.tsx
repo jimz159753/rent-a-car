@@ -1,17 +1,15 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
-import { Drawer } from '@/app/components/ui/Drawer'
-import { ListTable } from '@/app/components/ui/ListTable'
-import { ActionEnum, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
+import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
 import { Button } from '@/app/components/ui/Button'
-import Image from 'next/image'
-import './page.css'
-import { Form } from './form/form'
+import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
-import { ActionMeta } from 'react-select'
+import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Drawer, Spin, Table, Form } from 'antd'
+import './page.css'
 
-const Vehicles = <T extends object>() => {
+const Vehicles = () => {
     const [data, setData] = useState<IVehicle[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
@@ -19,101 +17,91 @@ const Vehicles = <T extends object>() => {
     const [brand, setBrand] = useState<string>('')
     const [plate, setPlate] = useState<string>('')
     const [price, setPrice] = useState<string>('')
-    const [dropStatus, setDropStatus] = useState<null | any>(null)
+    const [status, setStatus] = useState<StatusEnum>(StatusEnum.AVAILABLE)
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
-    const StatusOptions: any[] = [
-        { value: StatusEnum.AVAILABLE, label: 'Disponible' },
-        { value: StatusEnum.RENTED, label: 'Alquilado' }
-    ]
+    const [form] = Form.useForm()
 
-    const editIcon = require('../../../../public/edit.png')
-    const removeIcon = require('../../../../public/remove.png')
-
-    const columns = [{
-        header: () => 'Id',
-        cell: (cell: any) => cell.renderValue(),
-        accessorKey: '_id'
-    },
-    {
-        header: () => 'Modelo',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'model'
-    },
-    {
-        header: () => 'Marca',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'brand'
-    },
-    {
-        header: () => 'Placa',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'plate'
-    },
-    {
-        header: () => 'Precio',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'price'
-    },
-    {
-        header: () => 'Estatus',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'status'
-    },
-    {
-        header: () => 'Fecha',
-        cell: (cell: any) => <p>{cell.renderValue()}</p>,
-        accessorKey: 'timestamp'
-    },
-    {
-        id: 'Action',
-        header: () => 'Acción',
-        cell: (cell: any) => <div className='flex justify-between'>
-            <Button onClick={(e) => rowUpdateDrawer(cell.row.index, cell.row.original._id)}>
-                <Image src={editIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-            <Button onClick={(e) => deleteVehicle(cell.row.original._id)}>
-                <Image src={removeIcon} width={25} height={25} alt="rent a car" />
-            </Button>
-        </div>,
-    },
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: '_id',
+            key: '_id',
+        },
+        {
+            title: 'Modelo',
+            dataIndex: 'model',
+            key: 'model',
+        },
+        {
+            title: 'Marca',
+            dataIndex: 'brand',
+            key: 'brand',
+        },
+        {
+            title: 'Placa',
+            dataIndex: 'plate',
+            key: 'plate',
+        },
+        {
+            title: 'Precio',
+            dataIndex: 'price',
+            key: 'price',
+        },
+        {
+            title: 'Estatus',
+            dataIndex: 'status',
+            key: 'status',
+        },
+        {
+            title: 'Fecha',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+        },
+        {
+            title: 'Acción',
+            dataIndex: 'timestamp',
+            key: 'timestamp',
+            render: (timestamp: string, item: IVehicle, idx: number) => <div className='flex justify-between'>
+                <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
+                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteVehicle(item._id)} />
+            </div>
+        },
     ]
 
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
             const { model, brand, plate, price, status } = data[index]
-            const statusOption = { value: status, label: status }
             setId(id)
-            setModel(model)
-            setBrand(brand)
-            setPlate(plate)
-            setPrice(price)
-            setDropStatus(statusOption)
+            form.setFieldsValue({
+                model,
+                brand,
+                plate,
+                price,
+                status
+            })
         }
         setOpen(true)
     }
 
     const rowAddDrawer = () => {
         setAction(ActionEnum.ADD)
-        setModel('')
-        setBrand('')
-        setPlate('')
-        setPrice('')
-        setDropStatus(null)
+        form.resetFields()
         setOpen(true)
     }
 
-    const registerVehicle = async (vehicle: IVehicle) => {
+    const registerVehicle = async (vehicle: FieldType) => {
         await addVehicle(vehicle)
         await loadVehicles()
     }
 
     const loadVehicles = async () => {
-        const data = await getVehicles()
+        const response = await getVehicles()
+        const data = response.map((el: IVehicle) => ({ ...el, key: el._id }))
         setData(data)
     }
 
-    const editVehicle = async (id: string, updatedVehicle: IVehicle) => {
+    const editVehicle = async (id: string, updatedVehicle: FieldType) => {
         await updateVehicle(id, updatedVehicle)
         await loadVehicles()
     }
@@ -127,25 +115,26 @@ const Vehicles = <T extends object>() => {
         loadVehicles()
     }, [])
 
-    const StatusOnChange = (newValue: any, actionMeta: ActionMeta<T>) => {
-        setDropStatus(newValue)
+    const onClose = () => {
+        setOpen(false)
     }
 
-    const handleAction = () => {
+    const handleAction = (values: FieldType) => {
         const vehicle = {
-            model,
-            brand,
-            plate,
-            price,
-            status: dropStatus.value
+            model: values.model,
+            brand: values.brand,
+            plate: values.plate,
+            price: values.price,
+            status: values.status
         }
         if (action === ActionEnum.ADD) {
             registerVehicle(vehicle)
+            form.resetFields()
             setModel('')
             setBrand('')
             setPlate('')
             setPrice('')
-            setDropStatus(null)
+            setStatus(StatusEnum.AVAILABLE)
         } else {
             editVehicle(id, vehicle)
         }
@@ -154,23 +143,23 @@ const Vehicles = <T extends object>() => {
 
     return (
         <Dashboard>
-            {data && <ListTable data={data} columns={columns} rowAddDrawer={rowAddDrawer} />}
-            <Drawer isOpen={isOpen} setOpen={setOpen} title={action === ActionEnum.ADD ? 'Agregar Vehículo' : 'Actualizar Vehículo'} >
-                <Form
+            <div>
+                <Button onClick={rowAddDrawer}>Agregar</Button>
+                {data ? <Table columns={columns} dataSource={data} /> :
+                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                }
+            </div>
+            <Drawer open={isOpen} onClose={onClose} title={action === ActionEnum.ADD ? 'Agregar Vehículo' : 'Actualizar Vehículo'} >
+                <VehicleForm
                     setOpen={setOpen}
+                    action={action}
+                    handleAction={handleAction}
+                    form={form}
                     model={model}
                     brand={brand}
                     plate={plate}
                     price={price}
-                    dropStatus={dropStatus}
-                    setModel={setModel}
-                    setBrand={setBrand}
-                    setPlate={setPlate}
-                    setPrice={setPrice}
-                    action={action}
-                    StatusOnChange={StatusOnChange}
-                    handleAction={handleAction}
-                    StatusOptions={StatusOptions}
+                    status={status}
                 />
             </Drawer>
         </Dashboard>

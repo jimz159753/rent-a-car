@@ -1,5 +1,5 @@
 export interface IVehicle {
-    _id?: string;
+    _id: string;
     model: string;
     image?: string;
     brand: string;
@@ -22,4 +22,13 @@ export enum StatusEnum {
 export type IDropdownOption = {
     value: StatusEnum;
     label: string;
+}
+
+export type FieldType = {
+    model: string;
+    image?: string;
+    brand: string;
+    plate: string;
+    price: string;
+    status: StatusEnum;
 }

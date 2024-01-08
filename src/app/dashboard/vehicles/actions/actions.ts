@@ -1,7 +1,7 @@
-import { IVehicle } from "../interfaces/vehicle.interface"
+import { FieldType, IVehicle } from "../interfaces/vehicle.interface"
 
 
-export const addVehicle = async (newVehicle: IVehicle) => {
+export const addVehicle = async (newVehicle: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/vehicles`, {
         method: 'POST',
@@ -26,7 +26,7 @@ export const getVehicles = async () => {
     return data
 }
 
-export const updateVehicle = async (id: string, updatedVehicle: IVehicle) => {
+export const updateVehicle = async (id: string, updatedVehicle: FieldType) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/vehicles/${id}`, {
         method: 'PATCH',
