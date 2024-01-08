@@ -6,7 +6,7 @@ import { Button } from '@/app/components/ui/Button'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Drawer, Spin, Table, Form } from 'antd'
+import { Drawer, Spin, Table, Form, Tag } from 'antd'
 import './page.css'
 
 const Vehicles = () => {
@@ -51,6 +51,7 @@ const Vehicles = () => {
             title: 'Estatus',
             dataIndex: 'status',
             key: 'status',
+            render: (status: string) => <Tag color={status === StatusEnum.AVAILABLE ? 'geekblue' : 'volcano'}>{status}</Tag>
         },
         {
             title: 'Fecha',

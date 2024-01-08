@@ -1,46 +1,31 @@
 import React from 'react'
-import { Input } from '@/app/components/ui/Input'
-import { Button } from '@/app/components/ui/Button'
-import { ActionEnum, IDropdownOption, RoleEnum } from '../interfaces/user.interface'
+import { ActionEnum, FieldType, RoleEnum } from '../interfaces/user.interface'
 import './form.css'
-import { Dropdown } from '@/app/components/ui/Dropdown'
-import { ActionMeta, SingleValue } from 'react-select'
+import { Button, Form, Input, Select } from 'antd'
 
-interface FormProps<T extends object> {
+interface FormProps {
     setOpen: (e: boolean) => void
     email: string
-    setEmail: (e: string) => void
     name: string
-    setName: (e: string) => void
     phone: string
-    setPhone: (e: string) => void
     address: string
-    setAddress: (e: string) => void
-    password: string
-    setPassword: (e: string) => void
+    role: string
     action: ActionEnum
-    handleAction: React.MouseEventHandler<HTMLButtonElement>
-    dropRole: IDropdownOption
-    RoleOnChange: (newValue: SingleValue<T>, actionMeta: ActionMeta<T>) => void
+    handleAction: (values: FieldType) => void
+    form: any
 }
 
-export const Form = <T extends object>({
+export const UserForm = ({
     setOpen,
     name,
     email,
     phone,
     address,
-    dropRole,
-    password,
-    setEmail,
-    setName,
-    setPhone,
-    setAddress,
-    setPassword,
+    role,
+    form,
     action,
     handleAction,
-    RoleOnChange
-}: FormProps<T>) => {
+}: FormProps) => {
     const dropRoles = [
         {
             value: RoleEnum.ADMIN,
@@ -53,25 +38,65 @@ export const Form = <T extends object>({
     ]
 
     return (
-        <form className='users-form' onSubmit={(e) => e.preventDefault()}>
-            <Input label='Nombre' name='name' type='text' placeholder='nombre' value={name} onChange={(e) => setName(e.target.value)} required />
-            <Input label='Correo eléctronico' name='email' type='text' placeholder='correo' value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <Input label='Teléfono' name='phone' type='number' placeholder='teléfono' value={phone} onChange={(e) => setPhone(e.target.value)} required />
-            <Input label='Dirección' name='address' type='text' placeholder='dirección' value={address} onChange={(e) => setAddress(e.target.value)} required />
-            <Dropdown id='role' label='Role' options={dropRoles as T[]} onChange={RoleOnChange} value={dropRole as T} placeholder='selecciona un role' name='role' />
-            {action === ActionEnum.ADD &&
-                <Input
-                    label='Contraseña'
-                    name='password'
-                    type='text'
-                    placeholder='contraseña'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required />}
+        <Form
+            form={form}
+            initialValues={{
+                name,
+                email,
+                phone,
+                address,
+                role,
+            }}
+            className='form'
+            onFinish={handleAction}>
+            <Form.Item<FieldType>
+                label="Nombre"
+                name="name"
+                rules={[{ required: true, message: 'Nombre requerido.' }]}
+            >
+                <Input placeholder='nombre' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Correo eléctronico"
+                name="email"
+                rules={[{ required: true, message: 'Correo eléctronico requerido.' }]}
+            >
+                <Input placeholder='email' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Teléfono"
+                name="phone"
+                rules={[{ required: true, message: 'Teléfono requerido.' }]}
+            >
+                <Input placeholder='phone' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Dirección"
+                name="address"
+                rules={[{ required: true, message: 'Dirección requerido.' }]}
+            >
+                <Input placeholder='address' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Role"
+                name="role"
+                rules={[{ required: true, message: 'Role requerido.' }]}
+            >
+                <Select placeholder='selecciona un role' options={dropRoles} />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Contraseña"
+                name="password"
+                rules={[{ required: true, message: 'Contraseña requerida.' }]}
+            >
+                <Input.Password placeholder='contraseña' />
+            </Form.Item>
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
-                <Button className='update' onClick={handleAction} >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
+                <Form.Item>
+                    <Button className='submit' htmlType='submit' >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
+                </Form.Item>
             </div>
-        </form>
+        </Form>
     )
 }

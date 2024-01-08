@@ -1,8 +1,6 @@
 import React from 'react'
 import './form.css'
-import { ActionEnum, FieldType, IDropdownOption, IVehicle, StatusEnum } from '../interfaces/vehicle.interface'
-import { ActionMeta, SingleValue } from 'react-select'
-import { Dropdown } from '@/app/components/ui/Dropdown'
+import { ActionEnum, FieldType, StatusEnum } from '../interfaces/vehicle.interface'
 import { Button, Form, Input, Select } from 'antd'
 
 interface FormProps<T extends object> {
