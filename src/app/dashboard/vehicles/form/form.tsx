@@ -1,9 +1,10 @@
 import React from 'react'
-import './form.css'
 import { ActionEnum, FieldType, StatusEnum } from '../interfaces/vehicle.interface'
-import { Button, Form, Input, Select } from 'antd'
+import { Button, Form, Input, Select, Upload, UploadProps, message } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
+import './form.css'
 
-interface FormProps<T extends object> {
+interface FormProps {
     setOpen: (e: boolean) => void
     model: string
     brand: string
@@ -15,7 +16,22 @@ interface FormProps<T extends object> {
     form: any;
 }
 
-export const VehicleForm = <T extends object>({
+const props: UploadProps = {
+    accept: "image/*",
+    headers: { "content-type": "multipart/form-data" },
+    beforeUpload: (file) => {
+        const isPNG = file.type === 'image/png';
+        if (!isPNG) {
+            message.error(`${file.name} is not a png file`);
+        }
+        return isPNG || Upload.LIST_IGNORE;
+    },
+    customRequest: ({ onSuccess }: any) => onSuccess("ok"),
+    maxCount: 1,
+    listType: "picture"
+};
+
+export const VehicleForm = ({
     setOpen,
     model,
     brand,
@@ -24,7 +40,7 @@ export const VehicleForm = <T extends object>({
     status,
     action,
     handleAction,
-    form }: FormProps<T>) => {
+    form }: FormProps) => {
     const dropStatus = [
         {
             lable: StatusEnum.AVAILABLE,
@@ -38,6 +54,7 @@ export const VehicleForm = <T extends object>({
 
     return (
         <Form
+            requiredMark={'optional'}
             form={form}
             initialValues={{
                 model,
@@ -46,7 +63,7 @@ export const VehicleForm = <T extends object>({
                 price,
                 status
             }}
-            className='form'
+            className='vehicles-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
                 label="Modelo"
@@ -82,6 +99,16 @@ export const VehicleForm = <T extends object>({
                 rules={[{ required: true, message: 'Estatus requerido.' }]}
             >
                 <Select placeholder='selecciona un estatus' options={dropStatus} />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Imagen"
+                getValueFromEvent={({ file }) => file.originFileObj}
+                name="image"
+                rules={[{ required: true, message: 'Imagen requerido.' }]}
+            >
+                <Upload {...props}>
+                    <Button icon={<UploadOutlined />}>Subir</Button>
+                </Upload>
             </Form.Item>
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>

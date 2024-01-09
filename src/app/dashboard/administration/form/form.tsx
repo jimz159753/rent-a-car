@@ -39,6 +39,7 @@ export const UserForm = ({
 
     return (
         <Form
+            requiredMark={'optional'}
             form={form}
             initialValues={{
                 name,
@@ -47,7 +48,7 @@ export const UserForm = ({
                 address,
                 role,
             }}
-            className='form'
+            className='administration-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
                 label="Nombre"

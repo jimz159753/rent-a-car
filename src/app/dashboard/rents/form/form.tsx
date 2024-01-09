@@ -34,6 +34,7 @@ export const RentForm = ({
 }: FormProps) => {
     return (
         <Form
+            requiredMark={'optional'}
             form={form}
             initialValues={{
                 client,
@@ -43,7 +44,7 @@ export const RentForm = ({
                 total,
                 description
             }}
-            className='form'
+            className='rents-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
                 label="Cliente"

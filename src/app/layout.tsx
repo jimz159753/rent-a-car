@@ -1,5 +1,6 @@
 import { Quando, Quicksand } from 'next/font/google'
 import Head from 'next/head'
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 import './globals.css'
 
 const quando = Quando({
@@ -31,7 +32,9 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
       </Head>
-      <body className={`${quando.variable} ${quicksand.variable}`}>{children}</body>
+      <body className={`${quando.variable} ${quicksand.variable}`}>
+        <AntdRegistry>{children}</AntdRegistry>
+      </body>
     </html>
   )
 }

@@ -1,15 +1,19 @@
-import { FieldType, IVehicle } from "../interfaces/vehicle.interface"
+import { FieldType } from "../interfaces/vehicle.interface"
 
 
 export const addVehicle = async (newVehicle: FieldType) => {
     const token = localStorage.getItem('token')
+    const formData = new FormData()
+    for (const name in newVehicle) {
+        console.log(name)
+        formData.append(name, newVehicle[name as keyof typeof newVehicle])
+    }
     await fetch(`${process.env.API_URL}/vehicles`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newVehicle)
+        body: formData
     })
 }
 

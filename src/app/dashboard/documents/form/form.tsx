@@ -28,13 +28,14 @@ export const DocumentForm = ({
 }: FormProps) => {
     return (
         <Form
+            requiredMark={'optional'}
             form={form}
             initialValues={{
                 name,
                 client,
                 vehicle
             }}
-            className='form'
+            className='documents-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
                 label="Nombre"

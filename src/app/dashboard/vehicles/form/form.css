@@ -1,13 +1,33 @@
-form {
-    input {
-        @apply h-11 w-60 border border-current rounded px-4 text-lg focus:outline-none;
+.vehicles-form {
+
+    .ant-form-item {
+        @apply mb-14;
+
+        .ant-row {
+            @apply flex flex-col items-start;
+        }
+
+        .ant-col label::after {
+            @apply content-none;
+        }
+
+        .ant-form-item-control {
+            @apply w-full ;
+        }
+        .ant-select, input {
+            @apply h-11;
+        }
+    }
+
+    button {
+        @apply h-11;
     }
 
     .cancel {
-        @apply bg-soft-red rounded w-32 font-quando text-white;
+        @apply bg-soft-red rounded w-32 font-quando text-white mt-16;
     }
 
     .submit {
-        @apply bg-[#6582EB] rounded w-32 font-quando text-white;
+        @apply bg-[#6582EB] rounded w-32 font-quando text-white mt-16;
     }
 }

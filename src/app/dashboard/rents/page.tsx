@@ -1,12 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
-import { Drawer } from '@/app/components/ui/Drawer'
 import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/rent.interface'
 import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Form, Spin, Table } from 'antd'
+import { Button, Drawer, Form, Spin, Table } from 'antd'
 
 const Rent = () => {
     const [data, setData] = useState<IRent[]>()
@@ -135,6 +134,10 @@ const Rent = () => {
         loadDropdrowns()
     }, [])
 
+    const onClose = () => {
+        setOpen(false)
+    }
+
     const handleAction = (values: FieldType) => {
         const clientObj = JSON.parse(values.client)
         const vehicleObj = JSON.parse(values.vehicle)
@@ -165,14 +168,14 @@ const Rent = () => {
     return (
         <Dashboard>
             <div>
-                <Button onClick={rowAddDrawer}>Agregar</Button>
+                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
                 {data ? <Table columns={columns} dataSource={data} /> :
                     <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                 }
             </div>
             <Drawer
-                isOpen={isOpen}
-                setOpen={setOpen}
+                open={isOpen}
+                onClose={onClose}
                 title={action === ActionEnum.ADD ?
                     'Agregar Alquiler'
                     :

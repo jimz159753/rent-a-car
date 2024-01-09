@@ -140,7 +140,7 @@ const Documents = () => {
     return (
         <Dashboard>
             <div>
-                <Button onClick={rowAddDrawer}>Agregar</Button>
+                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
                 {data ? <Table columns={columns} dataSource={data} /> :
                     <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                 }

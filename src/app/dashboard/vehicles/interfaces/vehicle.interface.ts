@@ -26,7 +26,7 @@ export type IDropdownOption = {
 
 export type FieldType = {
     model: string;
-    image?: string;
+    image: string;
     brand: string;
     plate: string;
     price: string;

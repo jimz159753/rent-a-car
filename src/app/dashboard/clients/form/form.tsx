@@ -1,7 +1,7 @@
 import React from 'react'
-import './form.css'
 import { ActionEnum, FieldType } from '../interfaces/client.interface'
 import { Button, Input, Form } from 'antd'
+import './form.css'
 
 interface FormProps {
     setOpen: (value: boolean) => void
@@ -26,6 +26,7 @@ export const ClientForm = ({
 
     return (
         <Form
+            requiredMark={'optional'}
             form={form}
             initialValues={{
                 dni,
@@ -33,7 +34,8 @@ export const ClientForm = ({
                 phone,
                 address
             }}
-            className='form' onFinish={handleAction}>
+            className='clients-form'
+            onFinish={handleAction}>
             <Form.Item<FieldType>
                 label="Dni"
                 name="dni"

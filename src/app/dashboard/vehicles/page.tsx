@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../page'
 import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
-import { Button } from '@/app/components/ui/Button'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Drawer, Spin, Table, Form, Tag } from 'antd'
+import { Drawer, Spin, Table, Form, Tag, Button } from 'antd'
 import './page.css'
 
 const Vehicles = () => {
@@ -51,7 +50,7 @@ const Vehicles = () => {
             title: 'Estatus',
             dataIndex: 'status',
             key: 'status',
-            render: (status: string) => <Tag color={status === StatusEnum.AVAILABLE ? 'geekblue' : 'volcano'}>{status}</Tag>
+            render: (status: string) => <Tag color={status === StatusEnum.AVAILABLE ? 'geekblue' : 'red'}>{status}</Tag>
         },
         {
             title: 'Fecha',
@@ -126,7 +125,8 @@ const Vehicles = () => {
             brand: values.brand,
             plate: values.plate,
             price: values.price,
-            status: values.status
+            status: values.status,
+            image: values.image
         }
         if (action === ActionEnum.ADD) {
             registerVehicle(vehicle)
@@ -145,7 +145,7 @@ const Vehicles = () => {
     return (
         <Dashboard>
             <div>
-                <Button onClick={rowAddDrawer}>Agregar</Button>
+                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
                 {data ? <Table columns={columns} dataSource={data} /> :
                     <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                 }
