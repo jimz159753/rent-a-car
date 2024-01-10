@@ -1,13 +1,15 @@
 'use client'
-import React from 'react'
+import React, { useContext } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { Button, Input, Form } from 'antd';
 import './page.css'
+import { Context } from '../layout';
 
 const Login = () => {
     const rentACarIcon = require('../../../public/rent_a_car.png')
     const { push } = useRouter();
+    const [user, setUser] = useContext(Context)
 
     type FieldType = {
         email: string;
@@ -25,6 +27,7 @@ const Login = () => {
         })
         const data = await response.json()
         if (data.token) {
+            setUser(data.user)
             localStorage.setItem('token', data.token)
             push('/dashboard/information')
         }

@@ -1,9 +1,0 @@
-.drawer-container {
-    @apply shadow-[-6px_0px_12px_0px_rgba(0,0,0,0.38)] bg-white fixed flex flex-col h-full w-1/5 transition-[right] duration-1000 ease-linear p-8 -right-full top-0 z-50 overflow-auto;
-    -webkit-box-shadow: -6px 0px 12px 0px rgba(0, 0, 0, 0.38);
-    -moz-box-shadow: -6px 0px 12px 0px rgba(0, 0, 0, 0.38);
-}
-
-.drawer-open {
-    @apply right-0;
-}

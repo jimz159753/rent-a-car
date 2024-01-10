@@ -100,16 +100,18 @@ export const VehicleForm = ({
             >
                 <Select placeholder='selecciona un estatus' options={dropStatus} />
             </Form.Item>
-            <Form.Item<FieldType>
-                label="Imagen"
-                getValueFromEvent={({ file }) => file.originFileObj}
-                name="image"
-                rules={[{ required: true, message: 'Imagen requerido.' }]}
-            >
-                <Upload {...props}>
-                    <Button icon={<UploadOutlined />}>Subir</Button>
-                </Upload>
-            </Form.Item>
+            {action === ActionEnum.ADD &&
+                <Form.Item<FieldType>
+                    label="Imagen"
+                    getValueFromEvent={({ file }) => file.originFileObj}
+                    name="image"
+                    rules={[{ required: true, message: 'Imagen requerido.' }]}
+                >
+                    <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>Subir</Button>
+                    </Upload>
+                </Form.Item>
+            }
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Form.Item>

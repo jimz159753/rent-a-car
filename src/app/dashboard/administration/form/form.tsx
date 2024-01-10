@@ -1,4 +1,3 @@
-import React from 'react'
 import { ActionEnum, FieldType, RoleEnum } from '../interfaces/user.interface'
 import './form.css'
 import { Button, Form, Input, Select } from 'antd'
