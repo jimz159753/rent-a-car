@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../page'
+import Dashboard from '../layout'
 import { ActionEnum, FieldType, IClient, IDocument, IVehicle } from './interfaces/document.interface'
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
 import { DocumentForm } from './form/form'
@@ -138,13 +138,15 @@ const Documents = () => {
     }
 
     return (
-        <Dashboard>
-            <div>
-                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
-                {data ? <Table columns={columns} dataSource={data} /> :
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                }
-            </div>
+        <div>
+            {data ?
+                <div>
+                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Table columns={columns} dataSource={data} />
+                </div>
+                :
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+            }
             <Drawer
                 open={isOpen}
                 onClose={onClose}
@@ -166,7 +168,7 @@ const Documents = () => {
                         dropVehicles={dropVehicles}
                     />}
             </Drawer>
-        </Dashboard >
+        </div >
     )
 }
 

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../page'
+import Dashboard from '../layout'
 import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/rent.interface'
 import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
@@ -166,13 +166,14 @@ const Rent = () => {
     }
 
     return (
-        <Dashboard>
-            <div>
+        <div>
+            {data ? <div>
                 <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
-                {data ? <Table columns={columns} dataSource={data} /> :
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                }
+                <Table columns={columns} dataSource={data} />
             </div>
+                :
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+            }
             <Drawer
                 open={isOpen}
                 onClose={onClose}
@@ -197,7 +198,7 @@ const Rent = () => {
                         form={form}
                     />}
             </Drawer>
-        </Dashboard >
+        </div >
     )
 }
 

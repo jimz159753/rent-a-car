@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../page'
+import Dashboard from '../layout'
 import { UserForm } from './form/form'
 import { ActionEnum, FieldType, IUser, RoleEnum } from './interfaces/user.interface'
 import './page.css'
@@ -20,6 +20,8 @@ const Clients = () => {
     const [password, setPassword] = useState<string>('')
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const [form] = Form.useForm()
+    const userStringObj = localStorage.getItem('user')
+    const user: IUser = userStringObj && JSON.parse(userStringObj)
 
     const columns = [
         {
@@ -60,9 +62,7 @@ const Clients = () => {
         },
         {
             title: 'Acción',
-            dataIndex: 'timestamp',
-            key: 'timestamp',
-            render: (timestamp: string, item: IUser, idx: number) => <div className='flex justify-between'>
+            render: (password: string, item: IUser, idx: number) => <div className='flex justify-between'>
                 <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
                 <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteUser(item._id)} />
             </div>
@@ -74,6 +74,7 @@ const Clients = () => {
         if (data) {
             const { name, email, phone, address, role } = data[index]
             setId(id)
+            setEmail(email)
             form.setFieldsValue({
                 name,
                 email,
@@ -87,6 +88,7 @@ const Clients = () => {
 
     const rowAddDrawer = () => {
         setAction(ActionEnum.ADD)
+        setEmail('')
         form.resetFields()
         setOpen(true)
     }
@@ -97,7 +99,8 @@ const Clients = () => {
     }
 
     const loadUsers = async () => {
-        const data = await getUsers()
+        const response = await getUsers()
+        const data = response.map((el: IUser) => ({ ...el, key: el._id }))
         setData(data)
     }
 
@@ -143,13 +146,15 @@ const Clients = () => {
     }
 
     return (
-        <Dashboard>
-            <div>
-                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
-                {data ? <Table columns={columns} dataSource={data} /> :
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                }
-            </div>
+        <div>
+            {data ?
+                <div>
+                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Table columns={columns} dataSource={data} />
+                </div>
+                :
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+            }
             <Drawer
                 open={isOpen}
                 onClose={onClose}
@@ -164,9 +169,10 @@ const Clients = () => {
                     action={action}
                     handleAction={handleAction}
                     form={form}
+                    user={user}
                 />
             </Drawer>
-        </Dashboard >
+        </div >
     )
 }
 

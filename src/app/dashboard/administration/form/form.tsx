@@ -1,4 +1,4 @@
-import { ActionEnum, FieldType, RoleEnum } from '../interfaces/user.interface'
+import { ActionEnum, FieldType, IUser, RoleEnum } from '../interfaces/user.interface'
 import './form.css'
 import { Button, Form, Input, Select } from 'antd'
 
@@ -12,6 +12,7 @@ interface FormProps {
     action: ActionEnum
     handleAction: (values: FieldType) => void
     form: any
+    user: IUser
 }
 
 export const UserForm = ({
@@ -24,6 +25,7 @@ export const UserForm = ({
     form,
     action,
     handleAction,
+    user
 }: FormProps) => {
     const dropRoles = [
         {
@@ -35,6 +37,8 @@ export const UserForm = ({
             label: RoleEnum.EMPLOYEE
         }
     ]
+
+    console.log('EMAIL', email)
 
     return (
         <Form
@@ -84,13 +88,26 @@ export const UserForm = ({
             >
                 <Select placeholder='selecciona un role' options={dropRoles} />
             </Form.Item>
-            <Form.Item<FieldType>
-                label="Contraseña"
-                name="password"
-                rules={[{ required: true, message: 'Contraseña requerida.' }]}
-            >
-                <Input.Password placeholder='contraseña' />
-            </Form.Item>
+            {user.email === email ?
+                <Form.Item<FieldType>
+                    label="Contraseña"
+                    name="password"
+                    rules={[{ required: true, message: 'Contraseña requerida.' }]}
+                >
+                    <Input.Password placeholder='contraseña' />
+                </Form.Item>
+                :
+                user.role === RoleEnum.ADMIN && action === ActionEnum.ADD ?
+                    <Form.Item<FieldType>
+                        label="Contraseña"
+                        name="password"
+                        rules={[{ required: true, message: 'Contraseña requerida.' }]}
+                    >
+                        <Input.Password placeholder='contraseña' />
+                    </Form.Item>
+                    :
+                    null
+            }
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Form.Item>

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../page'
+import Dashboard from '../layout'
 import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
@@ -143,13 +143,15 @@ const Vehicles = () => {
 
 
     return (
-        <Dashboard>
-            <div>
-                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
-                {data ? <Table columns={columns} dataSource={data} /> :
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                }
-            </div>
+        <div>
+            {data ?
+                <div>
+                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Table columns={columns} dataSource={data} />
+                </div>
+                :
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+            }
             <Drawer open={isOpen} onClose={onClose} title={action === ActionEnum.ADD ? 'Agregar Vehículo' : 'Actualizar Vehículo'} >
                 <VehicleForm
                     setOpen={setOpen}
@@ -163,7 +165,7 @@ const Vehicles = () => {
                     status={status}
                 />
             </Drawer>
-        </Dashboard>
+        </div>
     )
 }
 

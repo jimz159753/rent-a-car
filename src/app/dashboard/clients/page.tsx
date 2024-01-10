@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../page'
+import Dashboard from '../layout'
 import { ClientForm } from './form/form'
 import { ActionEnum, FieldType, IClient } from './interfaces/client.interface'
 import { addClient, getClients, removeClient, updateClient } from './actions/actions'
@@ -132,13 +132,15 @@ const Clients = () => {
     }
 
     return (
-        <Dashboard>
-            <div>
-                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
-                {data ? <Table columns={columns} dataSource={data} /> :
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                }
-            </div>
+        <div>
+            {data ?
+                <div>
+                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Table columns={columns} dataSource={data} />
+                </div>
+                :
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+            }
             <Drawer open={isOpen} onClose={onClose} title={action === ActionEnum.ADD ? 'Agregar Cliente' : 'Actualizar Cliente'} >
                 <ClientForm
                     setOpen={setOpen}
@@ -151,7 +153,7 @@ const Clients = () => {
                     address={address}
                 />
             </Drawer>
-        </Dashboard >
+        </div >
     )
 }
 
