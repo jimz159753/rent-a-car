@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../layout'
 import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/rent.interface'
 import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'

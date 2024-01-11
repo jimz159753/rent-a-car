@@ -5,7 +5,6 @@ export const addVehicle = async (newVehicle: FieldType) => {
     const token = localStorage.getItem('token')
     const formData = new FormData()
     for (const name in newVehicle) {
-        console.log(name)
         formData.append(name, newVehicle[name as keyof typeof newVehicle])
     }
     await fetch(`${process.env.API_URL}/vehicles`, {

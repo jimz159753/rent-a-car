@@ -17,7 +17,7 @@ interface FormProps {
 }
 
 const props: UploadProps = {
-    accept: "image/*",
+    accept: "image/png",
     headers: { "content-type": "multipart/form-data" },
     beforeUpload: (file) => {
         const isPNG = file.type === 'image/png';

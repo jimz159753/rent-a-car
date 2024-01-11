@@ -1,8 +1,8 @@
 export interface IDocument {
     _id: string;
-    name: string;
     client: IClient;
     vehicle: IVehicle;
+    document: string;
     timestamp?: string;
 }
 
@@ -32,7 +32,7 @@ export enum ActionEnum {
 }
 
 export type FieldType = {
-    name: string;
     client: string;
     vehicle: string;
+    document: string;
 }

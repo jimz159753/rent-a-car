@@ -1,11 +1,11 @@
 import React from 'react'
 import { ActionEnum, FieldType, IClient, IVehicle } from '../interfaces/document.interface'
 import './form.css'
-import { Button, Form, Input, Select } from 'antd'
+import { Button, Form, Select, Upload, UploadProps, message } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
 
 interface FormProps {
     setOpen: (e: boolean) => void
-    name: string
     client: string
     vehicle: string
     action: ActionEnum
@@ -15,9 +15,23 @@ interface FormProps {
     form: any
 }
 
+const props: UploadProps = {
+    accept: "application/pdf",
+    headers: { "content-type": "multipart/form-data" },
+    beforeUpload: (file) => {
+        const isPNG = file.type === 'application/pdf';
+        if (!isPNG) {
+            message.error(`${file.name} is not a pdf file`);
+        }
+        return isPNG || Upload.LIST_IGNORE;
+    },
+    customRequest: ({ onSuccess }: any) => onSuccess("ok"),
+    maxCount: 1,
+    listType: "picture"
+};
+
 export const DocumentForm = ({
     setOpen,
-    name,
     client,
     vehicle,
     action,
@@ -38,13 +52,6 @@ export const DocumentForm = ({
             className='documents-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
-                label="Nombre"
-                name="name"
-                rules={[{ required: true, message: 'Nombre requerido.' }]}
-            >
-                <Input placeholder='nombre' />
-            </Form.Item>
-            <Form.Item<FieldType>
                 label="Cliente"
                 name="client"
                 rules={[{ required: true, message: 'Cliente requerido.' }]}
@@ -58,6 +65,18 @@ export const DocumentForm = ({
             >
                 <Select placeholder='selecciona un vehículo' options={dropVehicles} />
             </Form.Item>
+            {action === ActionEnum.ADD &&
+                <Form.Item<FieldType>
+                    label="Documento"
+                    getValueFromEvent={({ file }) => file.originFileObj}
+                    name="document"
+                    rules={[{ required: true, message: 'Documento requerido.' }]}
+                >
+                    <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>Subir</Button>
+                    </Upload>
+                </Form.Item>
+            }
             <div className='mt-10 flex space-x-10'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Form.Item>

@@ -1,14 +1,21 @@
-import { FieldType, IDocument } from "../interfaces/document.interface"
+import { FieldType } from "../interfaces/document.interface"
 
 export const addDocument = async (newDocument: FieldType) => {
     const token = localStorage.getItem('token')
+    const formData = new FormData()
+
+    const { client, vehicle } = newDocument
+    const newObj = JSON.stringify({ client, vehicle })
+
+    formData.append('data', newObj)
+    formData.append('document', newDocument.document)
+
     await fetch(`${process.env.API_URL}/documents`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newDocument)
+        body: formData
     })
 }
 

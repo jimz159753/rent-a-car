@@ -1,17 +1,16 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../layout'
 import { ActionEnum, FieldType, IClient, IDocument, IVehicle } from './interfaces/document.interface'
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
 import { DocumentForm } from './form/form'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Spin, Table } from 'antd'
+import Link from 'next/link'
 
 const Documents = () => {
     const [data, setData] = useState<IDocument[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
-    const [name, setName] = useState<string>('')
     const [client, setClient] = useState<string>('')
     const [vehicle, setVehicle] = useState<string>('')
     const [dropClients, setDropClients] = useState<IClient[]>([])
@@ -29,18 +28,20 @@ const Documents = () => {
             title: 'Nombre',
             dataIndex: 'name',
             key: 'name',
+            render: (name: string) => <Link target="_blank" href={process.env.FILES_URL + name}>{name}</Link>
         },
         {
             title: 'Cliente',
             dataIndex: 'client',
             key: '_id',
-            render: (client: IClient, item: IDocument) => <p>{item.client.name}</p>
+            render: (client: IClient, item: IDocument) => <p>{client.name}</p>
+
         },
         {
             title: 'Vehículo',
             dataIndex: 'vehicle',
             key: '_id',
-            render: (vehicle: IVehicle, item: IDocument) => <p>{item.vehicle.model}</p>
+            render: (vehicle: IVehicle, item: IDocument) => <p>{vehicle.model}</p>
         },
         {
             title: 'Fecha',
@@ -61,10 +62,9 @@ const Documents = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { name, client, vehicle } = data[index]
+            const { client, vehicle } = data[index]
             setId(id)
             form.setFieldsValue({
-                name,
                 client: client.name,
                 vehicle: vehicle.model,
             })
@@ -118,18 +118,15 @@ const Documents = () => {
     }
 
     const handleAction = (values: FieldType) => {
-        const clientObj = JSON.parse(values.client)
-        const vehicleObj = JSON.parse(values.vehicle)
         const document = {
-            name: values.name,
-            client: clientObj,
-            vehicle: vehicleObj,
+            client: values.client,
+            vehicle: values.vehicle,
+            document: values.document
         }
 
         if (action === ActionEnum.ADD) {
             registerDocument(document)
             form.resetFields()
-            setName('')
             setClient('')
             setVehicle('')
         } else {
@@ -160,7 +157,6 @@ const Documents = () => {
                         form={form}
                         handleAction={handleAction}
                         setOpen={setOpen}
-                        name={name}
                         client={client}
                         vehicle={vehicle}
                         action={action}

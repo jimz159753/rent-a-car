@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        'API_URL':'http://localhost:3001'
+        'API_URL':'https://api.rhbrentauncarro.com/',
+        'FILES_URL': 'https://api.rhbrentauncarro.com//files/'
     }
 }
 

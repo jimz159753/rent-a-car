@@ -1,12 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Dashboard from '../layout'
 import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Drawer, Spin, Table, Form, Tag, Button } from 'antd'
 import './page.css'
+import Link from 'next/link'
 
 const Vehicles = () => {
     const [data, setData] = useState<IVehicle[]>()
@@ -30,6 +30,7 @@ const Vehicles = () => {
             title: 'Modelo',
             dataIndex: 'model',
             key: 'model',
+            render: (model: string, item: IVehicle) => <Link target="_blank" href={`${process.env.FILES_URL}${item.image}`}>{model}</Link>
         },
         {
             title: 'Marca',
