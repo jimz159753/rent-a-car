@@ -131,10 +131,10 @@ const Clients = () => {
     }
 
     return (
-        <div>
+        <div className='clients-content'>
             {data ?
                 <div>
-                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Button className='add-btn' onClick={rowAddDrawer}>Agregar</Button>
                     <Table columns={columns} dataSource={data} />
                 </div>
                 :

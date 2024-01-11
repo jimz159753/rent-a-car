@@ -1,0 +1,7 @@
+.information-content {
+    @apply flex flex-col;
+
+    .ant-descriptions {
+        @apply my-10;
+    }
+}

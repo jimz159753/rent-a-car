@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import { UserForm } from './form/form'
 import { ActionEnum, FieldType, IUser, RoleEnum } from './interfaces/user.interface'
-import './page.css'
 import { addUser, getUsers, removeUser, updateUser } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Spin, Table, Tag } from 'antd'
-import Link from 'next/link'
+import './page.css'
 
 const Clients = () => {
     const [data, setData] = useState<IUser[]>()
@@ -146,10 +145,10 @@ const Clients = () => {
     }
 
     return (
-        <div>
+        <div className='administration-content'>
             {data ?
                 <div>
-                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Button className='add-btn' onClick={rowAddDrawer}>Agregar</Button>
                     <Table columns={columns} dataSource={data} />
                 </div>
                 :

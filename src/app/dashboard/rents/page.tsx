@@ -5,6 +5,7 @@ import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Spin, Table } from 'antd'
+import './page.css'
 
 const Rent = () => {
     const [data, setData] = useState<IRent[]>()
@@ -165,9 +166,9 @@ const Rent = () => {
     }
 
     return (
-        <div>
+        <div className='rents-content'>
             {data ? <div>
-                <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                <Button className='add-btn' onClick={rowAddDrawer}>Agregar</Button>
                 <Table columns={columns} dataSource={data} />
             </div>
                 :

@@ -1,7 +1,7 @@
 .vehicles-form {
 
     .ant-form-item {
-        @apply mb-14;
+        @apply m-0 h-28;
 
         .ant-row {
             @apply flex flex-col items-start;

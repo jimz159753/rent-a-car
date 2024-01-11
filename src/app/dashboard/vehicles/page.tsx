@@ -5,8 +5,8 @@ import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Drawer, Spin, Table, Form, Tag, Button } from 'antd'
-import './page.css'
 import Link from 'next/link'
+import './page.css'
 
 const Vehicles = () => {
     const [data, setData] = useState<IVehicle[]>()
@@ -144,10 +144,10 @@ const Vehicles = () => {
 
 
     return (
-        <div>
+        <div className='vehicles-content'>
             {data ?
                 <div>
-                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Button className='add-btn' onClick={rowAddDrawer}>Agregar</Button>
                     <Table columns={columns} dataSource={data} />
                 </div>
                 :

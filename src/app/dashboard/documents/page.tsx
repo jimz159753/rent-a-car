@@ -6,6 +6,7 @@ import { DocumentForm } from './form/form'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Spin, Table } from 'antd'
 import Link from 'next/link'
+import './page.css'
 
 const Documents = () => {
     const [data, setData] = useState<IDocument[]>()
@@ -135,10 +136,10 @@ const Documents = () => {
     }
 
     return (
-        <div>
+        <div className='documents-content'>
             {data ?
                 <div>
-                    <Button className='my-8 border' onClick={rowAddDrawer}>Agregar</Button>
+                    <Button className='add-btn' onClick={rowAddDrawer}>Agregar</Button>
                     <Table columns={columns} dataSource={data} />
                 </div>
                 :
