@@ -4,17 +4,15 @@ import { Layout, theme } from 'antd';
 import './layout.css'
 import { SideMenu } from '../components/ui/SideMenu';
 
-
 interface DashboardProps {
     children: React.ReactNode
 }
 
 const { Header, Content, Footer, Sider } = Layout;
 
-
 const Dashboard = (props: DashboardProps) => {
     const {
-        token: { colorBgContainer, borderRadiusLG },
+        token: { colorBgContainer },
     } = theme.useToken();
 
     return (

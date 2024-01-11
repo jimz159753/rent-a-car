@@ -4,7 +4,7 @@ import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicl
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Drawer, Spin, Table, Form, Tag, Button } from 'antd'
+import { Drawer, Spin, Table, Form, Tag, Button, message } from 'antd'
 import Link from 'next/link'
 import './page.css'
 
@@ -137,8 +137,10 @@ const Vehicles = () => {
             setPlate('')
             setPrice('')
             setStatus(StatusEnum.AVAILABLE)
+            message.success('Datos agregados')
         } else {
             editVehicle(id, vehicle)
+            message.success('Datos actualizados')
         }
     }
 

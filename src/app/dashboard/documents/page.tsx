@@ -4,7 +4,7 @@ import { ActionEnum, FieldType, IClient, IDocument, IVehicle } from './interface
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
 import { DocumentForm } from './form/form'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Spin, Table } from 'antd'
+import { Button, Drawer, Form, Spin, Table, message } from 'antd'
 import Link from 'next/link'
 import './page.css'
 
@@ -130,8 +130,10 @@ const Documents = () => {
             form.resetFields()
             setClient('')
             setVehicle('')
+            message.success('Datos agregados')
         } else {
             editDocument(id, document)
+            message.success('Datos actualizados')
         }
     }
 

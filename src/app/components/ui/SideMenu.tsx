@@ -25,8 +25,8 @@ export const SideMenu = () => {
     const userStringObj = localStorage.getItem('user')
     const user: IUser = userStringObj && JSON.parse(userStringObj)
     const links = ['information', 'administration', 'clients', 'documents', 'vehicles', 'rents']
-    const items: MenuItem[] = ['Informacion', 'Administracion', 'Clientes', 'Documentos', 'Vehiculos', 'Alquileres'].map(
-        (title, index) => (user && title !== 'Administracion' && user.role === RoleEnum.EMPLOYEE ?
+    const items: MenuItem[] = ['Información', 'Administración', 'Clientes', 'Documentos', 'Vehículos', 'Alquileres'].map(
+        (title, index) => (user && title !== 'Administración' && user.role === RoleEnum.EMPLOYEE ?
             getItem(<Link key={title} href={`/dashboard/${links[index]}`}>
                 <p>{title}</p>
             </Link>, index)

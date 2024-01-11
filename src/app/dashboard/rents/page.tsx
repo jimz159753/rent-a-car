@@ -4,7 +4,7 @@ import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/re
 import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Spin, Table } from 'antd'
+import { Button, Drawer, Form, Spin, Table, message } from 'antd'
 import './page.css'
 
 const Rent = () => {
@@ -159,9 +159,10 @@ const Rent = () => {
             setPayment('')
             setTotal('')
             setDescription('')
-            setOpen(false)
+            message.success('Datos agregados')
         } else {
             editRent(id, rent)
+            message.success('Datos actualizados')
         }
     }
 

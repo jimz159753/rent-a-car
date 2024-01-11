@@ -12,8 +12,6 @@ const Information = () => {
     const data = localStorage.getItem('user')
     const user = JSON.parse(data as string)
     const [form] = Form.useForm()
-    const [messageApi, contextHolder] = message.useMessage();
-
     const items: DescriptionsProps['items'] = [
         {
             key: '1',
@@ -46,8 +44,7 @@ const Information = () => {
         const { password, confirmation } = values
         if (password === confirmation) {
             updateUserPassword(user._id, { password })
-            messageApi.open({ type: 'loading', content: 'Cargando cambios' })
-                .then(() => message.success('Finalizado'))
+            message.success('Datos actualizados')
             form.resetFields()
         } else {
             message.error('Error en la comparación')
@@ -55,7 +52,6 @@ const Information = () => {
     }
     return (
         <div className='information-content'>
-            {contextHolder}
             <Avatar size={100} icon={<UserOutlined />} />
             <Layout>
                 <Descriptions title="Información de usuario" items={items} bordered />

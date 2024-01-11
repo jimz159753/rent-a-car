@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ClientForm } from './form/form'
 import { ActionEnum, FieldType, IClient } from './interfaces/client.interface'
 import { addClient, getClients, removeClient, updateClient } from './actions/actions'
-import { Button, Drawer, Image, Spin, Table, Form } from 'antd'
+import { Button, Drawer, Image, Spin, Table, Form, message } from 'antd'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import './page.css'
 
@@ -125,8 +125,10 @@ const Clients = () => {
             setName('')
             setPhone('')
             setAddress('')
+            message.success('Datos agregados')
         } else {
             editClient(id, client)
+            message.success('Datos actualizados')
         }
     }
 

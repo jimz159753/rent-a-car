@@ -4,7 +4,7 @@ import { UserForm } from './form/form'
 import { ActionEnum, FieldType, IUser, RoleEnum } from './interfaces/user.interface'
 import { addUser, getUsers, removeUser, updateUser } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Spin, Table, Tag } from 'antd'
+import { Button, Drawer, Form, Spin, Table, Tag, message } from 'antd'
 import './page.css'
 
 const Clients = () => {
@@ -139,8 +139,10 @@ const Clients = () => {
             setAddress('')
             setRole(RoleEnum.EMPLOYEE)
             setPassword('')
+            message.success('Datos agregados')
         } else {
             editUser(id, user)
+            message.success('Datos actualizados')
         }
     }
 
