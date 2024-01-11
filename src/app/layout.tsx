@@ -3,7 +3,6 @@ import { Quando, Quicksand } from 'next/font/google'
 import Head from 'next/head'
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import './globals.css'
-import { createContext, useState } from 'react';
 
 const quando = Quando({
   weight: ['400'],
@@ -21,14 +20,12 @@ const quicksand = Quicksand({
   variable: '--font-quicksand'
 })
 
-export const Context = createContext<any>(null)
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const [user, setUser] = useState(null)
   return (
     <html lang="en">
       <Head>
@@ -38,9 +35,7 @@ export default function RootLayout({
         />
       </Head>
       <body className={`${quando.variable} ${quicksand.variable}`}>
-        <Context.Provider value={[user, setUser]} >
-          <AntdRegistry>{children}</AntdRegistry>
-        </Context.Provider>
+        <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>
   )
