@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Menu, type MenuProps, } from 'antd';
 import { IUser, RoleEnum } from '@/app/dashboard/administration/interfaces/user.interface';
@@ -22,7 +23,7 @@ const getItem = (
 }
 
 export const SideMenu = () => {
-    const userStringObj = localStorage.getItem('user')
+    const [userStringObj, setUserStringObj] = useState('')
     const user: IUser = userStringObj && JSON.parse(userStringObj)
     const links = ['information', 'administration', 'clients', 'documents', 'vehicles', 'rents']
     const items: MenuItem[] = ['Información', 'Administración', 'Clientes', 'Documentos', 'Vehículos', 'Alquileres'].map(
@@ -37,6 +38,12 @@ export const SideMenu = () => {
                 :
                 null),
     );
+
+    useEffect(() => {
+        const user = localStorage.getItem('user')
+        if (user)
+            setUserStringObj(user)
+    }, [])
     return (
         <div>{user && <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']} items={items} />}</div>
     )

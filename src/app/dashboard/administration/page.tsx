@@ -19,7 +19,7 @@ const Clients = () => {
     const [password, setPassword] = useState<string>('')
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const [form] = Form.useForm()
-    const userStringObj = localStorage.getItem('user')
+    const [userStringObj, setUserStringObj] = useState('')
     const user: IUser = userStringObj && JSON.parse(userStringObj)
 
     const columns = [
@@ -125,6 +125,9 @@ const Clients = () => {
 
     useEffect(() => {
         loadUsers()
+        const user = localStorage.getItem('user')
+        if (user)
+            setUserStringObj(user)
     }, [])
 
     const onClose = () => {

@@ -38,8 +38,6 @@ export const UserForm = ({
         }
     ]
 
-    console.log('EMAIL', email)
-
     return (
         <Form
             requiredMark={'optional'}

@@ -1,16 +1,17 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Descriptions, DescriptionsProps, Form, Layout, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Ifields, UserForm } from './form/form';
 import { updateUserPassword } from './actions/actions';
 import './page.css'
+import { IUser } from './interfaces/user.interface';
 
 
 
 const Information = () => {
-    const data = localStorage.getItem('user')
-    const user = JSON.parse(data as string)
+    const [userStringObj, setUserStringObj] = useState('')
+    const user: IUser = userStringObj && JSON.parse(userStringObj)
     const [form] = Form.useForm()
     const items: DescriptionsProps['items'] = [
         {
@@ -39,6 +40,12 @@ const Information = () => {
             children: user.timestamp,
         },
     ];
+
+    useEffect(() => {
+        const user = localStorage.getItem('user')
+        if (user)
+            setUserStringObj(user)
+    }, [])
 
     const handleAction = (values: Ifields) => {
         const { password, confirmation } = values
