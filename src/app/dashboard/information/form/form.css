@@ -16,6 +16,6 @@
     }
 
     .submit {
-        @apply bg-[#6582EB] h-11 rounded w-32 font-quando text-white mt-8;
+        @apply bg-[#6582EB] h-11 rounded w-32 font-quando text-white;
     }
 }

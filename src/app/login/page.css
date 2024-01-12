@@ -9,11 +9,14 @@
         }
 
         .ant-form-item {
-            @apply w-full;
+            @apply w-full h-28;
+        }
+        input {
+            @apply h-11;
         }
 
         button {
-            @apply bg-soft-red font-quicksand w-full text-white font-bold ;
+            @apply bg-soft-red h-11 rounded w-32 font-quando text-white mt-8;
         }
     }
 

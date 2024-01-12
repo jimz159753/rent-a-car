@@ -24,7 +24,7 @@ const Dashboard = (props: DashboardProps) => {
             <Layout>
                 <Header style={{ padding: 0, background: colorBgContainer }} />
                 <Content>
-                    <section className='flex justify-center'>
+                    <section className='flex justify-center h-screen'>
                         {props.children}
                     </section>
                 </Content>
