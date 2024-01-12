@@ -25,7 +25,7 @@ const Information = () => {
         },
         {
             key: '3',
-            label: 'dirección',
+            label: 'Dirección',
             children: user.address,
         },
         {

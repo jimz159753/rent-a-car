@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { ActionEnum, FieldType, IClient, IDocument, IVehicle } from './interfaces/document.interface'
 import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
 import { DocumentForm } from './form/form'
-import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Spin, Table, message } from 'antd'
+import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from 'antd'
 import Link from 'next/link'
 import './page.css'
 
@@ -55,7 +55,17 @@ const Documents = () => {
             key: 'timestamp',
             render: (timestamp: string, item: IDocument, idx: number) => <div className='flex justify-between'>
                 <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
-                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteDocument(item._id)} />
+                <Popconfirm
+                    title="Borrar registro"
+                    okText="Si"
+                    cancelText="No"
+                    onConfirm={() => deleteDocument(item._id)}
+                    description="¿Seguro que quieres borrar este registro?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }}
+                    />}
+                >
+                    <DeleteOutlined style={{ color: '#E74E4E' }} />
+                </Popconfirm>
             </div>
         },
     ]

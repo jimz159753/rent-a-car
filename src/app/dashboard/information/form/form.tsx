@@ -32,6 +32,6 @@ export const UserForm = ({ handleAction, form }: FormProps) => <Form
         <Input.Password placeholder='confirmación' />
     </Form.Item>
     <Form.Item>
-        <Button className='submit' htmlType='submit' >Enviar</Button>
+        <Button className='submit' htmlType='submit' >Guardar</Button>
     </Form.Item>
 </Form>

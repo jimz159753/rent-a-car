@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { ClientForm } from './form/form'
 import { ActionEnum, FieldType, IClient } from './interfaces/client.interface'
 import { addClient, getClients, removeClient, updateClient } from './actions/actions'
-import { Button, Drawer, Image, Spin, Table, Form, message } from 'antd'
-import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Button, Drawer, Image, Spin, Table, Form, message, Popconfirm } from 'antd'
+import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import './page.css'
 
 const Clients = () => {
@@ -56,7 +56,17 @@ const Clients = () => {
             key: 'timestamp',
             render: (timestamp: string, item: IClient, idx: number) => <div className='flex justify-between'>
                 <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
-                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteClient(item._id)} />
+                <Popconfirm
+                    title="Borrar registro"
+                    okText="Si"
+                    cancelText="No"
+                    onConfirm={() => deleteClient(item._id)}
+                    description="¿Seguro que quieres borrar este registro?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }}
+                    />}
+                >
+                    <DeleteOutlined style={{ color: '#E74E4E' }} />
+                </Popconfirm>
             </div>
         },
     ]

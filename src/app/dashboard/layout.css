@@ -1,15 +1,17 @@
 .dashboard {
     @apply h-screen;
-}
-
-.sidebar {
-    @apply bg-black text-white w-1/5 h-screen;
-
-    img {
-        @apply py-10 mx-auto
+    
+    ul {
+        .ant-menu-item-selected {
+            @apply rounded-none;
+        }
     }
 
-    li {
-        @apply font-quando px-10 text-[18px] h-14 hover:bg-white/80 items-center flex
+    .ant-table-content {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+    button {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 }

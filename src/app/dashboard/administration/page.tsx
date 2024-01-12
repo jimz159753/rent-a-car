@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { UserForm } from './form/form'
 import { ActionEnum, FieldType, IUser, RoleEnum } from './interfaces/user.interface'
 import { addUser, getUsers, removeUser, updateUser } from './actions/actions'
-import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Spin, Table, Tag, message } from 'antd'
+import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { Button, Drawer, Form, Popconfirm, Spin, Table, Tag, message } from 'antd'
 import './page.css'
 
 const Clients = () => {
@@ -63,7 +63,17 @@ const Clients = () => {
             title: 'Acción',
             render: (password: string, item: IUser, idx: number) => <div className='flex justify-between'>
                 <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
-                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteUser(item._id)} />
+                <Popconfirm
+                    title="Borrar registro"
+                    okText="Si"
+                    cancelText="No"
+                    onConfirm={() => deleteUser(item._id)}
+                    description="¿Seguro que quieres borrar este registro?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }}
+                    />}
+                >
+                    <DeleteOutlined style={{ color: '#E74E4E' }} />
+                </Popconfirm>
             </div>
         },
     ]

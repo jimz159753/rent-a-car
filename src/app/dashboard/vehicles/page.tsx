@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
-import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Drawer, Spin, Table, Form, Tag, Button, message } from 'antd'
+import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { Drawer, Spin, Table, Form, Tag, Button, message, Popconfirm } from 'antd'
 import Link from 'next/link'
 import './page.css'
 
@@ -64,7 +64,17 @@ const Vehicles = () => {
             key: 'timestamp',
             render: (timestamp: string, item: IVehicle, idx: number) => <div className='flex justify-between'>
                 <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
-                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteVehicle(item._id)} />
+                <Popconfirm
+                    title="Borrar registro"
+                    okText="Si"
+                    cancelText="No"
+                    onConfirm={() => deleteVehicle(item._id)}
+                    description="¿Seguro que quieres borrar este registro?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }}
+                    />}
+                >
+                    <DeleteOutlined style={{ color: '#E74E4E' }} />
+                </Popconfirm>
             </div>
         },
     ]

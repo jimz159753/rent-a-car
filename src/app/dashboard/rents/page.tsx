@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/rent.interface'
 import { RentForm } from './form/form'
 import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
-import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Spin, Table, message } from 'antd'
+import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from 'antd'
 import './page.css'
 
 const Rent = () => {
@@ -71,7 +71,17 @@ const Rent = () => {
             key: 'timestamp',
             render: (timestamp: string, item: IRent, idx: number) => <div className='flex justify-between'>
                 <EditOutlined style={{ color: '#6582EB' }} onClick={() => rowUpdateDrawer(idx, item._id)} />
-                <DeleteOutlined style={{ color: '#E74E4E' }} onClick={() => deleteRent(item._id)} />
+                <Popconfirm
+                    title="Borrar registro"
+                    okText="Si"
+                    cancelText="No"
+                    onConfirm={() => deleteRent(item._id)}
+                    description="¿Seguro que quieres borrar este registro?"
+                    icon={<QuestionCircleOutlined style={{ color: 'red' }}
+                    />}
+                >
+                    <DeleteOutlined style={{ color: '#E74E4E' }} />
+                </Popconfirm>
             </div>
         },
     ]
