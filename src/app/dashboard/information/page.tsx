@@ -4,8 +4,8 @@ import { Avatar, Descriptions, DescriptionsProps, Form, Layout, message } from '
 import { UserOutlined } from '@ant-design/icons';
 import { Ifields, UserForm } from './form/form';
 import { updateUserPassword } from './actions/actions';
-import './page.css'
 import { IUser } from './interfaces/user.interface';
+import './page.css'
 
 
 

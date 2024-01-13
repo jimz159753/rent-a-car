@@ -8,7 +8,6 @@ import './page.css'
 const Login = () => {
     const rentACarIcon = require('../../../public/rent_a_car.png')
     const { push } = useRouter();
-
     type FieldType = {
         email: string;
         password: string;
@@ -18,6 +17,7 @@ const Login = () => {
         const { email, password } = values
         const response = await fetch(`${process.env.API_URL}/auth/login`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
