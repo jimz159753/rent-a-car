@@ -12,6 +12,7 @@ export const addDocument = async (newDocument: FieldType) => {
 
     await fetch(`${process.env.API_URL}/documents`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Authorization': `Bearer ${token}`,
         },
@@ -23,6 +24,7 @@ export const getDocuments = async () => {
     const token = localStorage.getItem('token')
     const response = await fetch(`${process.env.API_URL}/documents`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -36,6 +38,7 @@ export const updateDocument = async (id: string, updatedDocument: FieldType) => 
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/documents/${id}`, {
         method: 'PATCH',
+        credentials: 'include',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -48,6 +51,7 @@ export const removeDocument = async (id: string) => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.API_URL}/documents/${id}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -58,6 +62,7 @@ export const getClients = async () => {
     const token = localStorage.getItem('token')
     const response = await fetch(`${process.env.API_URL}/clients`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -71,6 +76,7 @@ export const getVehicles = async () => {
     const token = localStorage.getItem('token')
     const response = await fetch(`${process.env.API_URL}/vehicles`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
