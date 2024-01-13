@@ -19,7 +19,7 @@ export interface IClient {
 }
 
 export interface IVehicle {
-    _id?: string;
+    _id: string;
     model: string;
     image?: string;
     brand: string;
@@ -40,8 +40,8 @@ export enum ActionEnum {
 }
 
 export type FieldType = {
-    client: string;
-    vehicle: string;
+    client: string | IClient;
+    vehicle: string | IVehicle;
     days: string;
     payment: string;
     total: string;

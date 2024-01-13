@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ActionEnum, FieldType, IClient, IRent, IVehicle } from './interfaces/rent.interface'
+import { ActionEnum, FieldType, IClient, IRent, IVehicle, StatusEnum } from './interfaces/rent.interface'
 import { RentForm } from './form/form'
-import { addRent, getClients, getRents, getVehicles, removeRent, updateRent } from './actions/actions'
-import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { addRent, getClients, getRents, getVehicles, removeRent, updateVehicle, updateRent } from './actions/actions'
+import { CheckOutlined, DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined, RollbackOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from 'antd'
 import './page.css'
 
@@ -24,21 +24,28 @@ const Rent = () => {
 
     const columns = [
         {
-            title: 'Id',
-            dataIndex: '_id',
+            title: 'Alquilar',
+            dataIndex: 'vehicle',
             key: '_id',
+            render: (vehicle: IVehicle, item: IRent) => <div className='text-center'>
+                {vehicle.status === StatusEnum.AVAILABLE ?
+                    <CheckOutlined onClick={() => rentVehicle(item._id, item)} style={{ color: '#6582EB' }} />
+                    :
+                    <RollbackOutlined onClick={() => rentVehicle(item._id, item)} style={{ color: '#E74E4E' }} />
+                }
+            </div>
         },
         {
             title: 'Cliente',
             dataIndex: 'client',
             key: '_id',
-            render: (client: IClient, item: IRent) => <p>{item.client.name}</p>
+            render: (client: IClient) => <p>{client.name}</p>
         },
         {
             title: 'Vehículo',
             dataIndex: 'vehicle',
             key: '_id',
-            render: (vehicle: IVehicle, item: IRent) => <p>{item.vehicle.model}</p>
+            render: (vehicle: IVehicle) => <p>{vehicle.model}</p>
         },
         {
             title: 'Dias',
@@ -77,7 +84,7 @@ const Rent = () => {
                     cancelText="No"
                     onConfirm={() => deleteRent(item._id)}
                     description="¿Seguro que quieres borrar este registro?"
-                    icon={<QuestionCircleOutlined style={{ color: 'red' }}
+                    icon={<QuestionCircleOutlined style={{ color: '#E74E4E' }}
                     />}
                 >
                     <DeleteOutlined style={{ color: '#E74E4E' }} />
@@ -130,6 +137,16 @@ const Rent = () => {
         await loadRents()
     }
 
+    const rentVehicle = async (id: string, item: IRent) => {
+        const status = item.vehicle.status === StatusEnum.AVAILABLE ? StatusEnum.RENTED : StatusEnum.AVAILABLE
+        const updatedVehicle = { ...item.vehicle, status }
+        const updatedRent = { ...item, vehicle: updatedVehicle }
+        await updateVehicle(item.vehicle._id, updatedVehicle)
+        await editRent(id, updatedRent)
+        await loadRents()
+        message.success(status === StatusEnum.AVAILABLE ? 'Vehículo devuelto' : 'Vehículo alquilado')
+    }
+
     const loadDropdrowns = async () => {
         const clients = await getClients()
         const vehicles = await getVehicles()
@@ -149,8 +166,8 @@ const Rent = () => {
     }
 
     const handleAction = (values: FieldType) => {
-        const clientObj = JSON.parse(values.client)
-        const vehicleObj = JSON.parse(values.vehicle)
+        const clientObj = JSON.parse(values.client as string)
+        const vehicleObj = JSON.parse(values.vehicle as string)
         const rent = {
             client: clientObj,
             vehicle: vehicleObj,
