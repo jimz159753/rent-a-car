@@ -6,8 +6,6 @@ import { Ifields, UserForm } from './form/form';
 import { updateUserPassword } from './actions/actions';
 import { IUser } from './interfaces/user.interface';
 import './page.css'
-import 'antd/dist/antd.css';
-
 
 const Information = () => {
     const [userStringObj, setUserStringObj] = useState('')
