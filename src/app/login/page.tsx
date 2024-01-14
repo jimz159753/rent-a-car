@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { Button, Input, Form } from 'antd';
+import Cookies from "js-cookie";
 import './page.css'
 
 const Login = () => {
@@ -25,6 +26,7 @@ const Login = () => {
         })
         const data = await response.json()
         if (data.token) {
+            Cookies.set('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user))
             localStorage.setItem('token', data.token)
             push('/dashboard/information')
