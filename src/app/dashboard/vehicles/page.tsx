@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ActionEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
+import { ActionEnum, CategoryEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
@@ -17,6 +17,7 @@ const Vehicles = () => {
     const [plate, setPlate] = useState<string>('')
     const [price, setPrice] = useState<string>('')
     const [status, setStatus] = useState<StatusEnum>(StatusEnum.AVAILABLE)
+    const [category, setCategory] = useState<CategoryEnum>(CategoryEnum.SEDAN)
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const [form] = Form.useForm()
 
@@ -31,6 +32,11 @@ const Vehicles = () => {
             dataIndex: 'model',
             key: 'model',
             render: (model: string, item: IVehicle) => <Link target="_blank" href={`${process.env.FILES_URL}${item.image}`}>{model}</Link>
+        },
+        {
+            title: 'Categoría',
+            dataIndex: 'category',
+            key: 'category',
         },
         {
             title: 'Marca',
@@ -82,10 +88,11 @@ const Vehicles = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { model, brand, plate, price, status } = data[index]
+            const { model, category, brand, plate, price, status } = data[index]
             setId(id)
             form.setFieldsValue({
                 model,
+                category,
                 brand,
                 plate,
                 price,
@@ -133,6 +140,7 @@ const Vehicles = () => {
     const handleAction = (values: FieldType) => {
         const vehicle = {
             model: values.model,
+            category: values.category,
             brand: values.brand,
             plate: values.plate,
             price: values.price,
@@ -143,6 +151,7 @@ const Vehicles = () => {
             registerVehicle(vehicle)
             form.resetFields()
             setModel('')
+            setCategory(CategoryEnum.SEDAN)
             setBrand('')
             setPlate('')
             setPrice('')
@@ -176,6 +185,7 @@ const Vehicles = () => {
                     plate={plate}
                     price={price}
                     status={status}
+                    category={category}
                 />
             </Drawer>
         </div>

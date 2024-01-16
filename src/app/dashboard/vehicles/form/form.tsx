@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActionEnum, FieldType, StatusEnum } from '../interfaces/vehicle.interface'
+import { ActionEnum, CategoryEnum, FieldType, StatusEnum } from '../interfaces/vehicle.interface'
 import { Button, Form, Input, Select, Upload, UploadProps, message } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import './form.css'
@@ -11,6 +11,7 @@ interface FormProps {
     plate: string
     price: string
     status: StatusEnum
+    category: CategoryEnum
     action: ActionEnum
     handleAction: (values: FieldType) => void
     form: any;
@@ -38,6 +39,7 @@ export const VehicleForm = ({
     plate,
     price,
     status,
+    category,
     action,
     handleAction,
     form }: FormProps) => {
@@ -52,6 +54,25 @@ export const VehicleForm = ({
         }
     ]
 
+    const dropCategory = [
+        {
+            label: CategoryEnum.SEDAN,
+            value: CategoryEnum.SEDAN
+        },
+        {
+            label: CategoryEnum.SUV,
+            value: CategoryEnum.SUV
+        },
+        {
+            label: CategoryEnum.MINIVAN,
+            value: CategoryEnum.MINIVAN
+        },
+        {
+            label: CategoryEnum.VAN,
+            value: CategoryEnum.VAN
+        },
+    ]
+
     return (
         <Form
             requiredMark={'optional'}
@@ -61,7 +82,8 @@ export const VehicleForm = ({
                 brand,
                 plate,
                 price,
-                status
+                status,
+                category
             }}
             className='vehicles-form'
             onFinish={handleAction}>
@@ -99,6 +121,13 @@ export const VehicleForm = ({
                 rules={[{ required: true, message: 'Estatus requerido.' }]}
             >
                 <Select placeholder='selecciona un estatus' options={dropStatus} />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Categoría"
+                name="category"
+                rules={[{ required: true, message: 'Categoría requerido.' }]}
+            >
+                <Select placeholder='selecciona una categoría' options={dropCategory} />
             </Form.Item>
             {action === ActionEnum.ADD &&
                 <Form.Item<FieldType>

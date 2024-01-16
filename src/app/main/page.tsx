@@ -1,14 +1,16 @@
 "use client";
 import React from 'react'
-import { Navbar } from '../components/ui/Navbar'
 import Image from 'next/image'
-import './page.css'
 import { Categories } from '../components/ui/Categories'
-import { Footer } from '../components/ui/Footer'
+import { MainForm } from './form/form';
+import { Form } from 'antd';
+import { Ifields } from './interface/main.interface';
+import { Container } from '../components/ui/Container';
+import { useRouter } from 'next/navigation';
+import './page.css'
 
 
 const Main = () => {
-    const cityBackground = require('../../../public/city_background.png')
     const aboutUsImg = require('../../../public/about_us.png')
     const freeWorriesImg = require('../../../public/free_worries.png')
     const aboutUs = `
@@ -16,31 +18,39 @@ const Main = () => {
     const freeWorries = `
     Asistencia personalizada 24/7 sin costo adicional a tu renta en caso de emergencias de salud o contratiempos de viaje
     `
-    return (
-        <div>
-            <Navbar />
-            <Image src={cityBackground} className='city-background' alt="rent a car" />
-            <div id='about' className='main-container'>
+    const [form] = Form.useForm()
+    const router = useRouter();
 
-                <div className='about-us'>
-                    <div className='about-us-text'>
-                        <h1>Nosotros</h1>
-                        <p>{aboutUs}</p>
+    const handleAction = (values: Ifields) => {
+        const { agency, startDate, endDate } = values
+        const startDateFormat = startDate.format('DD-MM-YYYY')
+        const endDateFormat = endDate.format('DD-MM-YYYY')
+        router.push(`/register?agency=${agency}&startDate=${startDateFormat}&endDate=${endDateFormat}`);
+    }
+    return (
+        <Container>
+            <div>
+                <MainForm handleAction={handleAction} form={form} />
+                <div id='about' className='main-container'>
+                    <div className='about-us'>
+                        <div className='about-us-text'>
+                            <h1>Nosotros</h1>
+                            <p>{aboutUs}</p>
+                        </div>
+                        <Image src={aboutUsImg} className='about-us-img' alt="rent a car" />
                     </div>
-                    <Image src={aboutUsImg} className='about-us-img' alt="rent a car" />
-                </div>
-                <div className='free-worries'>
-                    <Image src={freeWorriesImg} className='free-worries-img' alt="rent a car" />
-                    <div className='free-worries-text'>
-                        <h1>Viaja libre de preocupaciones</h1>
-                        <p>{freeWorries}</p>
+                    <div className='free-worries'>
+                        <Image src={freeWorriesImg} className='free-worries-img' alt="rent a car" />
+                        <div className='free-worries-text'>
+                            <h1>Viaja libre de preocupaciones</h1>
+                            <p>{freeWorries}</p>
+                        </div>
                     </div>
+                    <h1 className='text-center font-quando text-[24px] opacity-60'>Tipo de vehículos</h1>
+                    <Categories />
                 </div>
-                <h1 className='text-center font-quando text-[24px] opacity-60'>Tipo de vehículos</h1>
-                <Categories />
             </div>
-            <Footer />
-        </div>
+        </Container>
     )
 }
 

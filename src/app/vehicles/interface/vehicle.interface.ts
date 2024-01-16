@@ -10,25 +10,15 @@ export interface IVehicle {
     timestamp?: string;
 }
 
-export enum ActionEnum {
-    ADD = 'Add',
-    UPDATE = 'Update'
-}
-
 export enum StatusEnum {
     AVAILABLE = 'Disponible',
     RENTED = 'Alquildo'
 }
 
-export type IDropdownOption = {
-    value: StatusEnum;
-    label: string;
-}
-
 export type FieldType = {
     model: string;
-    category: CategoryEnum;
     image: string;
+    category: CategoryEnum;
     brand: string;
     plate: string;
     price: string;
@@ -40,4 +30,10 @@ export enum CategoryEnum {
     SUV = 'SUV',
     MINIVAN = 'MiniVan',
     VAN = 'Van'
+}
+
+export interface VehicleProps {
+    searchParams: {
+        category: CategoryEnum
+    }
 }

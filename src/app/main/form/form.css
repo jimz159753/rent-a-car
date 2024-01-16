@@ -1,0 +1,23 @@
+.main-form {
+    @apply w-1/6 bg-white absolute top-1/4 left-[5%];
+
+    .ant-form-item {
+        @apply m-0 h-24 flex justify-center items-center;
+
+        .ant-row {
+            @apply flex flex-col items-start;
+        }
+
+        .ant-col label::after {
+            @apply content-none;
+        }
+
+        .ant-select, input {
+            @apply h-11;
+        }
+    }
+
+    .submit {
+        @apply bg-[#E74E4E] h-11 rounded w-32 font-quando text-white;
+    }
+}
