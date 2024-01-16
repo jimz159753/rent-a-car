@@ -4,6 +4,8 @@ export interface IRent {
     vehicle: IVehicle;
     days: string;
     payment: string;
+    startDate: string;
+    endDate: string;
     total: string;
     description: string;
     timestamp?: string;
@@ -42,6 +44,8 @@ export enum ActionEnum {
 export type FieldType = {
     client: string | IClient;
     vehicle: string | IVehicle;
+    startDate: string;
+    endDate: string;
     days: string;
     payment: string;
     total: string;

@@ -1,8 +1,27 @@
 .vehicle-list {
-    @apply flex justify-center gap-16 mb-32;
+    @apply flex flex-wrap w-2/3 justify-between mb-32 items-center;
 
     .ant-card {
-        @apply w-[550px] flex flex-col items-center
+        @apply w-[550px] flex flex-col items-center mb-10;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+        .ant-card-head {
+            @apply mr-auto;
+        }
+
+        .ant-card-cover {
+            .ant-image-img {
+                @apply w-auto m-0;
+            }
+        }
+
+        .ant-card-body {
+            @apply flex flex-col gap-5;
+
+            button {
+                @apply bg-[#E74E4E] h-11 rounded font-quando text-white;
+            }
+        }
     }
 
 }

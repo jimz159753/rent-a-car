@@ -15,13 +15,13 @@ export const Footer = () => {
         <div id='contact' className='footer'>
             <div className='info'>
                 <div className='social-media'>
-                    <Link href='https://www.instagram.com/rhb_rentadeautos/?igshid=MzMyNGUyNmU2YQ%3D%3D'>
+                    <Link href='https://www.instagram.com'>
                         <Image src={instagramIcon} className='icon' alt="rent a car" />
                     </Link>
-                    <Link href='https://www.facebook.com/profile.php?id=100076404669982&mibextid=LQQJ4d'>
+                    <Link href='https://www.facebook.com'>
                         <Image src={facebookIcon} className='icon' alt="rent a car" />
                     </Link>
-                    <Link href='https://wa.me/5216727238767'>
+                    <Link href=''>
                         <Image src={whatsappIcon} className='icon' alt="rent a car" />
                     </Link>
                 </div>
@@ -37,8 +37,6 @@ export const Footer = () => {
                     <div className='data'>
                         <h1>Contáctanos</h1>
                         <p>Reservaciones:</p>
-                        <p>333 171 2021 ó 333 945 4500</p>
-                        <p>SAN JUAN BOSCO #4783, LOMAS DE GUADALUPE</p>
                     </div>
                 </div>
                 <div className='separate' />

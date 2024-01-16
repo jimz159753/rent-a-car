@@ -17,6 +17,8 @@ const Rent = () => {
     const [description, setDescription] = useState<string>('')
     const [client, setClient] = useState<string>('')
     const [vehicle, setVehicle] = useState<string>('')
+    const [startDate, setStartDate] = useState<string>('')
+    const [endDate, setEndDate] = useState<string>('')
     const [dropClients, setDropClients] = useState<IClient[]>([])
     const [dropVehicles, setDropVehicles] = useState<IVehicle[]>([])
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
@@ -63,12 +65,22 @@ const Rent = () => {
             key: 'total',
         },
         {
+            title: 'Día de entrada',
+            dataIndex: 'startDate',
+            key: 'startDate',
+        },
+        {
+            title: 'Día de salida',
+            dataIndex: 'endDate',
+            key: 'endDate',
+        },
+        {
             title: 'Descripción',
             dataIndex: 'description',
             key: 'description',
         },
         {
-            title: 'Fecha',
+            title: 'Fecha de creación',
             dataIndex: 'timestamp',
             key: 'timestamp',
         },
@@ -96,7 +108,7 @@ const Rent = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { client, vehicle, days, payment, total, description } = data[index]
+            const { client, vehicle, days, payment, total, startDate, endDate, description } = data[index]
             setId(id)
             form.setFieldsValue({
                 client: client.name,
@@ -104,6 +116,8 @@ const Rent = () => {
                 days,
                 payment,
                 total,
+                startDate,
+                endDate,
                 description
             })
         }
@@ -122,8 +136,8 @@ const Rent = () => {
         setData(data)
     }
 
-    const registerRent = async (document: FieldType) => {
-        await addRent(document)
+    const registerRent = async (rent: FieldType) => {
+        await addRent(rent)
         await loadRents()
     }
 
@@ -168,12 +182,15 @@ const Rent = () => {
     const handleAction = (values: FieldType) => {
         const clientObj = JSON.parse(values.client as string)
         const vehicleObj = JSON.parse(values.vehicle as string)
+        console.log(values)
         const rent = {
             client: clientObj,
             vehicle: vehicleObj,
             days: values.days,
             payment: values.payment,
             total: values.total,
+            startDate: values.startDate,
+            endDate: values.endDate,
             description: values.description
         }
 
@@ -185,6 +202,8 @@ const Rent = () => {
             setDays('')
             setPayment('')
             setTotal('')
+            setStartDate('')
+            setEndDate('')
             setDescription('')
             message.success('Datos agregados')
         } else {
@@ -224,6 +243,8 @@ const Rent = () => {
                         dropClients={dropClients}
                         dropVehicles={dropVehicles}
                         form={form}
+                        startDate={startDate}
+                        endDate={endDate}
                     />}
             </Drawer>
         </div >

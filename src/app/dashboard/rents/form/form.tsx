@@ -1,13 +1,16 @@
 import React from 'react'
 import { ActionEnum, FieldType, IClient, IVehicle } from '../interfaces/rent.interface'
-import { Button, Form, Input, Select } from 'antd'
+import { Button, DatePicker, Form, Input, InputNumber, Select } from 'antd'
 import './form.css'
+import { Dayjs } from 'dayjs'
 
 interface FormProps {
     setOpen: (e: boolean) => void
     days: string
     payment: string
     total: string
+    startDate: string
+    endDate: string
     description: string
     action: ActionEnum
     dropClients: IClient[];
@@ -25,6 +28,8 @@ export const RentForm = ({
     days,
     payment,
     total,
+    startDate,
+    endDate,
     description,
     action,
     dropClients,
@@ -42,10 +47,16 @@ export const RentForm = ({
                 days,
                 payment,
                 total,
+                startDate,
+                endDate,
                 description
             }}
             className='rents-form'
-            onFinish={handleAction}>
+            onFinish={(values) => {
+                values.startDate = values.startDate.format('DD-MM-YYYY')
+                values.endDate = values.endDate.format('DD-MM-YYYY')
+                handleAction(values)
+            }}>
             <Form.Item<FieldType>
                 label="Cliente"
                 name="client"
@@ -65,21 +76,41 @@ export const RentForm = ({
                 name="days"
                 rules={[{ required: true, message: 'Dias requerido.' }]}
             >
-                <Input placeholder='dias' />
+                <InputNumber placeholder='dias' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Anticipo"
                 name="payment"
                 rules={[{ required: true, message: 'Anticipo requerido.' }]}
             >
-                <Input placeholder='payment' />
+                <InputNumber
+                    formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+                    placeholder='payment' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Total"
                 name="total"
                 rules={[{ required: true, message: 'Total requerido.' }]}
             >
-                <Input placeholder='total' />
+                <InputNumber
+                    formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+                    placeholder='total' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Día de entrada"
+                name="startDate"
+                rules={[{ required: true, message: 'Día requerido.' }]}
+            >
+                <DatePicker placeholder='descripción' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Día de salída"
+                name="endDate"
+                rules={[{ required: true, message: 'Día requerido.' }]}
+            >
+                <DatePicker placeholder='descripción' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Descripción"

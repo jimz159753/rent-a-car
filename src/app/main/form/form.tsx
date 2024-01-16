@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, DatePicker, Form, Input } from 'antd'
-import { EnvironmentOutlined } from '@ant-design/icons'
+import { FaLocationDot } from "react-icons/fa6";
 import { Ifields } from '../interface/main.interface'
 import './form.css'
 
@@ -21,7 +21,7 @@ export const MainForm = ({ form, handleAction }: FormProps) => {
                 name="agency"
                 rules={[{ required: true, message: 'Lugar requerido.' }]}
             >
-                <Input placeholder='inicio del viaje' prefix={<EnvironmentOutlined style={{ color: '#e74e4e' }} />} />
+                <Input placeholder='inicio del viaje' prefix={<FaLocationDot color='#e74e4e' />} />
             </Form.Item>
             <Form.Item
                 label="Entrega"
