@@ -4,6 +4,7 @@ import { Container } from '../components/ui/Container'
 import { IVehicle, VehicleProps } from './interface/vehicle.interface'
 import { getVehiclesByCategory } from './actions/actions'
 import { Card, Image } from 'antd';
+import './page.css'
 
 const { Meta } = Card;
 
@@ -21,19 +22,16 @@ const Vehicles = ({ searchParams }: VehicleProps) => {
     }, [])
     return (
         <Container>
-            <div>
+            <div className='vehicle-list'>
                 {data &&
-                    data.map(({ _id, image, brand, model }: IVehicle) => {
-                        console.log(`${process.env.FILES_URL}${image}`)
-                        return <Card
-                            key={_id}
-                            hoverable
-                            style={{ width: 240 }}
-                            cover={<Image alt="vehicle" src={`${process.env.FILES_URL}${image}`} preview={false} crossOrigin='anonymous' />}
-                        >
-                            <Meta title={brand} description={model} />
-                        </Card>
-                    })
+                    data.map(({ _id, image, brand, model }: IVehicle) => <Card
+                        key={_id}
+                        title={brand}
+                        cover={<Image alt="vehicle" src={`${process.env.FILES_URL}${image}`} preview={false} crossOrigin='anonymous' />}
+                    >
+                        <Meta title={brand} description={model} />
+                    </Card>
+                    )
                 }
             </div>
         </Container>

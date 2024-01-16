@@ -17,6 +17,10 @@
         .ant-select, input {
             @apply h-11;
         }
+
+        .ant-input-number {
+            @apply w-full;
+        }
     }
 
     button {

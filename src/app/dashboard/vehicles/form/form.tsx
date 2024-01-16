@@ -1,6 +1,6 @@
 import React from 'react'
-import { ActionEnum, CategoryEnum, FieldType, StatusEnum } from '../interfaces/vehicle.interface'
-import { Button, Form, Input, Select, Upload, UploadProps, message } from 'antd'
+import { ActionEnum, CategoryEnum, FieldType, StatusEnum, TransmitionEnum } from '../interfaces/vehicle.interface'
+import { Button, Form, Input, InputNumber, Select, Upload, UploadProps, message } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import './form.css'
 
@@ -10,6 +10,13 @@ interface FormProps {
     brand: string
     plate: string
     price: string
+    type: string
+    people: string
+    doors: string
+    suitcases: string
+    bags: string
+    transmition: TransmitionEnum
+    ac: boolean
     status: StatusEnum
     category: CategoryEnum
     action: ActionEnum
@@ -34,6 +41,13 @@ const props: UploadProps = {
 
 export const VehicleForm = ({
     setOpen,
+    type,
+    people,
+    doors,
+    suitcases,
+    bags,
+    transmition,
+    ac,
     model,
     brand,
     plate,
@@ -70,7 +84,29 @@ export const VehicleForm = ({
         {
             label: CategoryEnum.VAN,
             value: CategoryEnum.VAN
+        }
+    ]
+
+    const dropTransmition = [
+        {
+            label: TransmitionEnum.AUTOMATIC,
+            value: TransmitionEnum.AUTOMATIC
         },
+        {
+            label: TransmitionEnum.STANDARD,
+            value: TransmitionEnum.STANDARD
+        }
+    ]
+
+    const dropAC = [
+        {
+            label: 'Si',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        }
     ]
 
     return (
@@ -78,6 +114,13 @@ export const VehicleForm = ({
             requiredMark={'optional'}
             form={form}
             initialValues={{
+                type,
+                people,
+                doors,
+                suitcases,
+                bags,
+                transmition,
+                ac,
                 model,
                 brand,
                 plate,
@@ -88,12 +131,48 @@ export const VehicleForm = ({
             className='vehicles-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
+                label="Tipo"
+                name="type"
+                rules={[{ required: true, message: 'Tipo requerido.' }]}
+            >
+                <Input placeholder='tipo' />
+            </Form.Item>
+            <Form.Item<FieldType>
                 label="Modelo"
                 name="model"
                 rules={[{ required: true, message: 'Modelo requerido.' }]}
             >
-                <Input placeholder='dni' />
+                <Input placeholder='modelo' />
             </Form.Item>
+            <Form.Item<FieldType>
+                label="Cantidad de personas"
+                name="people"
+                rules={[{ required: true, message: 'Cantidad requerida.' }]}
+            >
+                <InputNumber placeholder='cantidad de personas' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Cantidad de puertas"
+                name="doors"
+                rules={[{ required: true, message: 'Cantidad requerida.' }]}
+            >
+                <InputNumber placeholder='cantidad de puertas' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Cantidad de maletas"
+                name="suitcases"
+                rules={[{ required: true, message: 'Cantidad requerida.' }]}
+            >
+                <InputNumber placeholder='cantidad de maletas' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Cantidad de mochilas"
+                name="bags"
+                rules={[{ required: true, message: 'Cantidad requerida.' }]}
+            >
+                <InputNumber placeholder='cantidad de mochilas' />
+            </Form.Item>
+
             <Form.Item<FieldType>
                 label="Marca"
                 name="brand"
@@ -113,7 +192,24 @@ export const VehicleForm = ({
                 name="price"
                 rules={[{ required: true, message: 'Precio requerido.' }]}
             >
-                <Input placeholder='price' />
+                <InputNumber
+                    formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+                    placeholder='price' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="AC"
+                name="ac"
+                rules={[{ required: true, message: 'AC requerido.' }]}
+            >
+                <Select placeholder='selecciona un AC' options={dropAC} />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Transmisión"
+                name="transmition"
+                rules={[{ required: true, message: 'Transmisión requerida.' }]}
+            >
+                <Select placeholder='selecciona una transmisión' options={dropTransmition} />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Estatus"

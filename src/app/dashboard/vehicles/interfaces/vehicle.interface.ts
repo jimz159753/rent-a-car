@@ -1,5 +1,12 @@
 export interface IVehicle {
     _id: string;
+    ac: boolean;
+    type: string;
+    people: string;
+    doors: string;
+    suitcases: string;
+    bags: string;
+    transmition: TransmitionEnum,
     category: CategoryEnum;
     model: string;
     image?: string;
@@ -9,6 +16,12 @@ export interface IVehicle {
     status: StatusEnum;
     timestamp?: string;
 }
+
+export enum TransmitionEnum {
+    AUTOMATIC = 'Automático',
+    STANDARD = 'Manual'
+}
+
 
 export enum ActionEnum {
     ADD = 'Add',
@@ -26,6 +39,13 @@ export type IDropdownOption = {
 }
 
 export type FieldType = {
+    type: string;
+    ac: boolean;
+    people: string;
+    doors: string;
+    suitcases: string;
+    bags: string;
+    transmition: TransmitionEnum,
     model: string;
     category: CategoryEnum;
     image: string;

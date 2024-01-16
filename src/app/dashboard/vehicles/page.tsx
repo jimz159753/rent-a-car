@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ActionEnum, CategoryEnum, FieldType, IVehicle, StatusEnum } from './interfaces/vehicle.interface'
+import { ActionEnum, CategoryEnum, FieldType, IVehicle, StatusEnum, TransmitionEnum } from './interfaces/vehicle.interface'
 import { VehicleForm } from './form/form'
 import { addVehicle, getVehicles, removeVehicle, updateVehicle } from './actions/actions'
 import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
@@ -16,6 +16,13 @@ const Vehicles = () => {
     const [brand, setBrand] = useState<string>('')
     const [plate, setPlate] = useState<string>('')
     const [price, setPrice] = useState<string>('')
+    const [type, setType] = useState<string>('')
+    const [ac, setAc] = useState<boolean>(false)
+    const [people, setPeople] = useState<string>('')
+    const [doors, setDoors] = useState<string>('')
+    const [suitcases, setSuitcases] = useState<string>('')
+    const [bags, setBags] = useState<string>('')
+    const [transmition, setTransmition] = useState<TransmitionEnum>(TransmitionEnum.AUTOMATIC)
     const [status, setStatus] = useState<StatusEnum>(StatusEnum.AVAILABLE)
     const [category, setCategory] = useState<CategoryEnum>(CategoryEnum.SEDAN)
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
@@ -88,9 +95,16 @@ const Vehicles = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { model, category, brand, plate, price, status } = data[index]
+            const { model, category, brand, plate, price, status, type, people, doors, suitcases, bags, transmition, ac } = data[index]
             setId(id)
             form.setFieldsValue({
+                type,
+                people,
+                doors,
+                suitcases,
+                bags,
+                transmition,
+                ac,
                 model,
                 category,
                 brand,
@@ -139,6 +153,13 @@ const Vehicles = () => {
 
     const handleAction = (values: FieldType) => {
         const vehicle = {
+            type: values.type,
+            ac: values.ac,
+            people: values.people,
+            doors: values.doors,
+            suitcases: values.suitcases,
+            bags: values.bags,
+            transmition: values.transmition,
             model: values.model,
             category: values.category,
             brand: values.brand,
@@ -150,11 +171,18 @@ const Vehicles = () => {
         if (action === ActionEnum.ADD) {
             registerVehicle(vehicle)
             form.resetFields()
+            setType('')
+            setAc(false)
+            setPeople('')
+            setDoors('')
+            setSuitcases('')
+            setBags('')
             setModel('')
-            setCategory(CategoryEnum.SEDAN)
             setBrand('')
             setPlate('')
             setPrice('')
+            setTransmition(TransmitionEnum.AUTOMATIC)
+            setCategory(CategoryEnum.SEDAN)
             setStatus(StatusEnum.AVAILABLE)
             message.success('Datos agregados')
         } else {
@@ -186,6 +214,13 @@ const Vehicles = () => {
                     price={price}
                     status={status}
                     category={category}
+                    type={type}
+                    people={people}
+                    doors={doors}
+                    suitcases={suitcases}
+                    bags={bags}
+                    transmition={transmition}
+                    ac={ac}
                 />
             </Drawer>
         </div>

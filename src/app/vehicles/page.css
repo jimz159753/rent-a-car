@@ -1,0 +1,8 @@
+.vehicle-list {
+    @apply flex justify-center gap-16 mb-32;
+
+    .ant-card {
+        @apply w-[550px] flex flex-col items-center
+    }
+
+}
