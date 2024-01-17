@@ -21,6 +21,18 @@
         .ant-input-number {
             @apply w-full;
         }
+
+        .ant-picker {
+            @apply w-full h-11;
+        }
+
+        .ant-picker-input {
+            @apply flex flex-row-reverse gap-2;
+
+            span {
+                @apply m-0;
+            }
+        }
     }
 
     button {
@@ -28,10 +40,10 @@
     }
 
     .cancel {
-        @apply bg-soft-red rounded w-32 font-quando text-white mt-8;
+        @apply bg-soft-red rounded w-32 font-quando text-white;
     }
 
     .submit {
-        @apply bg-[#6582EB] rounded w-32 font-quando text-white mt-8;
+        @apply bg-[#6582EB] rounded w-32 font-quando text-white;
     }
 }

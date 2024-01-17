@@ -37,7 +37,7 @@ export const MainForm = ({ form, handleAction }: FormProps) => {
             >
                 <DatePicker placeholder='confirmación' />
             </Form.Item>
-            <Form.Item>
+            <Form.Item className='submit-item'>
                 <Button className='submit' htmlType='submit' >Buscar</Button>
             </Form.Item>
         </Form>

@@ -16,7 +16,7 @@
         }
 
         .ant-card-body {
-            @apply flex flex-col gap-5;
+            @apply flex flex-col gap-5 p-0;
 
             button {
                 @apply bg-[#E74E4E] h-11 rounded font-quando text-white;

@@ -1,8 +1,8 @@
 .main-form {
-    @apply w-1/6 bg-white absolute top-1/4 left-[5%];
+    @apply w-1/5 bg-white absolute top-1/4 left-[5%] rounded;
 
     .ant-form-item {
-        @apply m-0 h-24 flex justify-center items-center;
+        @apply mx-10 h-20 mt-5;
 
         .ant-row {
             @apply flex flex-col items-start;
@@ -12,9 +12,28 @@
             @apply content-none;
         }
 
-        .ant-select, input {
+        .ant-form-item-control {
+            @apply w-full ;
+        }
+        input {
             @apply h-11;
         }
+
+        .ant-picker {
+            @apply w-full h-11;
+        }
+
+        .ant-picker-input {
+            @apply flex flex-row-reverse gap-2;
+
+            span {
+                @apply m-0 text-[#E74E4E];
+            }
+        }
+    }
+
+    .submit-item {
+        @apply flex justify-end;
     }
 
     .submit {

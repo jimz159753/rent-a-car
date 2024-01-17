@@ -77,7 +77,7 @@ export const DocumentForm = ({
                     </Upload>
                 </Form.Item>
             }
-            <div className='mt-10 flex space-x-10'>
+            <div className='mt-10 flex justify-between'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Form.Item>
                     <Button className='submit' htmlType='submit' >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>

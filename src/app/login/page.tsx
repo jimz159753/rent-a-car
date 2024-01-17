@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 import './page.css'
 
 const Login = () => {
-    const rentACarIcon = require('../../../public/rent_a_car.png')
     const { push } = useRouter();
     type FieldType = {
         email: string;
@@ -35,7 +34,6 @@ const Login = () => {
     return (
         <div className='login-form'>
             <Form className='login-container' onFinish={handleClick}>
-                <Image src={rentACarIcon} alt="rent a car" />
                 <Form.Item<FieldType>
                     name="email"
                     rules={[{ required: true, message: 'Correo eléctronico requerido.' }]}

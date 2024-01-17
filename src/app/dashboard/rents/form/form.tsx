@@ -103,14 +103,14 @@ export const RentForm = ({
                 name="startDate"
                 rules={[{ required: true, message: 'Día requerido.' }]}
             >
-                <DatePicker placeholder='descripción' />
+                <DatePicker placeholder='entrada' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Día de salída"
                 name="endDate"
                 rules={[{ required: true, message: 'Día requerido.' }]}
             >
-                <DatePicker placeholder='descripción' />
+                <DatePicker placeholder='salída' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Descripción"
@@ -119,7 +119,7 @@ export const RentForm = ({
             >
                 <Input placeholder='descripción' />
             </Form.Item>
-            <div className='mt-10 flex space-x-10'>
+            <div className='mt-10 flex justify-between'>
                 <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
                 <Form.Item>
                     <Button className='submit' htmlType='submit' >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
