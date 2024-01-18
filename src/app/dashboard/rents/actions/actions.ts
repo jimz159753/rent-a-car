@@ -1,4 +1,4 @@
-import { FieldType, IVehicle, StatusEnum } from "../interfaces/rent.interface"
+import { FieldType, IVehicle } from "../interfaces/rent.interface"
 
 export const addRent = async (newRent: FieldType) => {
     const token = localStorage.getItem('token')

@@ -53,6 +53,10 @@ export enum CategoryEnum {
 
 export interface VehicleProps {
     searchParams: {
-        category: CategoryEnum
+        category: CategoryEnum;
+        agency: string;
+        startDate: string;
+        endDate: string;
+        vehicle: string;
     }
 }

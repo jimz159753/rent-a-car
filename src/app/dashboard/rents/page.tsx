@@ -6,6 +6,7 @@ import { addRent, getClients, getRents, getVehicles, removeRent, updateVehicle, 
 import { CheckOutlined, DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined, RollbackOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from 'antd'
 import './page.css'
+import dayjs from 'dayjs'
 
 const Rent = () => {
     const [data, setData] = useState<IRent[]>()
@@ -68,11 +69,13 @@ const Rent = () => {
             title: 'Día de entrada',
             dataIndex: 'startDate',
             key: 'startDate',
+            render: (date: string) => dayjs(date).format('DD-MM-YYYY')
         },
         {
             title: 'Día de salida',
             dataIndex: 'endDate',
             key: 'endDate',
+            render: (date: string) => dayjs(date).format('DD-MM-YYYY')
         },
         {
             title: 'Descripción',
@@ -182,7 +185,6 @@ const Rent = () => {
     const handleAction = (values: FieldType) => {
         const clientObj = JSON.parse(values.client as string)
         const vehicleObj = JSON.parse(values.vehicle as string)
-        console.log(values)
         const rent = {
             client: clientObj,
             vehicle: vehicleObj,

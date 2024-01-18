@@ -53,8 +53,8 @@ export const RentForm = ({
             }}
             className='rents-form'
             onFinish={(values) => {
-                values.startDate = values.startDate.format('DD-MM-YYYY')
-                values.endDate = values.endDate.format('DD-MM-YYYY')
+                values.startDate = values.startDate.format('YYYY-MM-DD')
+                values.endDate = values.endDate.format('YYYY-MM-DD')
                 handleAction(values)
             }}>
             <Form.Item<FieldType>

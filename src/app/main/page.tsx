@@ -23,9 +23,9 @@ const Main = () => {
 
     const handleAction = (values: Ifields) => {
         const { agency, startDate, endDate } = values
-        const startDateFormat = startDate.format('DD-MM-YYYY')
-        const endDateFormat = endDate.format('DD-MM-YYYY')
-        router.push(`/register?agency=${agency}&startDate=${startDateFormat}&endDate=${endDateFormat}`);
+        const startDateFormat = startDate.format('YYYY-MM-DD')
+        const endDateFormat = endDate.format('YYYY-MM-DD')
+        router.push(`/vehicles?agency=${agency}&startDate=${startDateFormat}&endDate=${endDateFormat}`);
     }
     return (
         <Container>
