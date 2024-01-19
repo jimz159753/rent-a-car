@@ -7,6 +7,7 @@ import { CheckOutlined, DeleteOutlined, EditOutlined, LoadingOutlined, QuestionC
 import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from 'antd'
 import './page.css'
 import dayjs from 'dayjs'
+import { useRouter } from 'next/navigation'
 
 const Rent = () => {
     const [data, setData] = useState<IRent[]>()
@@ -24,6 +25,7 @@ const Rent = () => {
     const [dropVehicles, setDropVehicles] = useState<IVehicle[]>([])
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const [form] = Form.useForm()
+    const router = useRouter()
 
     const columns = [
         {
@@ -162,6 +164,11 @@ const Rent = () => {
         await editRent(id, updatedRent)
         await loadRents()
         message.success(status === StatusEnum.AVAILABLE ? 'Vehículo devuelto' : 'Vehículo alquilado')
+        if (status === StatusEnum.RENTED) {
+            const info = JSON.stringify(item)
+            router.push(`/dashboard/contract?item=${info}`)
+        }
+
     }
 
     const loadDropdrowns = async () => {
