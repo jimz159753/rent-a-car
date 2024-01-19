@@ -114,6 +114,8 @@ const Rent = () => {
         setAction(ActionEnum.UPDATE)
         if (data) {
             const { client, vehicle, days, payment, total, startDate, endDate, description } = data[index]
+            const startDayObj = dayjs(startDate)
+            const endDayObj = dayjs(endDate)
             setId(id)
             form.setFieldsValue({
                 client: client.name,
@@ -121,8 +123,8 @@ const Rent = () => {
                 days,
                 payment,
                 total,
-                startDate,
-                endDate,
+                startDate: startDayObj,
+                endDate: endDayObj,
                 description
             })
         }
@@ -168,7 +170,6 @@ const Rent = () => {
             const info = JSON.stringify(item)
             router.push(`/dashboard/contract?item=${info}`)
         }
-
     }
 
     const loadDropdrowns = async () => {

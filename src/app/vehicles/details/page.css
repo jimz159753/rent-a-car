@@ -27,10 +27,6 @@
         @apply mb-11
     }
 
-    button {
-        @apply bg-[#E74E4E] h-11 w-1/5 rounded font-quando text-white mb-32 mx-auto;
-    }
-
     .caracteristics {
         .title {
             @apply mb-11;

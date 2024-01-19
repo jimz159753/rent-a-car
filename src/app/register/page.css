@@ -1,0 +1,7 @@
+.register-container {
+    @apply mb-32;
+
+    button {
+        @apply bg-[#E74E4E] h-11 w-1/6 rounded font-quando text-white;
+    }
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ActionEnum, FieldType } from '../interfaces/client.interface'
-import { Button, Input, Form } from 'antd'
+import { Button, Input, Form, DatePicker } from 'antd'
 import './form.css'
 
 interface FormProps {
@@ -12,6 +12,9 @@ interface FormProps {
     name: string;
     phone: string;
     address: string;
+    email: string;
+    birthday: string;
+    country: string;
 }
 
 export const ClientForm = ({
@@ -22,6 +25,9 @@ export const ClientForm = ({
     name,
     phone,
     address,
+    email,
+    birthday,
+    country,
     form }: FormProps) => {
 
     return (
@@ -32,7 +38,10 @@ export const ClientForm = ({
                 dni,
                 name,
                 phone,
-                address
+                address,
+                email,
+                birthday,
+                country
             }}
             className='clients-form'
             onFinish={handleAction}>
@@ -61,6 +70,27 @@ export const ClientForm = ({
                 label="Dirección"
                 name="address"
                 rules={[{ required: true, message: 'Dirección requerido.' }]}
+            >
+                <Input placeholder='dirección' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Correo Eléctronico"
+                name="email"
+                rules={[{ required: true, message: 'Correo eléctronico requerido.' }]}
+            >
+                <Input placeholder='dirección' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="Fecha de nacimiento"
+                name="birthday"
+                rules={[{ required: true, message: 'Fecha de nacimiento requerido.' }]}
+            >
+                <DatePicker placeholder='entrada' />
+            </Form.Item>
+            <Form.Item<FieldType>
+                label="País"
+                name="country"
+                rules={[{ required: true, message: 'País requerido.' }]}
             >
                 <Input placeholder='dirección' />
             </Form.Item>

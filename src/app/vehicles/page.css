@@ -18,6 +18,14 @@
         .ant-card-body {
             @apply flex flex-col gap-5 p-0;
 
+            .price {
+                @apply text-center text-[24px] my-2 text-[#E74E4E];
+            }
+
+            .logo {
+                @apply flex items-center gap-1;
+            }
+
             button {
                 @apply bg-[#E74E4E] h-11 rounded font-quando text-white;
             }

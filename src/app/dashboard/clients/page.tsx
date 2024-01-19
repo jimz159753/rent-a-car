@@ -6,6 +6,7 @@ import { addClient, getClients, removeClient, updateClient } from './actions/act
 import { Button, Drawer, Image, Spin, Table, Form, message, Popconfirm } from 'antd'
 import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import './page.css'
+import dayjs from 'dayjs'
 
 const Clients = () => {
     const [data, setData] = useState<IClient[]>()
@@ -15,6 +16,9 @@ const Clients = () => {
     const [name, setName] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [address, setAddress] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [birthday, setBirthday] = useState<string>('')
+    const [country, setCountry] = useState<string>('')
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const [form] = Form.useForm()
 
@@ -74,13 +78,17 @@ const Clients = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { dni, name, phone, address } = data[index]
+            const { dni, name, phone, address, email, birthday, country } = data[index]
+            const birthdayObj = dayjs(birthday)
             setId(id)
             form.setFieldsValue({
                 dni,
                 name,
                 phone,
-                address
+                address,
+                email,
+                birthday: birthdayObj,
+                country
             })
         }
         setOpen(true)
@@ -126,7 +134,10 @@ const Clients = () => {
             dni: values.dni,
             name: values.name,
             phone: values.phone,
-            address: values.address
+            address: values.address,
+            email: values.email,
+            birthday: values.birthday,
+            country: values.country
         }
         if (action === ActionEnum.ADD) {
             registerClient(client)
@@ -135,6 +146,9 @@ const Clients = () => {
             setName('')
             setPhone('')
             setAddress('')
+            setEmail('')
+            setBirthday('')
+            setCountry('')
             message.success('Datos agregados')
         } else {
             editClient(id, client)
@@ -162,6 +176,9 @@ const Clients = () => {
                     name={name}
                     phone={phone}
                     address={address}
+                    email={email}
+                    birthday={birthday}
+                    country={country}
                 />
             </Drawer>
         </div >
