@@ -1,6 +1,10 @@
 .details-container {
     @apply flex flex-col justify-center mx-auto w-3/4;
 
+    .main-title {
+        @apply mb-24;
+    }
+
     h1 {
         @apply text-center text-xl font-bold;
     }
@@ -16,7 +20,7 @@
     }
 
     .description {
-        @apply w-2/3;
+        @apply w-2/4 ;
     }
 
     .caracteristics {
@@ -25,5 +29,11 @@
 
     button {
         @apply bg-[#E74E4E] h-11 w-1/5 rounded font-quando text-white mb-32 mx-auto;
+    }
+
+    .caracteristics {
+        .title {
+            @apply mb-11;
+        }
     }
 }

@@ -21,7 +21,7 @@ const Details = ({ searchParams }: VehicleProps) => {
     return (
         <Container>
             <div className='details-container'>
-                <h1>Renta un {vehicle.brand}</h1>
+                <h1 className='main-title'>Renta un {vehicle.brand}</h1>
                 <div className='flex justify-between gap-20'>
                     <Card
                         cover={<Image alt="vehicle" src={`${process.env.FILES_URL}${vehicle.image}`} preview={false} crossOrigin='anonymous' />}
@@ -38,21 +38,33 @@ const Details = ({ searchParams }: VehicleProps) => {
                     </div>
                 </div>
                 <div className='caracteristics'>
-                    <h1>Caracteristícas</h1>
-                    <Carousel autoplay>
-                        <div>
-                            <h3 style={contentStyle}>1</h3>
+                    <h1 className='title'>Caracteristícas</h1>
+                    <div className='flex gap-12'>
+                        <div className='flex flex-col items-center gap-5'>
+                            <h1>Número de pasajeros</h1>
+                            <p>{vehicle.people}</p>
                         </div>
-                        <div>
-                            <h3 style={contentStyle}>2</h3>
+                        <div className='flex flex-col items-center gap-5'>
+                            <h1>Número de puertas</h1>
+                            <p>{vehicle.doors}</p>
                         </div>
-                        <div>
-                            <h3 style={contentStyle}>3</h3>
+                        <div className='flex flex-col items-center gap-5'>
+                            <h1>Transmisión</h1>
+                            <p>{vehicle.transmition}</p>
                         </div>
-                        <div>
-                            <h3 style={contentStyle}>4</h3>
+                        <div className='flex flex-col items-center gap-5'>
+                            <h1>Aire acondicionado</h1>
+                            <p>{vehicle.ac ? 'A/C' : 'NO'}</p>
                         </div>
-                    </Carousel>
+                        <div className='flex flex-col items-center gap-5'>
+                            <h1>Maletas grandes</h1>
+                            <p>{vehicle.suitcases}</p>
+                        </div>
+                        <div className='flex flex-col items-center gap-5'>
+                            <h1>Maletas pequeñas</h1>
+                            <p>{vehicle.bags}</p>
+                        </div>
+                    </div>
                 </div>
                 <Button>RESERVAR AHORA</Button>
             </div>
