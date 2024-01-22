@@ -1,0 +1,34 @@
+.clients-form {
+    @apply flex flex-col w-1/4 mx-auto;
+
+    .ant-form-item {
+        @apply m-0 h-28;
+
+        .ant-row {
+            @apply flex flex-col items-start;
+        }
+
+        .ant-col label::after {
+            @apply content-none;
+        }
+
+        .ant-form-item-control {
+            @apply w-full ;
+        }
+        .ant-select, input {
+            @apply h-11;
+        }
+
+        .ant-picker {
+            @apply w-full h-11;
+        }
+
+        .ant-picker-input {
+            @apply flex flex-row-reverse gap-2;
+
+            span {
+                @apply m-0;
+            }
+        }
+    }
+}

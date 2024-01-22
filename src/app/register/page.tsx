@@ -1,20 +1,25 @@
 'use client'
 import React, { useState } from 'react'
 import { Container } from '../components/ui/Container'
-import { RegisterProps } from './interface/register.interface'
-import { Button, Steps, message } from 'antd'
+import { FieldType, RegisterProps } from './interface/register.interface'
+import { Button, Form, Steps, message } from 'antd'
 import Details from '../vehicles/details/page'
-import { UserForm } from './userFrom/userForm'
-import dayjs from 'dayjs'
+import { ClientForm } from './clientFrom/clientForm'
 import { PaymentForm } from './paymentForm/paymentForm'
+import dayjs from 'dayjs'
 import './page.css'
 
 const Register = ({ searchParams }: RegisterProps) => {
     const [current, setCurrent] = useState(0);
-    console.log(searchParams)
     const { startDate, endDate, agency } = searchParams
     const startDateFormat = dayjs(startDate).format('DD-MM-YYYY')
     const endDateFormat = dayjs(endDate).format('DD-MM-YYYY')
+    const [clientValues, setClientValues] = useState<FieldType>()
+    const [form] = Form.useForm()
+
+    const handleAction = (values: FieldType) => {
+        setClientValues(values)
+    }
 
     const steps = [
         {
@@ -27,7 +32,7 @@ const Register = ({ searchParams }: RegisterProps) => {
         },
         {
             title: '2. Completa el registro',
-            content: <UserForm />,
+            content: <ClientForm form={form} handleAction={handleAction} />,
         },
         {
             title: '3. Pago',
@@ -38,7 +43,15 @@ const Register = ({ searchParams }: RegisterProps) => {
     const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
     const next = () => {
-        setCurrent(current + 1);
+        if (current === 1) {
+            form.validateFields()
+                .then(values => {
+                    // STORE VALUES WHEN FINISHING THE STEPS
+                    setCurrent(current + 1);
+                })
+        } else {
+            setCurrent(current + 1);
+        }
     };
 
     const prev = () => {
@@ -49,7 +62,7 @@ const Register = ({ searchParams }: RegisterProps) => {
         <Container>
             <div className='register-container'>
                 <Steps current={current} items={items} />
-                <div className='my-32'>{steps[current].content}</div>
+                <div className='my-32 flex justify-center'>{steps[current].content}</div>
                 <div className='flex justify-center'>
                     {current > 0 && (
                         <Button style={{ margin: '0 8px' }} onClick={() => prev()}>

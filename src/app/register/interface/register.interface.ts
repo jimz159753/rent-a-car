@@ -16,3 +16,14 @@ export enum CategoryEnum {
     MINIVAN = 'MiniVan',
     VAN = 'Van'
 }
+
+
+export type FieldType = {
+    dni?: string;
+    name: string;
+    phone: string;
+    address: string;
+    email: string;
+    birthday: string;
+    country: string;
+}

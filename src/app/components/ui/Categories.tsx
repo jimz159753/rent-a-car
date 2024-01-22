@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import './Categories.css'
-import Link from 'next/link'
 
 export const Categories = () => {
     const categories = [
@@ -26,17 +25,11 @@ export const Categories = () => {
     return (
         <div id='cars' className='categories'>
             {
-                categories.map(category => <Link
-                    href={{
-                        pathname: '/vehicles',
-                        query: {
-                            category: category.title
-                        }
-                    }}
+                categories.map(category => <div
                     key={category.title} className='card'>
                     <Image src={category.image} alt="rent a car" />
                     <p>{category.title}</p>
-                </Link>)
+                </div>)
             }
         </div>
     )

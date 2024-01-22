@@ -1,8 +1,6 @@
-'use client'
 import React from 'react'
 import './page.css'
-import { Button, Image, Card } from 'antd'
-import { Container } from '@/app/components/ui/Container'
+import { Image, Card } from 'antd'
 import { VehicleProps } from '../interface/vehicle.interface'
 
 const { Meta } = Card;

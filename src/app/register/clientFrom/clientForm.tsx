@@ -1,57 +1,23 @@
+import { DatePicker, Form, Input } from 'antd'
 import React from 'react'
-import { ActionEnum, FieldType } from '../interfaces/client.interface'
-import { Button, Input, Form, DatePicker } from 'antd'
-import './form.css'
+import { FieldType } from '../interface/register.interface';
+import './clientForm.css'
+
 
 interface FormProps {
-    setOpen: (value: boolean) => void
-    action: ActionEnum
     handleAction: (values: FieldType) => void
     form: any;
-    dni: string;
-    name: string;
-    phone: string;
-    address: string;
-    email: string;
-    birthday: string;
-    country: string;
 }
 
 export const ClientForm = ({
-    setOpen,
-    action,
-    handleAction,
-    dni,
-    name,
-    phone,
-    address,
-    email,
-    birthday,
-    country,
-    form }: FormProps) => {
-
+    form,
+    handleAction }: FormProps) => {
     return (
         <Form
             requiredMark={'optional'}
             form={form}
-            initialValues={{
-                dni,
-                name,
-                phone,
-                address,
-                email,
-                birthday,
-                country
-            }}
             className='clients-form'
             onFinish={handleAction}>
-            <Form.Item<FieldType>
-                label="Dni"
-                name="dni"
-                rules={[{ required: true, message: 'Dni requerido.' }]}
-            >
-                <Input placeholder='dni' />
-            </Form.Item>
             <Form.Item<FieldType>
                 label="Nombre"
                 name="name"
@@ -85,7 +51,7 @@ export const ClientForm = ({
                 name="birthday"
                 rules={[{ required: true, message: 'Fecha de nacimiento requerido.' }]}
             >
-                <DatePicker placeholder='entrada' />
+                <DatePicker placeholder='fecha de nacimiento' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="País"
@@ -94,12 +60,6 @@ export const ClientForm = ({
             >
                 <Input placeholder='país' />
             </Form.Item>
-            <div className='mt-10 flex justify-between'>
-                <Button className='cancel' onClick={() => setOpen(false)} >Cancelar</Button>
-                <Form.Item>
-                    <Button className='submit' htmlType='submit' >{action === ActionEnum.ADD ? 'Agregar' : 'Actualizar'}</Button>
-                </Form.Item>
-            </div>
         </Form>
     )
 }
