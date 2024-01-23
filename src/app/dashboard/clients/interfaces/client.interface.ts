@@ -16,7 +16,6 @@ export enum ActionEnum {
 }
 
 export type FieldType = {
-    dni: string;
     name: string;
     phone: string;
     address: string;

@@ -3,17 +3,16 @@ export interface IRent {
     client: IClient;
     vehicle: IVehicle;
     days: string;
-    payment: string;
+    payment?: string;
     startDate: string;
     endDate: string;
     total: string;
-    description: string;
+    description?: string;
     timestamp?: string;
 }
 
 export interface IClient {
     _id?: string;
-    dni: string;
     name: string;
     phone: string;
     address: string;
@@ -47,7 +46,7 @@ export type FieldType = {
     startDate: string;
     endDate: string;
     days: string;
-    payment: string;
+    payment?: string;
     total: string;
-    description: string;
+    description?: string;
 }

@@ -8,7 +8,6 @@ interface FormProps {
     action: ActionEnum
     handleAction: (values: FieldType) => void
     form: any;
-    dni: string;
     name: string;
     phone: string;
     address: string;
@@ -21,7 +20,6 @@ export const ClientForm = ({
     setOpen,
     action,
     handleAction,
-    dni,
     name,
     phone,
     address,
@@ -35,7 +33,6 @@ export const ClientForm = ({
             requiredMark={'optional'}
             form={form}
             initialValues={{
-                dni,
                 name,
                 phone,
                 address,
@@ -45,13 +42,6 @@ export const ClientForm = ({
             }}
             className='clients-form'
             onFinish={handleAction}>
-            <Form.Item<FieldType>
-                label="Dni"
-                name="dni"
-                rules={[{ required: true, message: 'Dni requerido.' }]}
-            >
-                <Input placeholder='dni' />
-            </Form.Item>
             <Form.Item<FieldType>
                 label="Nombre"
                 name="name"

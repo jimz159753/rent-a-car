@@ -8,7 +8,6 @@ export interface IDocument {
 
 export interface IClient {
     _id: string;
-    dni: string;
     name: string;
     phone: string;
     address: string;

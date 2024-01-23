@@ -12,7 +12,6 @@ const Clients = () => {
     const [data, setData] = useState<IClient[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
-    const [dni, setDni] = useState<string>('')
     const [name, setName] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [address, setAddress] = useState<string>('')
@@ -30,14 +29,19 @@ const Clients = () => {
             key: '_id',
         },
         {
-            title: 'Dni',
-            dataIndex: 'dni',
-            key: 'dni',
-        },
-        {
             title: 'Nombre',
             dataIndex: 'name',
             key: 'name',
+        },
+        {
+            title: 'Correo eléctronico',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: 'Fecha de nacimiento',
+            dataIndex: 'birthday',
+            key: 'birthday',
         },
         {
             title: 'Teléfono',
@@ -78,11 +82,10 @@ const Clients = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { dni, name, phone, address, email, birthday, country } = data[index]
+            const { name, phone, address, email, birthday, country } = data[index]
             const birthdayObj = dayjs(birthday)
             setId(id)
             form.setFieldsValue({
-                dni,
                 name,
                 phone,
                 address,
@@ -131,7 +134,6 @@ const Clients = () => {
 
     const handleAction = (values: FieldType) => {
         const client = {
-            dni: values.dni,
             name: values.name,
             phone: values.phone,
             address: values.address,
@@ -142,7 +144,6 @@ const Clients = () => {
         if (action === ActionEnum.ADD) {
             registerClient(client)
             form.resetFields()
-            setDni('')
             setName('')
             setPhone('')
             setAddress('')
@@ -172,7 +173,6 @@ const Clients = () => {
                     action={action}
                     handleAction={handleAction}
                     form={form}
-                    dni={dni}
                     name={name}
                     phone={phone}
                     address={address}

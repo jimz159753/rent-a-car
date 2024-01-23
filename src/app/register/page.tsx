@@ -1,25 +1,23 @@
 'use client'
 import React, { useState } from 'react'
 import { Container } from '../components/ui/Container'
-import { FieldType, RegisterProps } from './interface/register.interface'
-import { Button, Form, Steps, message } from 'antd'
+import { IRent, IVehicle, RegisterProps } from './interface/register.interface'
+import { Button, Form, Steps } from 'antd'
 import Details from '../vehicles/details/page'
 import { ClientForm } from './clientFrom/clientForm'
-import { PaymentForm } from './paymentForm/paymentForm'
 import dayjs from 'dayjs'
 import './page.css'
+import { addRent } from './actions/actions'
+import { useRouter } from 'next/navigation'
 
 const Register = ({ searchParams }: RegisterProps) => {
     const [current, setCurrent] = useState(0);
-    const { startDate, endDate, agency } = searchParams
+    const { startDate, endDate, agency, vehicle } = searchParams
+    const vehicleObj: IVehicle = JSON.parse(vehicle)
     const startDateFormat = dayjs(startDate).format('DD-MM-YYYY')
     const endDateFormat = dayjs(endDate).format('DD-MM-YYYY')
-    const [clientValues, setClientValues] = useState<FieldType>()
     const [form] = Form.useForm()
-
-    const handleAction = (values: FieldType) => {
-        setClientValues(values)
-    }
+    const router = useRouter()
 
     const steps = [
         {
@@ -32,31 +30,39 @@ const Register = ({ searchParams }: RegisterProps) => {
         },
         {
             title: '2. Completa el registro',
-            content: <ClientForm form={form} handleAction={handleAction} />,
-        },
-        {
-            title: '3. Pago',
-            content: <PaymentForm />,
-        },
+            content: <ClientForm form={form} />,
+        }
     ];
 
     const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
     const next = () => {
-        if (current === 1) {
-            form.validateFields()
-                .then(values => {
-                    // STORE VALUES WHEN FINISHING THE STEPS
-                    setCurrent(current + 1);
-                })
-        } else {
-            setCurrent(current + 1);
-        }
+        setCurrent(current + 1);
     };
 
     const prev = () => {
         setCurrent(current - 1);
     };
+
+    const handlePayment = () => {
+        const days = dayjs(endDate).diff(dayjs(startDate), 'days')
+        const total = (days * Number(vehicleObj.price) * 100).toString()
+        form.validateFields()
+            .then(async (clientValues) => {
+                const newRent: IRent = {
+                    client: clientValues,
+                    vehicle: vehicleObj,
+                    days: days.toString(),
+                    total: total,
+                    startDate: startDateFormat,
+                    endDate: endDateFormat
+                }
+                const response = await addRent(newRent)
+                const session = await response.json()
+                router.push(session.url)
+
+            })
+    }
 
     return (
         <Container>
@@ -75,8 +81,8 @@ const Register = ({ searchParams }: RegisterProps) => {
                         </Button>
                     )}
                     {current === steps.length - 1 && (
-                        <Button onClick={() => message.success('Processing complete!')}>
-                            Done
+                        <Button onClick={handlePayment}>
+                            Pagar
                         </Button>
                     )}
                 </div>
