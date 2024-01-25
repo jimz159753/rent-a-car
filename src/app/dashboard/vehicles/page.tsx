@@ -59,6 +59,7 @@ const Vehicles = () => {
             title: 'Precio',
             dataIndex: 'price',
             key: 'price',
+            render: (price: string) => <p>${price ? Intl.NumberFormat().format(Number(price)) : 0}</p>
         },
         {
             title: 'Estatus',

@@ -2,7 +2,7 @@ import { FieldType, IVehicle } from "../interfaces/rent.interface"
 
 export const addRent = async (newRent: FieldType) => {
     const token = localStorage.getItem('token')
-    await fetch(`${process.env.API_URL}/rents`, {
+    return await fetch(`${process.env.API_URL}/rents`, {
         method: 'POST',
         credentials: 'include',
         headers: {

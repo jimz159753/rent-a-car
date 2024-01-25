@@ -13,7 +13,6 @@ const Rent = () => {
     const [data, setData] = useState<IRent[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
-    const [days, setDays] = useState<string>('')
     const [payment, setPayment] = useState<string>('')
     const [total, setTotal] = useState<string>('')
     const [description, setDescription] = useState<string>('')
@@ -50,7 +49,7 @@ const Rent = () => {
             title: 'Vehículo',
             dataIndex: 'vehicle',
             key: '_id',
-            render: (vehicle: IVehicle) => <p>{vehicle.model}</p>
+            render: (vehicle: IVehicle) => <p>{vehicle.brand} {vehicle.plate}</p>
         },
         {
             title: 'Dias',
@@ -61,21 +60,25 @@ const Rent = () => {
             title: 'Anticipo',
             dataIndex: 'payment',
             key: 'payment',
+            render: (payment: string) => <p>${payment ? Intl.NumberFormat().format(Number(payment)) : 0}</p>
         },
         {
             title: 'Total',
             dataIndex: 'total',
             key: 'total',
+            render: (total: string) => <p>${total ? Intl.NumberFormat().format(Number(total)) : 0}</p>
         },
         {
             title: 'Día de entrada',
             dataIndex: 'startDate',
             key: 'startDate',
+            render: (startDate: string) => <p>{dayjs(startDate).format('DD-MM-YYYY')}</p>
         },
         {
             title: 'Día de salida',
             dataIndex: 'endDate',
             key: 'endDate',
+            render: (endDate: string) => <p>{dayjs(endDate).format('DD-MM-YYYY')}</p>
         },
         {
             title: 'Descripción',
@@ -111,14 +114,13 @@ const Rent = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { client, vehicle, days, payment, total, startDate, endDate, description } = data[index]
+            const { client, vehicle, payment, total, startDate, endDate, description } = data[index]
             const startDayObj = dayjs(startDate)
             const endDayObj = dayjs(endDate)
             setId(id)
             form.setFieldsValue({
                 client: client.name,
                 vehicle: vehicle.model,
-                days,
                 payment,
                 total,
                 startDate: startDayObj,
@@ -142,8 +144,14 @@ const Rent = () => {
     }
 
     const registerRent = async (rent: FieldType) => {
-        await addRent(rent)
-        await loadRents()
+        const res = await addRent(rent)
+        const check = await res.json()
+        if (check.status === 404) {
+            message.info(check.message)
+        } else {
+            message.info('Datos agregados')
+            await loadRents()
+        }
     }
 
     const editRent = async (id: string, updatedRent: FieldType) => {
@@ -202,18 +210,18 @@ const Rent = () => {
             description: values.description
         }
 
+        console.log(rent)
+
         if (action === ActionEnum.ADD) {
             registerRent(rent)
             form.resetFields()
             setClient('')
             setVehicle('')
-            setDays('')
             setPayment('')
             setTotal('')
             setStartDate('')
             setEndDate('')
             setDescription('')
-            message.success('Datos agregados')
         } else {
             editRent(id, rent)
             message.success('Datos actualizados')
@@ -243,7 +251,6 @@ const Rent = () => {
                         setOpen={setOpen}
                         client={client}
                         vehicle={vehicle}
-                        days={days}
                         payment={payment}
                         total={total}
                         description={description}

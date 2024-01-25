@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Container } from '../components/ui/Container'
-import { CategoryEnum, IVehicle, TransmitionEnum, VehicleProps } from './interface/vehicle.interface'
-import { getVehicles, getVehiclesByCategory } from './actions/actions'
+import { IVehicle, TransmitionEnum, VehicleProps } from './interface/vehicle.interface'
+import { getVehicles } from './actions/actions'
 import { Button, Card, Image } from 'antd';
 import { FaUser, FaSuitcaseRolling, FaSuitcase, FaSnowflake, FaCarSide } from "react-icons/fa6";
 import { useRouter } from 'next/navigation';
-import './page.css'
 import dayjs, { Dayjs } from 'dayjs'
+import './page.css'
 
 const { Meta } = Card;
 
@@ -17,11 +17,6 @@ const Vehicles = ({ searchParams }: VehicleProps) => {
     const [agency, setAgency] = useState<string>('')
     const [endDate, setEndDate] = useState<Dayjs>()
     const router = useRouter();
-
-    const loadVehiclesByCategory = async (category: CategoryEnum) => {
-        const vehicles = await getVehiclesByCategory(category)
-        setData(vehicles)
-    }
 
     const loadVehiclesAvailable = async (startDate: string, endDate: string) => {
         const startDateObj = dayjs(startDate)
@@ -33,13 +28,10 @@ const Vehicles = ({ searchParams }: VehicleProps) => {
     }
 
     useEffect(() => {
-        const { category, startDate, endDate, agency } = searchParams
-        if (category) {
-            loadVehiclesByCategory(category)
-        } else {
-            loadVehiclesAvailable(startDate, endDate)
-            setAgency(agency)
-        }
+        const { startDate, endDate, agency } = searchParams
+        loadVehiclesAvailable(startDate, endDate)
+        setAgency(agency)
+
     }, [])
 
     return (
@@ -59,7 +51,7 @@ const Vehicles = ({ searchParams }: VehicleProps) => {
                         >
                             <Meta title={
                                 <div>
-                                    <p className='price'>{`$${startDate && endDate && Number(vehicle.price) * endDate.diff(startDate, 'days')}`}</p>
+                                    <p className='price'>{`$${startDate && endDate && Intl.NumberFormat().format(Number(Number(vehicle.price) * endDate.diff(startDate, 'days')))}`}</p>
                                     <div className='flex gap-5'>
                                         <div className='logo'>
                                             <FaUser size={16} />

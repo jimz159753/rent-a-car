@@ -6,7 +6,6 @@ import { Dayjs } from 'dayjs'
 
 interface FormProps {
     setOpen: (e: boolean) => void
-    days: string
     payment: string
     total: string
     startDate: string
@@ -25,7 +24,6 @@ export const RentForm = ({
     setOpen,
     client,
     vehicle,
-    days,
     payment,
     total,
     startDate,
@@ -44,7 +42,6 @@ export const RentForm = ({
             initialValues={{
                 client,
                 vehicle,
-                days,
                 payment,
                 total,
                 startDate,
@@ -53,6 +50,9 @@ export const RentForm = ({
             }}
             className='rents-form'
             onFinish={(values) => {
+                const vehicleObj = JSON.parse(values.vehicle)
+                values.total = (vehicleObj.price * Number(values.endDate.diff(values.startDate, 'days'))) - Number(values.payment)
+                values.days = values.endDate.diff(values.startDate, 'days')
                 values.startDate = values.startDate.format('YYYY-MM-DD')
                 values.endDate = values.endDate.format('YYYY-MM-DD')
                 handleAction(values)
@@ -72,31 +72,13 @@ export const RentForm = ({
                 <Select placeholder='selecciona un vehículo' options={dropVehicles} />
             </Form.Item>
             <Form.Item<FieldType>
-                label="Dias"
-                name="days"
-                rules={[{ required: true, message: 'Dias requerido.' }]}
-            >
-                <InputNumber placeholder='dias' />
-            </Form.Item>
-            <Form.Item<FieldType>
                 label="Anticipo"
                 name="payment"
-                rules={[{ required: true, message: 'Anticipo requerido.' }]}
             >
                 <InputNumber
                     formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
                     placeholder='payment' />
-            </Form.Item>
-            <Form.Item<FieldType>
-                label="Total"
-                name="total"
-                rules={[{ required: true, message: 'Total requerido.' }]}
-            >
-                <InputNumber
-                    formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
-                    placeholder='total' />
             </Form.Item>
             <Form.Item<FieldType>
                 label="Día de entrada"
@@ -115,7 +97,6 @@ export const RentForm = ({
             <Form.Item<FieldType>
                 label="Descripción"
                 name="description"
-                rules={[{ required: true, message: 'Descripción requerido.' }]}
             >
                 <Input placeholder='descripción' />
             </Form.Item>
