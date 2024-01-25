@@ -18,6 +18,7 @@ const Main = () => {
     const freeWorries = `
     Asistencia personalizada 24/7 sin costo adicional a tu renta en caso de emergencias de salud o contratiempos de viaje
     `
+    const cityBackground = require('../../../public/city_background.png')
     const [form] = Form.useForm()
     const router = useRouter();
 
@@ -30,6 +31,7 @@ const Main = () => {
     return (
         <Container>
             <div>
+                <Image src={cityBackground} className='h-5/6 mx-0 bg-cover mb-32 w-full' alt="rent a car" />
                 <MainForm handleAction={handleAction} form={form} />
                 <div id='about' className='main-container'>
                     <div className='about-us'>

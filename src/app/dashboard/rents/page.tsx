@@ -71,13 +71,11 @@ const Rent = () => {
             title: 'Día de entrada',
             dataIndex: 'startDate',
             key: 'startDate',
-            render: (date: string) => dayjs(date).format('DD-MM-YYYY')
         },
         {
             title: 'Día de salida',
             dataIndex: 'endDate',
             key: 'endDate',
-            render: (date: string) => dayjs(date).format('DD-MM-YYYY')
         },
         {
             title: 'Descripción',

@@ -1,7 +1,7 @@
 import { IRent } from "../interface/register.interface"
 
 export const addRent = async (newRent: IRent) => {
-    return await fetch(`${process.env.API_URL}/stripe`, {
+    return await fetch(`${process.env.API_URL}/stripe/session`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

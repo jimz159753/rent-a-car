@@ -1,5 +1,5 @@
 .vehicle-list {
-    @apply flex flex-wrap w-2/3 justify-between mb-32 items-center;
+    @apply flex flex-wrap w-2/3 justify-between my-32 items-center;
 
     .ant-card {
         @apply w-[550px] flex flex-col items-center mb-10;

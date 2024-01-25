@@ -60,7 +60,6 @@ const Register = ({ searchParams }: RegisterProps) => {
                 const response = await addRent(newRent)
                 const session = await response.json()
                 router.push(session.url)
-
             })
     }
 

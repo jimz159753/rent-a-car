@@ -1,17 +1,20 @@
 import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
 import './Navbar.css'
 
 export const Navbar = () => {
+
+    const scrolltoHash = function (element_id: string) {
+        const element = document.getElementById(element_id)
+        element?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+    }
+
     return (
         <div className='navbar'>
-            {/* <Image src={} width={100} height={100} alt="rent a car" /> */}
             <ul className='list'>
-                <li><Link href={'#about'}>Nosotros</Link></li>
-                <li><Link href={'#cars'}>Autos</Link></li>
-                <li><Link href={'#contact'}>Oficinas</Link></li>
-                <li><Link href={'#contact'}>Contacto</Link></li>
+                <li onClick={() => scrolltoHash('about')}>Nosotros</li>
+                <li onClick={() => scrolltoHash('cars')}>Autos</li>
+                <li onClick={() => scrolltoHash('contact')}>Oficinas</li>
+                <li onClick={() => scrolltoHash('contact')}>Contacto</li>
             </ul>
         </div>
     )
