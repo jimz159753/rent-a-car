@@ -27,7 +27,7 @@ const Details = ({ searchParams }: VehicleProps) => {
             </div>
             <div className='caracteristics'>
                 <h1 className='title'>Caracteristícas</h1>
-                <div className='flex gap-12 max-desktop:flex-col'>
+                <div className='flex gap-12 justify-center max-desktop:flex-col'>
                     <div className='flex flex-col items-center gap-5'>
                         <h2>Número de pasajeros</h2>
                         <p>{vehicle.people}</p>
