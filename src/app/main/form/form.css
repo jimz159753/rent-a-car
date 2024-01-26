@@ -1,5 +1,9 @@
 .main-form {
-    @apply w-1/5 bg-white absolute top-1/4 left-[5%] rounded;
+    @apply bg-white absolute top-1/4 left-[5%] rounded max-desktop:relative max-desktop:flex max-desktop:justify-center max-desktop:left-0;
+
+    form {
+        @apply w-80;
+    }
 
     .ant-form-item {
         @apply mx-10 h-20 mt-5;
@@ -33,7 +37,7 @@
     }
 
     .submit-item {
-        @apply flex justify-end;
+        @apply flex justify-end max-desktop:justify-center;
     }
 
     .submit {

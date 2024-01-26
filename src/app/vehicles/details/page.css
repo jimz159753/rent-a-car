@@ -20,12 +20,10 @@
     }
 
     .description {
-        @apply w-2/4 ;
+        @apply w-2/4 max-desktop:w-full;
     }
 
-    .caracteristics {
-        @apply mb-11
-    }
+    
 
     .caracteristics {
         .title {

@@ -1,7 +1,7 @@
 import React from 'react'
-import './page.css'
 import { Image, Card } from 'antd'
 import { VehicleProps } from '../interface/vehicle.interface'
+import './page.css'
 
 const { Meta } = Card;
 
@@ -10,7 +10,7 @@ const Details = ({ searchParams }: VehicleProps) => {
     return (
         <div className='details-container'>
             <h1 className='main-title'>Renta un {vehicle.brand}</h1>
-            <div className='flex justify-between gap-20'>
+            <div className='flex justify-between gap-20 max-desktop:flex-col max-desktop:gap-0 max-desktop:mb-11'>
                 <Card
                     cover={<Image alt="vehicle" src={`${process.env.FILES_URL}${vehicle.image}`} preview={false} crossOrigin='anonymous' />}
                 >
@@ -27,29 +27,29 @@ const Details = ({ searchParams }: VehicleProps) => {
             </div>
             <div className='caracteristics'>
                 <h1 className='title'>Caracteristícas</h1>
-                <div className='flex gap-12'>
+                <div className='flex gap-12 max-desktop:flex-col'>
                     <div className='flex flex-col items-center gap-5'>
-                        <h1>Número de pasajeros</h1>
+                        <h2>Número de pasajeros</h2>
                         <p>{vehicle.people}</p>
                     </div>
                     <div className='flex flex-col items-center gap-5'>
-                        <h1>Número de puertas</h1>
+                        <h2>Número de puertas</h2>
                         <p>{vehicle.doors}</p>
                     </div>
                     <div className='flex flex-col items-center gap-5'>
-                        <h1>Transmisión</h1>
+                        <h2>Transmisión</h2>
                         <p>{vehicle.transmition}</p>
                     </div>
                     <div className='flex flex-col items-center gap-5'>
-                        <h1>Aire acondicionado</h1>
+                        <h2>Aire acondicionado</h2>
                         <p>{vehicle.ac ? 'A/C' : 'NO'}</p>
                     </div>
                     <div className='flex flex-col items-center gap-5'>
-                        <h1>Maletas grandes</h1>
+                        <h2>Maletas grandes</h2>
                         <p>{vehicle.suitcases}</p>
                     </div>
                     <div className='flex flex-col items-center gap-5'>
-                        <h1>Maletas pequeñas</h1>
+                        <h2>Maletas pequeñas</h2>
                         <p>{vehicle.bags}</p>
                     </div>
                 </div>

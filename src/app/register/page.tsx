@@ -68,9 +68,9 @@ const Register = ({ searchParams }: RegisterProps) => {
             <div className='register-container'>
                 <Steps current={current} items={items} />
                 <div className='my-32 flex justify-center'>{steps[current].content}</div>
-                <div className='flex justify-center'>
+                <div className='flex justify-center gap-5'>
                     {current > 0 && (
-                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                        <Button onClick={() => prev()}>
                             Anterior
                         </Button>
                     )}

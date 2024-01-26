@@ -1,5 +1,5 @@
 .vehicle-list {
-    @apply flex flex-wrap w-2/3 justify-between my-32 items-center;
+    @apply flex flex-wrap w-2/3 justify-between my-32 items-center max-desktop:justify-center;
 
     .ant-card {
         @apply w-[550px] flex flex-col items-center mb-10;
@@ -27,7 +27,7 @@
             }
 
             button {
-                @apply bg-[#E74E4E] h-11 rounded font-quando text-white;
+                @apply bg-[#E74E4E] h-11 rounded font-quando text-white w-full;
             }
         }
     }
