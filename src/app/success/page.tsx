@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import './page.css'
 import { addClient, addRent, successPayment } from './actions/actions'
+import { Result } from 'antd'
+import './page.css'
 
 const Success = () => {
     const searchParams = useSearchParams()
@@ -30,8 +31,15 @@ const Success = () => {
             checkPayment()
         }
     }, [])
+
     return (
-        <div>Success</div>
+        <div className='result'>
+            <Result
+                status='success'
+                title='Tu pago fue generado exitosamente.'
+                subTitle=''
+            />
+        </div>
     )
 }
 
