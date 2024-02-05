@@ -4,8 +4,8 @@ export const addDocument = async (newDocument: FieldType) => {
     const token = localStorage.getItem('token')
     const formData = new FormData()
 
-    const { client, vehicle } = newDocument
-    const newObj = JSON.stringify({ client, vehicle })
+    const { rent } = newDocument
+    const newObj = JSON.stringify({ rent })
 
     formData.append('data', newObj)
     formData.append('document', newDocument.document)
@@ -58,23 +58,9 @@ export const removeDocument = async (id: string) => {
     })
 }
 
-export const getClients = async () => {
+export const getRents = async () => {
     const token = localStorage.getItem('token')
-    const response = await fetch(`${process.env.API_URL}/clients`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    const data = await response.json()
-    return data
-}
-
-export const getVehicles = async () => {
-    const token = localStorage.getItem('token')
-    const response = await fetch(`${process.env.API_URL}/vehicles`, {
+    const response = await fetch(`${process.env.API_URL}/rents`, {
         method: 'GET',
         credentials: 'include',
         headers: {

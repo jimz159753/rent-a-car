@@ -1,7 +1,8 @@
+import { IRent } from "../../rents/interfaces/rent.interface";
+
 export interface IDocument {
     _id: string;
-    client: IClient;
-    vehicle: IVehicle;
+    rent: IRent
     document: string;
     timestamp?: string;
 }
@@ -11,6 +12,9 @@ export interface IClient {
     name: string;
     phone: string;
     address: string;
+    email: string;
+    birthday: string;
+    country: string;
     timestamp?: string;
 }
 
@@ -31,7 +35,6 @@ export enum ActionEnum {
 }
 
 export type FieldType = {
-    client: string;
-    vehicle: string;
+    rent: string;
     document: string;
 }

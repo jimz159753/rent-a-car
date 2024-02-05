@@ -1,16 +1,15 @@
 import React from 'react'
-import { ActionEnum, FieldType, IClient, IVehicle } from '../interfaces/document.interface'
-import './form.css'
+import { ActionEnum, FieldType } from '../interfaces/document.interface'
 import { Button, Form, Select, Upload, UploadProps, message } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
+import { IRent } from '../../rents/interfaces/rent.interface'
+import './form.css'
 
 interface FormProps {
     setOpen: (e: boolean) => void
-    client: string
-    vehicle: string
     action: ActionEnum
-    dropClients: IClient[];
-    dropVehicles: IVehicle[];
+    rent: string;
+    dropRents: IRent[]
     handleAction: (values: FieldType) => void
     form: any
 }
@@ -32,11 +31,9 @@ const props: UploadProps = {
 
 export const DocumentForm = ({
     setOpen,
-    client,
-    vehicle,
     action,
-    dropClients,
-    dropVehicles,
+    rent,
+    dropRents,
     handleAction,
     form
 }: FormProps) => {
@@ -45,25 +42,16 @@ export const DocumentForm = ({
             requiredMark={'optional'}
             form={form}
             initialValues={{
-                name,
-                client,
-                vehicle
+                rent
             }}
             className='documents-form'
             onFinish={handleAction}>
             <Form.Item<FieldType>
-                label="Cliente"
-                name="client"
-                rules={[{ required: true, message: 'Cliente requerido.' }]}
+                label="Alquiler"
+                name="rent"
+                rules={[{ required: true, message: 'Alquiler requerido.' }]}
             >
-                <Select placeholder='selecciona un cliente' options={dropClients} />
-            </Form.Item>
-            <Form.Item<FieldType>
-                label="Vehículo"
-                name="vehicle"
-                rules={[{ required: true, message: 'Vehículo requerido.' }]}
-            >
-                <Select placeholder='selecciona un vehículo' options={dropVehicles} />
+                <Select placeholder='selecciona un vehículo' options={dropRents} />
             </Form.Item>
             {action === ActionEnum.ADD &&
                 <Form.Item<FieldType>

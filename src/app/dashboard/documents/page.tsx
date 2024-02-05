@@ -1,10 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ActionEnum, FieldType, IClient, IDocument, IVehicle } from './interfaces/document.interface'
-import { addDocument, getDocuments, removeDocument, updateDocument, getClients, getVehicles } from './actions/actions'
+import { ActionEnum, FieldType, IDocument } from './interfaces/document.interface'
+import { addDocument, getDocuments, removeDocument, updateDocument, getRents } from './actions/actions'
 import { DocumentForm } from './form/form'
 import { DeleteOutlined, EditOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from 'antd'
+import { IRent } from '../rents/interfaces/rent.interface'
 import Link from 'next/link'
 import './page.css'
 
@@ -12,10 +13,8 @@ const Documents = () => {
     const [data, setData] = useState<IDocument[]>()
     const [isOpen, setOpen] = useState(false)
     const [id, setId] = useState<string>('')
-    const [client, setClient] = useState<string>('')
-    const [vehicle, setVehicle] = useState<string>('')
-    const [dropClients, setDropClients] = useState<IClient[]>([])
-    const [dropVehicles, setDropVehicles] = useState<IVehicle[]>([])
+    const [rent, setRent] = useState<string>('')
+    const [dropRents, setDropRents] = useState<IRent[]>([])
     const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD)
     const [form] = Form.useForm()
 
@@ -33,16 +32,16 @@ const Documents = () => {
         },
         {
             title: 'Cliente',
-            dataIndex: 'client',
+            dataIndex: '_id',
             key: '_id',
-            render: (client: IClient, item: IDocument) => <p>{client.name}</p>
+            render: (id: string, item: IDocument) => <p>{item.rent.client.name}</p>
 
         },
         {
             title: 'Vehículo',
-            dataIndex: 'vehicle',
+            dataIndex: '_id',
             key: '_id',
-            render: (vehicle: IVehicle, item: IDocument) => <p>{vehicle.model}</p>
+            render: (id: string, item: IDocument) => <p>{item.rent.vehicle.brand} {item.rent.vehicle.plate}</p>
         },
         {
             title: 'Fecha',
@@ -73,11 +72,10 @@ const Documents = () => {
     const rowUpdateDrawer = (index: number, id: string) => {
         setAction(ActionEnum.UPDATE)
         if (data) {
-            const { client, vehicle } = data[index]
+            const { rent } = data[index]
             setId(id)
             form.setFieldsValue({
-                client: client.name,
-                vehicle: vehicle.model,
+                rent: rent.client.email
             })
         }
         setOpen(true)
@@ -111,12 +109,9 @@ const Documents = () => {
     }
 
     const loadDropdrowns = async () => {
-        const clients = await getClients()
-        const vehicles = await getVehicles()
-        const clientOptions = clients.map((el: IClient) => ({ value: JSON.stringify(el), label: el.name }))
-        const vehicleOptions = vehicles.map((el: IVehicle) => ({ value: JSON.stringify(el), label: el.brand }))
-        setDropClients(clientOptions)
-        setDropVehicles(vehicleOptions)
+        const rents = await getRents()
+        const rentsOptions = rents.map((el: IRent) => ({ value: JSON.stringify(el), label: el.client.email }))
+        setDropRents(rentsOptions)
     }
 
     useEffect(() => {
@@ -130,16 +125,14 @@ const Documents = () => {
 
     const handleAction = (values: FieldType) => {
         const document = {
-            client: values.client,
-            vehicle: values.vehicle,
+            rent: values.rent,
             document: values.document
         }
 
         if (action === ActionEnum.ADD) {
             registerDocument(document)
             form.resetFields()
-            setClient('')
-            setVehicle('')
+            setRent('')
             message.success('Datos agregados')
         } else {
             editDocument(id, document)
@@ -165,16 +158,14 @@ const Documents = () => {
                     :
                     'Actualizar Documento'}
             >
-                {dropClients && dropVehicles &&
+                {dropRents &&
                     <DocumentForm
                         form={form}
                         handleAction={handleAction}
                         setOpen={setOpen}
-                        client={client}
-                        vehicle={vehicle}
                         action={action}
-                        dropClients={dropClients}
-                        dropVehicles={dropVehicles}
+                        dropRents={dropRents}
+                        rent={rent}
                     />}
             </Drawer>
         </div >
