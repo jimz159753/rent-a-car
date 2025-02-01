@@ -5,56 +5,10 @@ import {
   Text,
   Page,
   View,
-  StyleSheet,
   PDFViewer,
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
-
-const styles = StyleSheet.create({
-  container: {
-    width: "95%",
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: "20px",
-    textAlign: "center",
-    marginVertical: "15px",
-  },
-  description: {
-    fontSize: "14px",
-    marginVertical: "10px",
-  },
-  textTable: {
-    fontSize: "14px",
-  },
-  table: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    border: "1px solid black",
-    height: "25px",
-    width: "80%",
-    marginHorizontal: "auto",
-    paddingHorizontal: "5px",
-  },
-  signContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: "100px",
-  },
-  sign: {
-    fontSize: "14px",
-    borderTop: "1px solid black",
-    width: "200px",
-    textAlign: "center",
-    paddingTop: "10px",
-  },
-  note: {
-    textAlign: "center",
-  },
-});
+import { styles } from "./contractStyles";
 
 interface ContractProps {
   searchParams: any;
@@ -125,7 +79,7 @@ const Contract = ({ searchParams }: ContractProps) => {
             </View>
             <Text
               style={styles.title}
-            >{`PENDIENTE: $${item.vehicle.price * item.days - item.payment}`}</Text>
+            >{`PENDIENTE: $${item.vehicle.price * item.days - (item.payment ? item.payment : 0)}`}</Text>
             <View style={styles.signContainer}>
               <Text style={styles.sign}>FIRMA</Text>
               <Text style={styles.sign}>HUELLA</Text>
