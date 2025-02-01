@@ -1,23 +1,22 @@
 .login-form {
-    @apply flex flex-col justify-center items-center h-screen space-y-6;
+  @apply flex flex-col justify-center items-center h-screen space-y-6;
 
-    .login-container{
-        @apply flex flex-col justify-between items-center h-1/5;
+  .login-container {
+    @apply flex flex-col justify-between items-center h-1/5;
 
-        img {
-            @apply w-full mb-8;
-        }
-
-        .ant-form-item {
-            @apply w-full h-28;
-        }
-        input {
-            @apply h-11;
-        }
-
-        button {
-            @apply bg-soft-red h-11 rounded w-32 font-quando text-white mt-8;
-        }
+    img {
+      @apply w-full mb-8;
     }
 
+    .ant-form-item {
+      @apply w-full h-28;
+    }
+    input {
+      @apply h-11;
+    }
+
+    button {
+      @apply bg-soft-red h-11 rounded w-32 font-quando text-white mt-8;
+    }
+  }
 }

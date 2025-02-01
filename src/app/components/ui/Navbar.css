@@ -1,13 +1,11 @@
-
-
 .navbar {
-    @apply h-20 bg-black text-white flex justify-between items-center font-quando text-[18px] max-tablet:justify-center;
+  @apply h-20 bg-black text-white flex justify-between items-center font-quando text-[18px] max-tablet:justify-center;
 }
 
 img {
-    @apply mx-10;
+  @apply mx-10;
 }
 
 .list {
-    @apply  flex justify-end space-x-10 mx-10 max-tablet:hidden;
+  @apply flex justify-end space-x-10 mx-10 max-tablet:hidden;
 }

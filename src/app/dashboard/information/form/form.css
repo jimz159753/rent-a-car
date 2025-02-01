@@ -1,21 +1,22 @@
 .user-form {
-    .ant-form-item {
-        @apply m-0 h-28;
+  .ant-form-item {
+    @apply m-0 h-28;
 
-        .ant-row {
-            @apply flex flex-col items-start;
-        }
-
-        .ant-col label::after {
-            @apply content-none;
-        }
-
-        .ant-select, input {
-            @apply h-11;
-        }
+    .ant-row {
+      @apply flex flex-col items-start;
     }
 
-    .submit {
-        @apply bg-[#6582EB] h-11 rounded w-32 font-quando text-white;
+    .ant-col label::after {
+      @apply content-none;
     }
+
+    .ant-select,
+    input {
+      @apply h-11;
+    }
+  }
+
+  .submit {
+    @apply bg-[#6582EB] h-11 rounded w-32 font-quando text-white;
+  }
 }

@@ -1,17 +1,17 @@
-import React from 'react'
-import { Navbar } from './Navbar'
-import { Footer } from './Footer'
+import React from "react";
+import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
 
 interface ContainerProps {
-    children: React.ReactElement
+  children: React.ReactElement;
 }
 
 export const Container = ({ children }: ContainerProps) => {
-    return (
-        <div>
-            <Navbar />
-            {children}
-            <Footer />
-        </div>
-    )
-}
+  return (
+    <div>
+      <Navbar />
+      {children}
+      <Footer />
+    </div>
+  );
+};

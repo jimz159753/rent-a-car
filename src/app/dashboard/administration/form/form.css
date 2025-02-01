@@ -1,33 +1,33 @@
 .administration-form {
+  .ant-form-item {
+    @apply m-0 h-28;
 
-    .ant-form-item {
-        @apply m-0 h-28;
-
-        .ant-row {
-            @apply flex flex-col items-start;
-        }
-
-        .ant-col label::after {
-            @apply content-none;
-        }
-
-        .ant-form-item-control {
-            @apply w-full ;
-        }
-        .ant-select, input {
-            @apply h-11;
-        }
+    .ant-row {
+      @apply flex flex-col items-start;
     }
 
-    button {
-        @apply h-11;
+    .ant-col label::after {
+      @apply content-none;
     }
 
-    .cancel {
-        @apply bg-soft-red rounded w-32 font-quando text-white;
+    .ant-form-item-control {
+      @apply w-full;
     }
+    .ant-select,
+    input {
+      @apply h-11;
+    }
+  }
 
-    .submit {
-        @apply bg-[#6582EB] rounded w-32 font-quando text-white;
-    }
+  button {
+    @apply h-11;
+  }
+
+  .cancel {
+    @apply bg-soft-red rounded w-32 font-quando text-white;
+  }
+
+  .submit {
+    @apply bg-[#6582EB] rounded w-32 font-quando text-white;
+  }
 }

@@ -1,30 +1,29 @@
-'use client'
-import { Quando, Quicksand } from 'next/font/google'
-import Head from 'next/head'
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-import './globals.css'
+"use client";
+import { Quando, Quicksand } from "next/font/google";
+import Head from "next/head";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import "./globals.css";
 
 const quando = Quando({
-  weight: ['400'],
-  style: ['normal'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-quando'
-})
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-quando",
+});
 
 const quicksand = Quicksand({
-  weight: ['400'],
-  style: ['normal'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-quicksand'
-})
-
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-quicksand",
+});
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -38,5 +37,5 @@ export default function RootLayout({
         <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>
-  )
+  );
 }

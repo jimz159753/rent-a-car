@@ -1,11 +1,11 @@
 .information-content {
-    @apply flex flex-col;
+  @apply flex flex-col;
 
-    .ant-descriptions {
-        @apply my-10;
+  .ant-descriptions {
+    @apply my-10;
 
-        table {
-            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-        }
+    table {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
+  }
 }

@@ -1,5 +1,5 @@
 .rents-content {
-    .add-btn {
-        @apply h-11 rounded w-32 font-quando my-8;
-    }
+  .add-btn {
+    @apply h-11 rounded w-32 font-quando my-8;
+  }
 }

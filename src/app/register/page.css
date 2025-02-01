@@ -1,12 +1,11 @@
 .register-container {
-    @apply my-32;
+  @apply my-32;
 
-    .ant-steps {
-        @apply max-desktop:items-center;
-    }
+  .ant-steps {
+    @apply max-desktop:items-center;
+  }
 
-
-    button {
-        @apply bg-[#E74E4E] h-11  rounded font-quando text-white;
-    }
+  button {
+    @apply bg-[#E74E4E] h-11  rounded font-quando text-white;
+  }
 }
