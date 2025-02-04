@@ -10,10 +10,6 @@ import { Button, Form, Input, Select } from "antd";
 interface FormProps {
   setOpen: (e: boolean) => void;
   email: string;
-  name: string;
-  phone: string;
-  address: string;
-  role: string;
   action: ActionEnum;
   handleAction: (values: FieldType) => void;
   form: any;
@@ -22,11 +18,7 @@ interface FormProps {
 
 export const UserForm = ({
   setOpen,
-  name,
   email,
-  phone,
-  address,
-  role,
   form,
   action,
   handleAction,
@@ -47,45 +39,38 @@ export const UserForm = ({
     <Form
       requiredMark={"optional"}
       form={form}
-      initialValues={{
-        name,
-        email,
-        phone,
-        address,
-        role,
-      }}
       className="administration-form"
       onFinish={handleAction}
     >
-      <Form.Item<FieldType>
+      <Form.Item<IUser>
         label="Nombre"
         name="name"
         rules={[{ required: true, message: "Nombre requerido." }]}
       >
         <Input placeholder="nombre" />
       </Form.Item>
-      <Form.Item<FieldType>
+      <Form.Item<IUser>
         label="Correo eléctronico"
         name="email"
         rules={[{ required: true, message: "Correo eléctronico requerido." }]}
       >
         <Input placeholder="email" />
       </Form.Item>
-      <Form.Item<FieldType>
+      <Form.Item<IUser>
         label="Teléfono"
         name="phone"
         rules={[{ required: true, message: "Teléfono requerido." }]}
       >
         <Input placeholder="phone" />
       </Form.Item>
-      <Form.Item<FieldType>
+      <Form.Item<IUser>
         label="Dirección"
         name="address"
         rules={[{ required: true, message: "Dirección requerido." }]}
       >
         <Input placeholder="address" />
       </Form.Item>
-      <Form.Item<FieldType>
+      <Form.Item<IUser>
         label="Role"
         name="role"
         rules={[{ required: true, message: "Role requerido." }]}
@@ -93,7 +78,7 @@ export const UserForm = ({
         <Select placeholder="selecciona un role" options={dropRoles} />
       </Form.Item>
       {user.email === email ? (
-        <Form.Item<FieldType>
+        <Form.Item<IUser>
           label="Contraseña"
           name="password"
           rules={[{ required: true, message: "Contraseña requerida." }]}
@@ -101,7 +86,7 @@ export const UserForm = ({
           <Input.Password placeholder="contraseña" />
         </Form.Item>
       ) : user.role === RoleEnum.ADMIN && action === ActionEnum.ADD ? (
-        <Form.Item<FieldType>
+        <Form.Item<IUser>
           label="Contraseña"
           name="password"
           rules={[{ required: true, message: "Contraseña requerida." }]}

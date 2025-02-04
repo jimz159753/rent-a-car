@@ -1,6 +1,6 @@
-import { FieldType } from "../interfaces/user.interface";
+import { FieldType, IUser } from "../interfaces/user.interface";
 
-export const addUser = async (newUser: FieldType) => {
+export const addUser = async (newUser: IUser) => {
   const token = localStorage.getItem("token");
   await fetch(`${process.env.API_URL}/auth/register`, {
     method: "POST",
@@ -27,7 +27,7 @@ export const getUsers = async () => {
   return data;
 };
 
-export const updateUser = async (id: string, updatedUser: FieldType) => {
+export const updateUser = async (id: string, updatedUser: IUser) => {
   const token = localStorage.getItem("token");
   await fetch(`${process.env.API_URL}/users/${id}`, {
     method: "PATCH",

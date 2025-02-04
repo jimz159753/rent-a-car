@@ -3,105 +3,32 @@ import React, { useEffect, useState } from "react";
 import { UserForm } from "./form/form";
 import {
   ActionEnum,
-  FieldType,
   IUser,
-  RoleEnum,
 } from "./interfaces/user.interface";
 import { addUser, getUsers, removeUser, updateUser } from "./actions/actions";
 import {
-  DeleteOutlined,
-  EditOutlined,
   LoadingOutlined,
-  QuestionCircleOutlined,
 } from "@ant-design/icons";
 import {
   Button,
   Drawer,
   Form,
-  Popconfirm,
   Spin,
   Table,
-  Tag,
   message,
 } from "antd";
 import "./page.css";
+import { columns } from "./columns";
 
 const Clients = () => {
   const [data, setData] = useState<IUser[]>();
   const [isOpen, setOpen] = useState(false);
   const [id, setId] = useState<string>("");
-  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [role, setRole] = useState<RoleEnum>(RoleEnum.EMPLOYEE);
-  const [password, setPassword] = useState<string>("");
   const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD);
   const [form] = Form.useForm();
   const [userStringObj, setUserStringObj] = useState("");
   const user: IUser = userStringObj && JSON.parse(userStringObj);
-
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "_id",
-      key: "_id",
-    },
-    {
-      title: "Nombre",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Correo eléctronico",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Teléfono",
-      dataIndex: "phone",
-      key: "phone",
-    },
-    {
-      title: "Dirección",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-      render: (role: string) => (
-        <Tag color={role === RoleEnum.ADMIN ? "geekblue" : "green"}>{role}</Tag>
-      ),
-    },
-    {
-      title: "Fecha",
-      dataIndex: "timestamp",
-      key: "timestamp",
-    },
-    {
-      title: "Acción",
-      render: (password: string, item: IUser, idx: number) => (
-        <div className="flex justify-between">
-          <EditOutlined
-            style={{ color: "#6582EB" }}
-            onClick={() => rowUpdateDrawer(idx, item._id)}
-          />
-          <Popconfirm
-            title="Borrar registro"
-            okText="Si"
-            cancelText="No"
-            onConfirm={() => deleteUser(item._id)}
-            description="¿Seguro que quieres borrar este registro?"
-            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-          >
-            <DeleteOutlined style={{ color: "#E74E4E" }} />
-          </Popconfirm>
-        </div>
-      ),
-    },
-  ];
 
   const rowUpdateDrawer = (index: number, id: string) => {
     setAction(ActionEnum.UPDATE);
@@ -127,7 +54,7 @@ const Clients = () => {
     setOpen(true);
   };
 
-  const registerUser = async (user: FieldType) => {
+  const registerUser = async (user: IUser) => {
     await addUser(user);
     await loadUsers();
   };
@@ -138,7 +65,7 @@ const Clients = () => {
     setData(data);
   };
 
-  const editUser = async (id: string, updatedUser: FieldType) => {
+  const editUser = async (id: string, updatedUser: IUser) => {
     await updateUser(id, updatedUser);
     await loadUsers();
   };
@@ -158,7 +85,7 @@ const Clients = () => {
     setOpen(false);
   };
 
-  const handleAction = (values: FieldType) => {
+  const handleAction = (values: IUser) => {
     const user = {
       name: values.name,
       email: values.email,
@@ -170,12 +97,6 @@ const Clients = () => {
     if (action === ActionEnum.ADD) {
       registerUser(user);
       form.resetFields();
-      setName("");
-      setEmail("");
-      setPhone("");
-      setAddress("");
-      setRole(RoleEnum.EMPLOYEE);
-      setPassword("");
       message.success("Datos agregados");
     } else {
       editUser(id, user);
@@ -190,7 +111,7 @@ const Clients = () => {
           <Button className="add-btn" onClick={rowAddDrawer}>
             Agregar
           </Button>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns({ rowUpdateDrawer, deleteUser })} dataSource={data} />
         </div>
       ) : (
         <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
@@ -204,11 +125,7 @@ const Clients = () => {
       >
         <UserForm
           setOpen={setOpen}
-          name={name}
           email={email}
-          phone={phone}
-          address={address}
-          role={role}
           action={action}
           handleAction={handleAction}
           form={form}
