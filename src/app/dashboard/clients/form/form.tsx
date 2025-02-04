@@ -1,13 +1,13 @@
 import React from "react";
 import { ActionEnum, FieldType } from "../interfaces/client.interface";
-import { Button, Input, Form, DatePicker } from "antd";
+import { Button, Input, Form, DatePicker, FormInstance } from "antd";
 import "./form.css";
 
 interface FormProps {
   setOpen: (value: boolean) => void;
   action: ActionEnum;
   handleAction: (values: FieldType) => void;
-  form: any;
+  form: FormInstance;
   name: string;
   phone: string;
   address: string;

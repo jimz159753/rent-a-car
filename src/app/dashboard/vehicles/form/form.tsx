@@ -15,6 +15,7 @@ import {
   Upload,
   UploadProps,
   message,
+  FormInstance
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "./form.css";
@@ -36,7 +37,7 @@ interface FormProps {
   category: CategoryEnum;
   action: ActionEnum;
   handleAction: (values: FieldType) => void;
-  form: any;
+  form: FormInstance;
 }
 
 const props: UploadProps = {

@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, FormInstance } from "antd";
 import "./form.css";
 
 interface FormProps {
   handleAction: (values: Ifields) => void;
-  form: any;
+  form: FormInstance;
 }
 
 export interface Ifields {

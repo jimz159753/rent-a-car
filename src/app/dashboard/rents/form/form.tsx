@@ -5,7 +5,7 @@ import {
   IClient,
   IVehicle,
 } from "../interfaces/rent.interface";
-import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, Select, FormInstance } from "antd";
 import "./form.css";
 import { Dayjs } from "dayjs";
 
@@ -20,7 +20,7 @@ interface FormProps {
   dropClients: IClient[];
   dropVehicles: IVehicle[];
   handleAction: (values: FieldType) => void;
-  form: any;
+  form: FormInstance;
   client: string;
   vehicle: string;
 }
@@ -58,7 +58,7 @@ export const RentForm = ({
         const vehicleObj = JSON.parse(values.vehicle);
         values.total =
           vehicleObj.price *
-            Number(values.endDate.diff(values.startDate, "days")) -
+          Number(values.endDate.diff(values.startDate, "days")) -
           Number(values.payment);
         values.days = values.endDate.diff(values.startDate, "days");
         values.startDate = values.startDate.format("YYYY-MM-DD");

@@ -1,6 +1,6 @@
 import React from "react";
 import { ActionEnum, FieldType } from "../interfaces/document.interface";
-import { Button, Form, Select, Upload, UploadProps, message } from "antd";
+import { Button, Form, Select, Upload, UploadProps, message, FormInstance } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { IRent } from "../../rents/interfaces/rent.interface";
 import "./form.css";
@@ -11,7 +11,7 @@ interface FormProps {
   rent: string;
   dropRents: IRent[];
   handleAction: (values: FieldType) => void;
-  form: any;
+  form: FormInstance;
 }
 
 const props: UploadProps = {
