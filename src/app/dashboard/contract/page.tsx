@@ -11,7 +11,9 @@ import dayjs from "dayjs";
 import { styles } from "./contractStyles";
 
 interface ContractProps {
-  searchParams: any;
+  searchParams: {
+    item: string;
+  };
 }
 
 const Contract = ({ searchParams }: ContractProps) => {

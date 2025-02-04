@@ -1,6 +1,14 @@
 import React from "react";
-import { ActionEnum, FieldType } from "../interfaces/document.interface";
-import { Button, Form, Select, Upload, UploadProps, message, FormInstance } from "antd";
+import { ActionEnum, IDocument } from "../interfaces/document.interface";
+import {
+  Button,
+  Form,
+  Select,
+  Upload,
+  UploadProps,
+  message,
+  FormInstance,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { IRent } from "../../rents/interfaces/rent.interface";
 import "./form.css";
@@ -8,9 +16,8 @@ import "./form.css";
 interface FormProps {
   setOpen: (e: boolean) => void;
   action: ActionEnum;
-  rent: string;
   dropRents: IRent[];
-  handleAction: (values: FieldType) => void;
+  handleAction: (values: IDocument) => void;
   form: FormInstance;
 }
 
@@ -32,7 +39,6 @@ const props: UploadProps = {
 export const DocumentForm = ({
   setOpen,
   action,
-  rent,
   dropRents,
   handleAction,
   form,
@@ -41,13 +47,10 @@ export const DocumentForm = ({
     <Form
       requiredMark={"optional"}
       form={form}
-      initialValues={{
-        rent,
-      }}
       className="documents-form"
       onFinish={handleAction}
     >
-      <Form.Item<FieldType>
+      <Form.Item<IDocument>
         label="Alquiler"
         name="rent"
         rules={[{ required: true, message: "Alquiler requerido." }]}
@@ -55,7 +58,7 @@ export const DocumentForm = ({
         <Select placeholder="selecciona un vehículo" options={dropRents} />
       </Form.Item>
       {action === ActionEnum.ADD && (
-        <Form.Item<FieldType>
+        <Form.Item<IDocument>
           label="Documento"
           getValueFromEvent={({ file }) => file.originFileObj}
           name="document"

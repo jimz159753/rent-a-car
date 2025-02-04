@@ -1,7 +1,7 @@
 import { IRent } from "../../rents/interfaces/rent.interface";
 
 export interface IDocument {
-  _id: string;
+  _id?: string;
   rent: IRent;
   document: string;
   timestamp?: string;
@@ -33,8 +33,3 @@ export enum ActionEnum {
   ADD = "Add",
   UPDATE = "Update",
 }
-
-export type FieldType = {
-  rent: string;
-  document: string;
-};

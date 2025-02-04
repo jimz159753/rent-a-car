@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import {
   ActionEnum,
-  FieldType,
   IDocument,
 } from "./interfaces/document.interface";
 import {
@@ -14,86 +13,20 @@ import {
 } from "./actions/actions";
 import { DocumentForm } from "./form/form";
 import {
-  DeleteOutlined,
-  EditOutlined,
   LoadingOutlined,
-  QuestionCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Drawer, Form, Popconfirm, Spin, Table, message } from "antd";
+import { Button, Drawer, Form, Spin, Table, message } from "antd";
 import { IRent } from "../rents/interfaces/rent.interface";
-import Link from "next/link";
 import "./page.css";
+import { columns } from "./columns";
 
 const Documents = () => {
   const [data, setData] = useState<IDocument[]>();
   const [isOpen, setOpen] = useState(false);
   const [id, setId] = useState<string>("");
-  const [rent, setRent] = useState<string>("");
   const [dropRents, setDropRents] = useState<IRent[]>([]);
   const [action, setAction] = useState<ActionEnum>(ActionEnum.ADD);
   const [form] = Form.useForm();
-
-  const columns = [
-    {
-      title: "Id",
-      dataIndex: "_id",
-      key: "_id",
-    },
-    {
-      title: "Nombre",
-      dataIndex: "name",
-      key: "name",
-      render: (name: string) => (
-        <Link target="_blank" href={process.env.FILES_URL + name}>
-          {name}
-        </Link>
-      ),
-    },
-    {
-      title: "Cliente",
-      dataIndex: "_id",
-      key: "_id",
-      render: (id: string, item: IDocument) => <p>{item.rent.client.name}</p>,
-    },
-    {
-      title: "Vehículo",
-      dataIndex: "_id",
-      key: "_id",
-      render: (id: string, item: IDocument) => (
-        <p>
-          {item.rent.vehicle.brand} {item.rent.vehicle.plate}
-        </p>
-      ),
-    },
-    {
-      title: "Fecha",
-      dataIndex: "timestamp",
-      key: "timestamp",
-    },
-    {
-      title: "Acción",
-      dataIndex: "timestamp",
-      key: "timestamp",
-      render: (timestamp: string, item: IDocument, idx: number) => (
-        <div className="flex justify-between">
-          <EditOutlined
-            style={{ color: "#6582EB" }}
-            onClick={() => rowUpdateDrawer(idx, item._id)}
-          />
-          <Popconfirm
-            title="Borrar registro"
-            okText="Si"
-            cancelText="No"
-            onConfirm={() => deleteDocument(item._id)}
-            description="¿Seguro que quieres borrar este registro?"
-            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-          >
-            <DeleteOutlined style={{ color: "#E74E4E" }} />
-          </Popconfirm>
-        </div>
-      ),
-    },
-  ];
 
   const rowUpdateDrawer = (index: number, id: string) => {
     setAction(ActionEnum.UPDATE);
@@ -119,12 +52,12 @@ const Documents = () => {
     setData(data);
   };
 
-  const registerDocument = async (document: FieldType) => {
+  const registerDocument = async (document: IDocument) => {
     await addDocument(document);
     await loadDocuments();
   };
 
-  const editDocument = async (id: string, updatedDocument: FieldType) => {
+  const editDocument = async (id: string, updatedDocument: IDocument) => {
     await updateDocument(id, updatedDocument);
     await loadDocuments();
   };
@@ -152,7 +85,7 @@ const Documents = () => {
     setOpen(false);
   };
 
-  const handleAction = (values: FieldType) => {
+  const handleAction = (values: IDocument) => {
     const document = {
       rent: values.rent,
       document: values.document,
@@ -161,7 +94,6 @@ const Documents = () => {
     if (action === ActionEnum.ADD) {
       registerDocument(document);
       form.resetFields();
-      setRent("");
       message.success("Datos agregados");
     } else {
       editDocument(id, document);
@@ -176,7 +108,7 @@ const Documents = () => {
           <Button className="add-btn" onClick={rowAddDrawer}>
             Agregar
           </Button>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns({ rowUpdateDrawer, deleteDocument })} dataSource={data} />
         </div>
       ) : (
         <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
@@ -197,7 +129,6 @@ const Documents = () => {
             setOpen={setOpen}
             action={action}
             dropRents={dropRents}
-            rent={rent}
           />
         )}
       </Drawer>

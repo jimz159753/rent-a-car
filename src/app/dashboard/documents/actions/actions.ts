@@ -1,6 +1,6 @@
-import { FieldType } from "../interfaces/document.interface";
+import { IDocument } from "../interfaces/document.interface";
 
-export const addDocument = async (newDocument: FieldType) => {
+export const addDocument = async (newDocument: IDocument) => {
   const token = localStorage.getItem("token");
   const formData = new FormData();
 
@@ -36,7 +36,7 @@ export const getDocuments = async () => {
 
 export const updateDocument = async (
   id: string,
-  updatedDocument: FieldType,
+  updatedDocument: IDocument,
 ) => {
   const token = localStorage.getItem("token");
   await fetch(`${process.env.API_URL}/documents/${id}`, {
